@@ -14,7 +14,8 @@ export enum TxType {
     TRANSFER = 'transfer',
     CONTRACT_GENESIS = 'genesis_system_contract', 
     CONTRACT = 'contract',
-    CONTRACT_CALL = 'contract_call'
+    CONTRACT_CALL = 'contract_call',
+    CONTRACT_UPGRADE = 'contract_upgrade' 
 }
 
 export interface ValidatorAttestation {
@@ -79,10 +80,13 @@ export const DEFAULT_LOCATION = {
     location: ContractLocation.FS  
 };
 
-interface ContractHistory {
-    version: string;          // string represents integer, e.g. "1", "2", "999" - no decimals
+export interface ContractVersion {
+    version: string | number;
     codeHash: string;
     sandboxHash: string;
+    deployedAt?: number;
+    deployer?: string;
+    active?: boolean;
 }
 
 
@@ -95,7 +99,7 @@ export interface ContractTransaction extends TransactionBase {
     location: typeof DEFAULT_LOCATION.location;
     code?: string;                              // Optional (present in deploy) - hex-encoded deterministic bytes
     sandbox?: string;                           // Optional (present in deploy) - hex-encoded deterministic bytes
-    contractHistory?: ContractHistory[];        // Optional (present in deploy)
+    contractVersion?: ContractVersion[];        // Optional (present in deploy)
 }
 
 
@@ -147,6 +151,7 @@ export interface TransferTransaction extends TransactionBase {
 // Contract deployment transaction
 export interface ContractTx extends ContractTransaction {
     type: TxType.CONTRACT;
+    contractVersion: ContractVersion[];  
 }
 
 // Contract call transaction
@@ -156,13 +161,25 @@ export interface ContractCallTransaction extends ContractTransaction {
     method: string;              // Method name being called
 }
 
+// Add upgrade transaction interface
+export interface ContractUpgradeTx extends TransactionBase {
+    type: TxType.CONTRACT_UPGRADE;
+    to: string;
+    codeHash: string;
+    sandboxHash: string;
+    code: string;
+    sandbox: string;
+    version: number;
+}
+
 // Union type for all transactions
 export type Transaction =
     | GenesisAllocationTx
     | GenesisTreasuryTx
     | TransferTransaction
     | ContractCallTransaction
-    | ContractTx;
+    | ContractTx
+    | ContractUpgradeTx;
 
 // Transaction ID computation
 // txid = H(chainId ‖ timestamp ‖ payload ‖ signature ‖ salt ‖ sequence)

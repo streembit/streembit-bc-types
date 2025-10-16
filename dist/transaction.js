@@ -14,6 +14,7 @@ var TxType;
     TxType["CONTRACT_GENESIS"] = "genesis_system_contract";
     TxType["CONTRACT"] = "contract";
     TxType["CONTRACT_CALL"] = "contract_call";
+    TxType["CONTRACT_UPGRADE"] = "contract_upgrade";
 })(TxType || (exports.TxType = TxType = {}));
 ;
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later

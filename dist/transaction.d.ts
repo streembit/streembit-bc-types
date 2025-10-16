@@ -10,7 +10,8 @@ export declare enum TxType {
     TRANSFER = "transfer",
     CONTRACT_GENESIS = "genesis_system_contract",
     CONTRACT = "contract",
-    CONTRACT_CALL = "contract_call"
+    CONTRACT_CALL = "contract_call",
+    CONTRACT_UPGRADE = "contract_upgrade"
 }
 export interface ValidatorAttestation {
     validatorId: string;
@@ -50,10 +51,13 @@ export declare enum ContractLocation {
 export declare const DEFAULT_LOCATION: {
     location: ContractLocation;
 };
-interface ContractHistory {
-    version: string;
+export interface ContractVersion {
+    version: string | number;
     codeHash: string;
     sandboxHash: string;
+    deployedAt?: number;
+    deployer?: string;
+    active?: boolean;
 }
 export interface ContractTransaction extends TransactionBase {
     type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS;
@@ -64,7 +68,7 @@ export interface ContractTransaction extends TransactionBase {
     location: typeof DEFAULT_LOCATION.location;
     code?: string;
     sandbox?: string;
-    contractHistory?: ContractHistory[];
+    contractVersion?: ContractVersion[];
 }
 export declare const GENESIS_FROM: string;
 export declare const GENESIS_PUBKEY: string;
@@ -101,13 +105,23 @@ export interface TransferTransaction extends TransactionBase {
 }
 export interface ContractTx extends ContractTransaction {
     type: TxType.CONTRACT;
+    contractVersion: ContractVersion[];
 }
 export interface ContractCallTransaction extends ContractTransaction {
     type: TxType.CONTRACT_CALL;
     data: string;
     method: string;
 }
-export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx;
+export interface ContractUpgradeTx extends TransactionBase {
+    type: TxType.CONTRACT_UPGRADE;
+    to: string;
+    codeHash: string;
+    sandboxHash: string;
+    code: string;
+    sandbox: string;
+    version: number;
+}
+export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx;
 export interface TxIdComponents {
     chainId: number;
     timestamp: number;
@@ -121,5 +135,4 @@ export interface TxSignParam {
     privatekey: string;
 }
 export declare const MAX_ALLOWED_SIGNATURES = 3;
-export {};
 //# sourceMappingURL=transaction.d.ts.map
