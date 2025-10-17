@@ -356,13 +356,7 @@ export interface AccountableNode {
         address: string;
     };
     assets: number;
-    officers: Array<{
-        name: string;
-        role: string;
-        signature: string;
-    }>;
-    certificate: string;
     deposit: string;
-    status: 'active' | 'suspended' | 'inactive';
+    status: 'active' | 'application_pending' | 'suspended' | 'inactive';
 }
 //# sourceMappingURL=consensus.d.ts.map
