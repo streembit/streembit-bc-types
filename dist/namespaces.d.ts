@@ -65,6 +65,7 @@ export declare const NSkey: {
     blacklist: (nodeId: string) => string;
     deposit: (nodeId: string) => string;
     validatorData: (vid: string) => string;
+    validatorDeposit: (vid: string) => string;
     consortiumMeta: (id: string) => string;
     consortiumPublicKey: (id: string) => string;
     consortiumVerification: (id: string, verifierPubkey: string) => string;
