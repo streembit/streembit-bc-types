@@ -35,6 +35,7 @@ declare const NS: {
     readonly DEPOSITS: "poc/deposits/";
     readonly VALIDATOR_BASE: "validator/";
     readonly CONSORTIUM_BASE: "consortium/";
+    readonly TOUCHLOG_BASE: "touchlog/";
     readonly UNDO: "undo/";
 };
 export type NamespaceKey = keyof typeof NS;
@@ -75,6 +76,9 @@ export declare const NSkey: {
     consortiumMemberData: (id: string, validatorId: string) => string;
     consortiumEncryptedKey: (id: string, validatorId: string) => string;
     consortiumGlobalPolicy: () => string;
+    touchLogEntry: (contractId: string, seq: bigint | number) => string;
+    touchLogSeq: (contractId: string) => string;
+    touchLogBookmark: (contractId: string) => string;
     undoPrefix: (index: bigint | number, blockHash: string) => string;
     undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => string;
     metaTip: () => "meta/tiphash";

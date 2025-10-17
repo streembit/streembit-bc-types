@@ -77,6 +77,8 @@ const NS = {
     //   consortium/<id>/members/<Vid> → Individual validator metadata
     //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
 
+    TOUCHLOG_BASE: 'touchlog/',            // touchlog/<contractId>/... → contract execution logs
+
     // Undo records for rollback
     UNDO: 'undo/',                      // undo/<index>/<blockHash>/<idx> → Undo record
 
@@ -142,6 +144,10 @@ export const NSkey = {
     consortiumMemberData: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
     consortiumGlobalPolicy: () => `${NS.CONSORTIUM_BASE}policy/`,
+
+    touchLogEntry: (contractId: string, seq: bigint | number) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`,      // individual log entry
+    touchLogSeq: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/seq`,                                        // monotonic sequence counter
+    touchLogBookmark: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`,                              // replay cursor for consumers
 
     // Undo keys for journal
     undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),

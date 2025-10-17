@@ -58,6 +58,7 @@ const NS = {
     //   consortium/<id>/members → JSON array ["Vid1", "Vid2", "Vid3"]
     //   consortium/<id>/members/<Vid> → Individual validator metadata
     //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
+    TOUCHLOG_BASE: 'touchlog/', // touchlog/<contractId>/... → contract execution logs
     // Undo records for rollback
     UNDO: 'undo/', // undo/<index>/<blockHash>/<idx> → Undo record
 };
@@ -107,6 +108,9 @@ exports.NSkey = {
     consortiumMemberData: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
     consortiumGlobalPolicy: () => `${NS.CONSORTIUM_BASE}policy/`,
+    touchLogEntry: (contractId, seq) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`, // individual log entry
+    touchLogSeq: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/seq`, // monotonic sequence counter
+    touchLogBookmark: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`, // replay cursor for consumers
     // Undo keys for journal
     undoPrefix: (index, blockHash) => exports.KeysStr.undoPrefix(index, blockHash),
     undoKey: (index, blockHash, idx) => exports.KeysStr.undoKey(index, blockHash, idx),
