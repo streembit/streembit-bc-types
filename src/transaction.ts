@@ -83,10 +83,27 @@ export const DEFAULT_LOCATION = {
 export interface ContractVersion {
     version: string | number;
     codeHash: string;
+    code: string;               // ADD: Hex-encoded contract code
+    sandbox: string;            // ADD: Hex-encoded sandbox code
     sandboxHash: string;
-    deployedAt?: number;
-    deployer?: string;
-    active?: boolean;
+    deployedAt: number;
+    deployer: string;
+    active: boolean;
+}
+
+/**
+ * Contract metadata stored in blockchain state
+ * Stored at: NSkey.accountMeta(contractAddress)
+ */
+export interface ContractMetadata {
+    type: 'contract';
+    cid: string;
+    filePath: string;               // Canonical path used for CID derivation (e.g., "dist/node/smart-contracts/validators/validator_v1.js")
+    deployer: string;               // Address of initial deployer
+    location: ContractLocation;     // FS or VM
+    codeHash: string;               
+    sandboxHash: string;           
+    versions: ContractVersion[];    // Version history with code/sandbox in each entry
 }
 
 
@@ -188,20 +205,6 @@ export interface TxSignParam {
     publickey: string;
     privatekey: string;
 }
-
-/**
- * Contract metadata stored in blockchain state
- * Stored at: NSkey.accountMeta(contractAddress)
- */
-export interface ContractMetadata {
-    type: 'contract';
-    cid: string;
-    filePath: string;           // Canonical path used for CID derivation (e.g., "dist/node/smart-contracts/validators/validator_v1.js")
-    deployer: string;           // Address of initial deployer
-    location: ContractLocation; // FS or VM
-    versions: ContractVersion[]; // Version history with code/sandbox in each entry
-}
-
 
 // Maximum allowed signatures for multisig transactions, increase this if needed for complex governance
 export const MAX_ALLOWED_SIGNATURES = 3;   

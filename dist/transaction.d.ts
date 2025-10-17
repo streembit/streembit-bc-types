@@ -54,10 +54,26 @@ export declare const DEFAULT_LOCATION: {
 export interface ContractVersion {
     version: string | number;
     codeHash: string;
+    code: string;
+    sandbox: string;
     sandboxHash: string;
-    deployedAt?: number;
-    deployer?: string;
-    active?: boolean;
+    deployedAt: number;
+    deployer: string;
+    active: boolean;
+}
+/**
+ * Contract metadata stored in blockchain state
+ * Stored at: NSkey.accountMeta(contractAddress)
+ */
+export interface ContractMetadata {
+    type: 'contract';
+    cid: string;
+    filePath: string;
+    deployer: string;
+    location: ContractLocation;
+    codeHash: string;
+    sandboxHash: string;
+    versions: ContractVersion[];
 }
 export interface ContractTransaction extends TransactionBase {
     type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS;
@@ -132,18 +148,6 @@ export interface TxIdComponents {
 export interface TxSignParam {
     publickey: string;
     privatekey: string;
-}
-/**
- * Contract metadata stored in blockchain state
- * Stored at: NSkey.accountMeta(contractAddress)
- */
-export interface ContractMetadata {
-    type: 'contract';
-    cid: string;
-    filePath: string;
-    deployer: string;
-    location: ContractLocation;
-    versions: ContractVersion[];
 }
 export declare const MAX_ALLOWED_SIGNATURES = 3;
 export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx;
