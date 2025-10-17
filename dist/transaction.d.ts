@@ -13,13 +13,19 @@ export declare enum TxType {
     CONTRACT_CALL = "contract_call",
     CONTRACT_UPGRADE = "contract_upgrade"
 }
+export interface TransactionSignature {
+    publickey: string;
+    signature: string;
+}
+export declare const GENESIS_FROM: string;
+export declare const GENESIS_PUBKEY: string;
+export declare const GENESIS_SIGNATURE: string;
+export declare const GENESIS_TX_SIGNATURE: TransactionSignature;
+export declare const GENESIS_SALT: string;
+export declare const GENESIS_TOTAL_SUPPLY: string;
 export interface ValidatorAttestation {
     validatorId: string;
     attestorPubKey: string;
-    signature: string;
-}
-export interface TransactionSignature {
-    publickey: string;
     signature: string;
 }
 export declare const SBRIT_FEE_AMOUNT: string;
@@ -28,6 +34,11 @@ export interface TransactionFee {
     amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
     asset: AssetId;
     to: string;
+}
+export interface GovernanceInit {
+    authorizedSigners: string[];
+    thresholdM: number;
+    minDelaySec: number;
 }
 export interface TransactionBase {
     version: number;
@@ -54,9 +65,9 @@ export declare const DEFAULT_LOCATION: {
 export interface ContractVersion {
     version: string | number;
     codeHash: string;
+    sandboxHash: string;
     code: string;
     sandbox: string;
-    sandboxHash: string;
     deployedAt: number;
     deployer: string;
     active: boolean;
@@ -82,20 +93,6 @@ export interface ContractTransaction extends TransactionBase {
     sandboxHash: string;
     cid: string;
     location: typeof DEFAULT_LOCATION.location;
-    code?: string;
-    sandbox?: string;
-    contractVersion?: ContractVersion[];
-}
-export declare const GENESIS_FROM: string;
-export declare const GENESIS_PUBKEY: string;
-export declare const GENESIS_SIGNATURE: string;
-export declare const GENESIS_TX_SIGNATURE: TransactionSignature;
-export declare const GENESIS_SALT: string;
-export declare const GENESIS_TOTAL_SUPPLY: string;
-export interface GovernanceInit {
-    authorizedSigners: string[];
-    thresholdM: number;
-    minDelaySec: number;
 }
 export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
     type: TxType.GENESIS;
@@ -115,12 +112,17 @@ export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
     validatorAttestations: [];
     init: GovernanceInit;
     fee: null;
+    code: string;
+    sandbox: string;
+    contractVersion: ContractVersion[];
 }
 export interface TransferTransaction extends TransactionBase {
     type: TxType.TRANSFER;
 }
 export interface ContractTx extends ContractTransaction {
     type: TxType.CONTRACT;
+    code: string;
+    sandbox: string;
     contractVersion: ContractVersion[];
 }
 export interface ContractCallTransaction extends ContractTransaction {

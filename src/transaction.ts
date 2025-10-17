@@ -18,17 +18,24 @@ export enum TxType {
     CONTRACT_UPGRADE = 'contract_upgrade' 
 }
 
-export interface ValidatorAttestation {
-    validatorId: string;          // address or 32B id
-    attestorPubKey: string;       // Attestor's public key (hex)
-    signature: string;            // Sign(H(chainId || txid || from || sequence))
-}
-
 export interface TransactionSignature {
     publickey: string;            // Signer's public key (hex, compressed 33 bytes }
     signature: string;            // Signer's signature (hex)
 };
 
+export const GENESIS_FROM: string = 'GENESIS';
+export const GENESIS_PUBKEY = '0'.repeat(66);
+export const GENESIS_SIGNATURE: string = 'GENESIS_SIGNATURE';
+export const GENESIS_TX_SIGNATURE: TransactionSignature = { "publickey": GENESIS_PUBKEY, "signature": GENESIS_SIGNATURE };
+export const GENESIS_SALT: string = 'GENESIS_SALT';
+export const GENESIS_TOTAL_SUPPLY: string = (10_000_000).toString();    // Ten million SBRIT
+
+
+export interface ValidatorAttestation {
+    validatorId: string;          // address or 32B id
+    attestorPubKey: string;       // Attestor's public key (hex)
+    signature: string;            // Sign(H(chainId || txid || from || sequence))
+}
 
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
 export const SBRIT_FEE_AMOUNT: string = '0.01';
@@ -40,6 +47,11 @@ export interface TransactionFee {
     to: string;                     // Fee recipient, address of validator
 }
 
+export interface GovernanceInit {
+    authorizedSigners: string[];    // compressed secp256k1 pubkeys (hex, 33B), sorted & unique
+    thresholdM: number;             // e.g., 4 (for 4-of-7)
+    minDelaySec: number;            // global timelock in seconds
+}
 
 export interface TransactionBase {
     // Protocol version
@@ -106,7 +118,6 @@ export interface ContractMetadata {
     versions: ContractVersion[];    // Version history with code/sandbox in each entry
 }
 
-
 export interface ContractTransaction extends TransactionBase {
     type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS;
     asset: AssetId.SBRIT;                       // fixed
@@ -114,25 +125,6 @@ export interface ContractTransaction extends TransactionBase {
     sandboxHash: string;                        // hex32 (hash of sandbox.js code)
     cid: string;                                // hex32 (derived deterministically)
     location: typeof DEFAULT_LOCATION.location;
-    code?: string;                              // Optional (present in deploy) - hex-encoded deterministic bytes
-    sandbox?: string;                           // Optional (present in deploy) - hex-encoded deterministic bytes
-    contractVersion?: ContractVersion[];        // Optional (present in deploy)
-}
-
-
-// START Genesis only
-
-export const GENESIS_FROM:string = 'GENESIS';
-export const GENESIS_PUBKEY = '0'.repeat(66);
-export const GENESIS_SIGNATURE: string = 'GENESIS_SIGNATURE';
-export const GENESIS_TX_SIGNATURE: TransactionSignature = { "publickey": GENESIS_PUBKEY, "signature": GENESIS_SIGNATURE };
-export const GENESIS_SALT:string = 'GENESIS_SALT';
-export const GENESIS_TOTAL_SUPPLY: string = (10_000_000).toString();    // Ten million SBRIT
-
-export interface GovernanceInit {
-    authorizedSigners: string[];    // compressed secp256k1 pubkeys (hex, 33B), sorted & unique
-    thresholdM: number;             // e.g., 4 (for 4-of-7)
-    minDelaySec: number;            // global timelock in seconds
 }
 
 export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
@@ -155,6 +147,9 @@ export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
     validatorAttestations: [];                  // MUST be empty
     init: GovernanceInit; 
     fee: null;                                  // Genesis transactions have no fees
+    code: string;                               // REQUIRED
+    sandbox: string;                            // REQUIRED
+    contractVersion: ContractVersion[];         // REQUIRED
 };
 
 // END Genesis only
@@ -164,18 +159,19 @@ export interface TransferTransaction extends TransactionBase {
     type: TxType.TRANSFER;
 }
 
-
 // Contract deployment transaction
 export interface ContractTx extends ContractTransaction {
     type: TxType.CONTRACT;
-    contractVersion: ContractVersion[];  
+    code: string;                           // REQUIRED for deployment
+    sandbox: string;                        // REQUIRED for deployment
+    contractVersion: ContractVersion[];     // REQUIRED for deployment
 }
 
 // Contract call transaction
 export interface ContractCallTransaction extends ContractTransaction {
     type: TxType.CONTRACT_CALL;
-    data: string;                // Call data (hex)
-    method: string;              // Method name being called
+    data: string;                           // Call data (hex)
+    method: string;                         // Method name being called
 }
 
 // Add upgrade transaction interface
