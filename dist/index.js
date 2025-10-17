@@ -22,3 +22,4 @@ __exportStar(require("./errors"), exports);
 __exportStar(require("./routes"), exports);
 __exportStar(require("./system"), exports);
 __exportStar(require("./transaction"), exports);
+__exportStar(require("./namespaces"), exports);

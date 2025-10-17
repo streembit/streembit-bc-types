@@ -1,0 +1,155 @@
+/**
+ * Storage Namespace Definitions
+ * 
+ * Canonical namespace prefixes for all storage keys as defined in the master spec.
+ * These MUST match exactly as specified in the white paper.
+ */
+
+
+/**
+ * Batch operation for atomic writes
+ */
+export interface BatchOp {
+    type: 'put' | 'del';
+    key: string;
+    value?: Uint8Array; // Required for 'put'
+}
+
+// Helper functions
+const PAD20 = (n: bigint | number) => n.toString().padStart(20, "0");
+const PAD6 = (n: bigint | number) => n.toString().padStart(6, "0");
+const normHash = (hex: string) => hex.toLowerCase(); // validate elsewhere if you like
+
+
+const NS = {
+
+    // Blocks & chain metadata
+    BLOCK_INDEX: 'bidx/',           // bidx/<blockHash> → Block index metadata
+    BLOCK_DATA: 'blk/',             // blk/<blockHash> → Raw block bytes
+    BLOCK_COUNT_INDEX: 'bcnt/',     // bcnt/<blockCount> → Block hash (reverse index)
+    META_TIP: 'meta/tiphash',       // Current chain tip hash
+    META_BLOCK_COUNT: 'meta/blockcount',  // Total number of blocks
+
+    // Genesis & chain initialization
+    GENESIS_PROCESSED: 'genesis/processed',     // Boolean flag: has genesis been processed?
+    /*
+    genesis/config/<param> → genesis parameters    
+    genesis/ config / governance_alias    → 'Cgov123abc...'
+    genesis / config / treasury_alias      → 'Ctreas456def...'
+    genesis / config / genesis_timestamp   → 1735689600
+    */
+    GENESIS_CONFIG: 'genesis/config/',         
+    GENESIS_BLOCK: 'genesis/block',             // Reference to the genesis block genesis/block<genesis block data>
+
+    // Accounts & balances
+    ACCT_META: 'acct/',             // acct/<address>/meta → AccountMeta
+    ACCT_BAL: 'acct/',              // acct/<address>/balance/<asset> → decimal string
+    ACCT_SEQ: 'acct/',              // acct/<address>/sequence → number
+
+    // Contract code & state
+    CODE_METAV1: 'code/v1/meta/',   // code/meta/<codeLocationHash> Phase 1: codeLocationHash eg. HASH('node\smart-contracts\genesis\treasury-control.ts')
+    CODE_METAV2: 'code/v2/meta/',   // code/meta/<codeLocationHash> Phase 2: codeHash 
+    CODE_BYTES: 'code/bytes/',      // code/bytes/<codeHash> → Raw JS bytes sandbox execution - Phase 2  
+    SC_STATE: 'sc/',                // sc/<cid>/kv/<keyHex32> → State value
+
+    // Assets
+    ASSET_SBRIT: 'asset/SBRIT/meta',
+    ASSET_SSC: 'asset/SSC/meta',
+
+    // PoC consensus
+    WHITELIST: 'poc/whitelist/', // poc/whitelist/<pubkey> → Whitelist entry
+    BLACKLIST: 'poc/blacklist/', // poc/blacklist/<pubkey> → Blacklist entry
+    DEPOSITS: 'poc/deposits/',  // poc/deposits/<address> → Deposit info
+
+    // Validators - Phase 1 implementation
+    VALIDATOR_BASE: 'validator/',       // Base prefix for all validator data
+    // Full paths constructed as:
+    //   validator/<Vid>/data → JSON {status, deposit, joinedAt, publicKey, consortium, ...}
+
+    // Consortiums - following APPNOTE design in consortium/index.ts 
+    CONSORTIUM_BASE: 'consortium/',     // Base prefix for all consortium data
+    // Full paths constructed as:
+    //   consortium/<id>/meta
+    //   consortium/<id>/publickey
+    //   consortium/<id>/verifications/<verifier_pubkey>
+    //   consortium/<id>/policy/*
+    //   consortium/<id>/members → JSON array ["Vid1", "Vid2", "Vid3"]
+    //   consortium/<id>/members/<Vid> → Individual validator metadata
+    //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
+
+    // Undo records for rollback
+    UNDO: 'undo/',                      // undo/<index>/<blockHash>/<idx> → Undo record
+
+} as const;
+
+// Freeze the NS object to make it truly immutable
+Object.freeze(NS);
+
+// Type for namespace keys
+export type NamespaceKey = keyof typeof NS;
+export type NamespaceValue = typeof NS[NamespaceKey];
+
+// String builders (nice for logs/tests)
+export const KeysStr = {
+    undoPrefix: (index: bigint | number, blockHashHex: string) => `${NS.UNDO}${PAD20(index)}/${normHash(blockHashHex)}/`,
+    undoKey: (index: bigint | number, blockHashHex: string, idx: bigint | number) => `${NS.UNDO}${PAD20(index)}/${normHash(blockHashHex)}/${PAD6(idx)}`
+};
+
+
+/**
+ * Helper functions for key construction
+ * Returns string keys for key value store
+ */
+export const NSkey = {
+    // Block keys
+    blockData: (blockHash: string) => `${NS.BLOCK_DATA}${blockHash}`,
+    blockIndex: (blockHash: string) => `${NS.BLOCK_INDEX}${blockHash}`,
+
+    genesisConfig: (param: string) => `${NS.GENESIS_CONFIG}${param}`,
+    genesisProcessed: () => NS.GENESIS_PROCESSED,
+    genesisBlock: () => NS.GENESIS_BLOCK,
+
+    // Specific genesis config helpers
+    treasuryCID: () => `${NS.GENESIS_CONFIG}treasury_cid`,
+    genesisTimestamp: () => `${NS.GENESIS_CONFIG}timestamp`,
+
+    // Account keys
+    accountMeta: (address: string) => `${NS.ACCT_META}${address}/meta`,
+    accountBalance: (address: string, asset: string) => `${NS.ACCT_BAL}${address}/balance/${asset}`,
+    accountSequence: (address: string) => `${NS.ACCT_SEQ}${address}/sequence`,
+
+    // Contract keys
+    contractCode: (codeHash: string) => `${NS.CODE_BYTES}${codeHash}`,
+    contractMeta: (codeHash: string) => `${NS.CODE_METAV1}${codeHash}`,
+    contractState: (cid: string, key: string) => `${NS.SC_STATE}${cid}/kv/${key}`,
+
+    // PoC keys
+    whitelist: (nodeId: string) => `${NS.WHITELIST}${nodeId}`,
+    blacklist: (nodeId: string) => `${NS.BLACKLIST}${nodeId}`,
+    deposit: (nodeId: string) => `${NS.DEPOSITS}${nodeId}`,
+
+    // Validator keys
+    validatorData: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/data`,
+
+    // Consortium keys
+    consortiumMeta: (id: string) => `${NS.CONSORTIUM_BASE}${id}/meta`,
+    consortiumPublicKey: (id: string) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
+    consortiumVerification: (id: string, verifierPubkey: string) => `${NS.CONSORTIUM_BASE}${id}/verifications/${verifierPubkey}`,
+    consortiumPolicy: (id: string, key: string) => `${NS.CONSORTIUM_BASE}${id}/policy/${key}`,
+    consortiumValidators: (id: string) => `${NS.CONSORTIUM_BASE}${id}/validators`,
+    consortiumMembers: (id: string) => `${NS.CONSORTIUM_BASE}${id}/members`,
+    consortiumMemberData: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
+    consortiumEncryptedKey: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
+    consortiumGlobalPolicy: () => `${NS.CONSORTIUM_BASE}policy/`,
+
+    // Undo keys for journal
+    undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),
+    undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => KeysStr.undoKey(index, blockHash, idx),
+
+    // Meta keys (these are fixed singleton keys, no parameters needed)
+    metaTip: () => NS.META_TIP,
+    metaBlockCount: () => NS.META_BLOCK_COUNT,
+
+    // Block count reverse index
+    blockCountIndex: (blockCount: number) => `${NS.BLOCK_COUNT_INDEX}${blockCount}`,
+};

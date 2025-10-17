@@ -8,3 +8,4 @@ export * from './errors';
 export * from './routes';
 export * from './system';
 export * from './transaction';
+export * from './namespaces';
