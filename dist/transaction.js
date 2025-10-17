@@ -30,10 +30,10 @@ exports.DEFAULT_LOCATION = {
 };
 // START Genesis only
 exports.GENESIS_FROM = 'GENESIS';
-exports.GENESIS_PUBKEY = '00000000';
-exports.GENESIS_SIGNATURE = '00000000';
+exports.GENESIS_PUBKEY = '0'.repeat(66);
+exports.GENESIS_SIGNATURE = 'GENESIS_SIGNATURE';
 exports.GENESIS_TX_SIGNATURE = { "publickey": exports.GENESIS_PUBKEY, "signature": exports.GENESIS_SIGNATURE };
-exports.GENESIS_SALT = 'GENESIS_00000000_00000000';
+exports.GENESIS_SALT = 'GENESIS_SALT';
 exports.GENESIS_TOTAL_SUPPLY = (10000000).toString(); // Ten million SBRIT
 ;
 // Maximum allowed signatures for multisig transactions, increase this if needed for complex governance

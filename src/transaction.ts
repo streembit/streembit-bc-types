@@ -106,10 +106,10 @@ export interface ContractTransaction extends TransactionBase {
 // START Genesis only
 
 export const GENESIS_FROM:string = 'GENESIS';
-export const GENESIS_PUBKEY:string = '00000000';
-export const GENESIS_SIGNATURE:string = '00000000';
+export const GENESIS_PUBKEY = '0'.repeat(66);
+export const GENESIS_SIGNATURE: string = 'GENESIS_SIGNATURE';
 export const GENESIS_TX_SIGNATURE: TransactionSignature = { "publickey": GENESIS_PUBKEY, "signature": GENESIS_SIGNATURE };
-export const GENESIS_SALT:string = 'GENESIS_00000000_00000000';
+export const GENESIS_SALT:string = 'GENESIS_SALT';
 export const GENESIS_TOTAL_SUPPLY: string = (10_000_000).toString();    // Ten million SBRIT
 
 export interface GovernanceInit {
