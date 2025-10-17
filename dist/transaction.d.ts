@@ -121,7 +121,6 @@ export interface ContractUpgradeTx extends TransactionBase {
     sandbox: string;
     version: number;
 }
-export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx;
 export interface TxIdComponents {
     chainId: number;
     timestamp: number;
@@ -134,5 +133,18 @@ export interface TxSignParam {
     publickey: string;
     privatekey: string;
 }
+/**
+ * Contract metadata stored in blockchain state
+ * Stored at: NSkey.accountMeta(contractAddress)
+ */
+export interface ContractMetadata {
+    type: 'contract';
+    cid: string;
+    filePath: string;
+    deployer: string;
+    location: ContractLocation;
+    versions: ContractVersion[];
+}
 export declare const MAX_ALLOWED_SIGNATURES = 3;
+export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx;
 //# sourceMappingURL=transaction.d.ts.map

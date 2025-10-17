@@ -172,14 +172,6 @@ export interface ContractUpgradeTx extends TransactionBase {
     version: number;
 }
 
-// Union type for all transactions
-export type Transaction =
-    | GenesisAllocationTx
-    | GenesisTreasuryTx
-    | TransferTransaction
-    | ContractCallTransaction
-    | ContractTx
-    | ContractUpgradeTx;
 
 // Transaction ID computation
 // txid = H(chainId ‖ timestamp ‖ payload ‖ signature ‖ salt ‖ sequence)
@@ -197,5 +189,28 @@ export interface TxSignParam {
     privatekey: string;
 }
 
+/**
+ * Contract metadata stored in blockchain state
+ * Stored at: NSkey.accountMeta(contractAddress)
+ */
+export interface ContractMetadata {
+    type: 'contract';
+    cid: string;
+    filePath: string;           // Canonical path used for CID derivation (e.g., "dist/node/smart-contracts/validators/validator_v1.js")
+    deployer: string;           // Address of initial deployer
+    location: ContractLocation; // FS or VM
+    versions: ContractVersion[]; // Version history with code/sandbox in each entry
+}
+
+
 // Maximum allowed signatures for multisig transactions, increase this if needed for complex governance
 export const MAX_ALLOWED_SIGNATURES = 3;   
+
+// Union type for all transactions
+export type Transaction =
+    | GenesisAllocationTx
+    | GenesisTreasuryTx
+    | TransferTransaction
+    | ContractCallTransaction
+    | ContractTx
+    | ContractUpgradeTx;
