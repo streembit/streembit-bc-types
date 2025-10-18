@@ -151,9 +151,9 @@ export const NSkey = {
     touchLogSeq: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/seq`,                                        // monotonic sequence counter
     touchLogBookmark: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`,                              // replay cursor for consumers
 
-    governanceRules: () => `${NS.GOVERNANCE_BASE}/rules`, 
+    governanceRules: () => `${NS.GOVERNANCE_BASE}rules`, 
 
-    governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}/rules/audit/${id}`, 
+    governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`, 
 
     // Undo keys for journal
     undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),

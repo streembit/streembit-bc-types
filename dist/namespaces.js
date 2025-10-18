@@ -112,8 +112,8 @@ exports.NSkey = {
     touchLogEntry: (contractId, seq) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`, // individual log entry
     touchLogSeq: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/seq`, // monotonic sequence counter
     touchLogBookmark: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`, // replay cursor for consumers
-    governanceRules: () => `${NS.GOVERNANCE_BASE}/rules`,
-    governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}/rules/audit/${id}`,
+    governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
+    governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     // Undo keys for journal
     undoPrefix: (index, blockHash) => exports.KeysStr.undoPrefix(index, blockHash),
     undoKey: (index, blockHash, idx) => exports.KeysStr.undoKey(index, blockHash, idx),
