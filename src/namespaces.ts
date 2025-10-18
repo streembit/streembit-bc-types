@@ -79,6 +79,8 @@ const NS = {
 
     TOUCHLOG_BASE: 'touchlog/',            // touchlog/<contractId>/... → contract execution logs
 
+    GOVERNANCE_BASE: 'governance/',
+
     // Undo records for rollback
     UNDO: 'undo/',                      // undo/<index>/<blockHash>/<idx> → Undo record
 
@@ -148,6 +150,10 @@ export const NSkey = {
     touchLogEntry: (contractId: string, seq: bigint | number) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`,      // individual log entry
     touchLogSeq: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/seq`,                                        // monotonic sequence counter
     touchLogBookmark: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`,                              // replay cursor for consumers
+
+    governanceRules: () => `${NS.GOVERNANCE_BASE}/rules`, 
+
+    governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}/rules/audit/${id}`, 
 
     // Undo keys for journal
     undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),
