@@ -497,4 +497,33 @@ export interface AccountableNode {
     status: 'active' | 'application_pending' | 'suspended' | 'inactive';
 }
 
+export interface AccountableNodeRuleSet {
+    jurisdictionWhitelist: string[];              // ISO country codes from the approved list
+    minimumAssetUSD: string;                      // Decimal string, e.g. '5000000'
+    depositRequirement: {
+        asset: 'SBRIT';
+        baseAmount: string;                         // ‘1000000’
+        multiplier: string;                         // ‘2’ (applied to total block tx value)
+        formula: 'max_base_or_multiplier';          // literal to signal enforcement rule
+        enforcedByContract: 'accountable-node-v1';  // contract that enforces deposits
+    };
+    requiredDisclosures: string[];                // legal name, registration no., etc.
+    signingRequirements: {
+        delegatedOfficerSignatures: 'all_listed';
+        signatureThresholdM: number;
+    };
+    verificationMethods: string[];                // streembit_github, gov_authority, …
+}
 
+export interface ValidatorRuleSet {
+    minimumDepositSBRIT: string;                  // placeholder until validator contract lands
+    attestationRequirement: 'per_transaction';
+}
+
+export interface GovernanceRuleset {
+    publishedAt: number;                          // tx.timestamp (unix seconds)
+    publishedBy: string;                          // tx.from (publisher address)
+    accountableNode: AccountableNodeRuleSet;
+    validator?: ValidatorRuleSet;                 // optional for now
+    notes?: string;                               // free-form governance memo
+}

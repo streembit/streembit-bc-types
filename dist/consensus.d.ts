@@ -359,4 +359,31 @@ export interface AccountableNode {
     deposit: string;
     status: 'active' | 'application_pending' | 'suspended' | 'inactive';
 }
+export interface AccountableNodeRuleSet {
+    jurisdictionWhitelist: string[];
+    minimumAssetUSD: string;
+    depositRequirement: {
+        asset: 'SBRIT';
+        baseAmount: string;
+        multiplier: string;
+        formula: 'max_base_or_multiplier';
+        enforcedByContract: 'accountable-node-v1';
+    };
+    requiredDisclosures: string[];
+    signingRequirements: {
+        delegatedOfficerSignatures: 'all_listed';
+    };
+    verificationMethods: string[];
+}
+export interface ValidatorRuleSet {
+    minimumDepositSBRIT: string;
+    attestationRequirement: 'per_transaction';
+}
+export interface GovernanceRuleset {
+    publishedAt: number;
+    publishedBy: string;
+    accountableNode: AccountableNodeRuleSet;
+    validator?: ValidatorRuleSet;
+    notes?: string;
+}
 //# sourceMappingURL=consensus.d.ts.map
