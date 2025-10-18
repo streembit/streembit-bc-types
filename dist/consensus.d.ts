@@ -372,6 +372,7 @@ export interface AccountableNodeRuleSet {
     requiredDisclosures: string[];
     signingRequirements: {
         delegatedOfficerSignatures: 'all_listed';
+        signatureThresholdM: number;
     };
     verificationMethods: string[];
 }
