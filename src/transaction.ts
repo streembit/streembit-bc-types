@@ -28,7 +28,8 @@ export const GENESIS_PUBKEY = '0'.repeat(66);
 export const GENESIS_SIGNATURE: string = 'GENESIS_SIGNATURE';
 export const GENESIS_TX_SIGNATURE: TransactionSignature = { "publickey": GENESIS_PUBKEY, "signature": GENESIS_SIGNATURE };
 export const GENESIS_SALT: string = 'GENESIS_SALT';
-export const GENESIS_TOTAL_SUPPLY: string = (10_000_000).toString();    // Ten million SBRIT
+export const GENESIS_TOTAL_SUPPLY: string = (10_000_000).toString();                                                        // Ten million SBRIT
+export const GENESIS_CONTRACT_LOCATION: string = "dist/node/smart-contracts/genesis/treasury_v1.js";
 
 
 export interface ValidatorAttestation {

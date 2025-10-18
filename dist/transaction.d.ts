@@ -23,6 +23,7 @@ export declare const GENESIS_SIGNATURE: string;
 export declare const GENESIS_TX_SIGNATURE: TransactionSignature;
 export declare const GENESIS_SALT: string;
 export declare const GENESIS_TOTAL_SUPPLY: string;
+export declare const GENESIS_CONTRACT_LOCATION: string;
 export interface ValidatorAttestation {
     validatorId: string;
     attestorPubKey: string;
