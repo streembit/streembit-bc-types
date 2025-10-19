@@ -7,4 +7,5 @@ export * from './routes';
 export * from './system';
 export * from './transaction';
 export * from './namespaces';
+export * from './contract';
 //# sourceMappingURL=index.d.ts.map
