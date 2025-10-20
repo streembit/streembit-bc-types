@@ -77,12 +77,14 @@ const NS = {
     //   consortium/<id>/members/<Vid> → Individual validator metadata
     //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
 
-    TOUCHLOG_BASE: 'touchlog/',            // touchlog/<contractId>/... → contract execution logs
+    TOUCHLOG_BASE: 'touchlog/',             // touchlog/<contractId>/... → contract execution logs
 
     GOVERNANCE_BASE: 'governance/',
 
+    CONTRACT_BY_NAME: "contract/name/",     // Named contracts (governance, treasury, etc.)
+
     // Undo records for rollback
-    UNDO: 'undo/',                      // undo/<index>/<blockHash>/<idx> → Undo record
+    UNDO: 'undo/',                          // undo/<index>/<blockHash>/<idx> → Undo record
 
 } as const;
 
@@ -154,6 +156,8 @@ export const NSkey = {
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`, 
 
     governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`, 
+
+    contractByName: (name: string) => `${ NS.CONTRACT_BY_NAME }${name}`,
 
     // Undo keys for journal
     undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),

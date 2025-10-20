@@ -60,6 +60,7 @@ const NS = {
     //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
     TOUCHLOG_BASE: 'touchlog/', // touchlog/<contractId>/... → contract execution logs
     GOVERNANCE_BASE: 'governance/',
+    CONTRACT_BY_NAME: "contract/name/", // Named contracts (governance, treasury, etc.)
     // Undo records for rollback
     UNDO: 'undo/', // undo/<index>/<blockHash>/<idx> → Undo record
 };
@@ -114,6 +115,7 @@ exports.NSkey = {
     touchLogBookmark: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`, // replay cursor for consumers
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
+    contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,
     // Undo keys for journal
     undoPrefix: (index, blockHash) => exports.KeysStr.undoPrefix(index, blockHash),
     undoKey: (index, blockHash, idx) => exports.KeysStr.undoKey(index, blockHash, idx),

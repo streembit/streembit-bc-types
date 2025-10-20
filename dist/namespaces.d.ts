@@ -37,6 +37,7 @@ declare const NS: {
     readonly CONSORTIUM_BASE: "consortium/";
     readonly TOUCHLOG_BASE: "touchlog/";
     readonly GOVERNANCE_BASE: "governance/";
+    readonly CONTRACT_BY_NAME: "contract/name/";
     readonly UNDO: "undo/";
 };
 export type NamespaceKey = keyof typeof NS;
@@ -82,6 +83,7 @@ export declare const NSkey: {
     touchLogBookmark: (contractId: string) => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
+    contractByName: (name: string) => string;
     undoPrefix: (index: bigint | number, blockHash: string) => string;
     undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => string;
     metaTip: () => "meta/tiphash";
