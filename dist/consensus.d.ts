@@ -387,4 +387,232 @@ export interface GovernanceRuleset {
     validator?: ValidatorRuleSet;
     notes?: string;
 }
+/**
+  * Accountable Node types for Proof of Collaboration consensus
+  * Defines registration, verification, and lifecycle management for accountable nodes
+  */
+/**
+ * Lifecycle status of an accountable node
+ */
+export declare enum AccountableNodeStatus {
+    /** Application submitted with deposit, awaiting governance approval */
+    APPLICATION_PENDING = "application_pending",
+    /** Approved by governance, eligible for block production */
+    ACTIVE = "active",
+    /** Temporarily suspended by governance (can be reinstated) */
+    SUSPENDED = "suspended",
+    /** Initiated withdrawal, waiting for unbonding period to complete */
+    UNBONDING = "unbonding",
+    /** Deposit withdrawn, no longer accountable or eligible for block production */
+    WITHDRAWN = "withdrawn",
+    /** Deposit slashed due to misbehavior, no longer eligible */
+    SLASHED = "slashed"
+}
+/**
+ * Required disclosure fields for accountable node registration
+ * Per whitepaper: Name, registration, address, proof of assets
+ */
+export interface AccountableNodeDisclosure {
+    /** Legal business name */
+    companyName: string;
+    /** Business registration number (government-issued) */
+    businessRegistration: string;
+    /** Legal jurisdiction (must be in approved whitelist) */
+    jurisdiction: string;
+    /** Legal business address */
+    businessAddress: string;
+    /** Verifiable assets in USD (must be ≥ $5M per whitepaper) */
+    assetsUSD: string;
+    /** Names of delegated officers with signing authority */
+    officerNames: string[];
+    /** Confirmation of personal liability for officers */
+    personalLiability: boolean;
+}
+/**
+ * Verification evidence for accountable node claims
+ */
+export interface AccountableNodeVerification {
+    /** Type of verification method used */
+    method: 'audited_financial_statements' | 'legal_business_registration' | 'jurisdiction_compliance_check' | 'github_publishing' | 'accountability_service_provider' | 'government_authority';
+    /** Reference to verification document/record */
+    reference: string;
+    /** Hash of verification evidence (for immutability) */
+    evidenceHash?: string;
+    /** Timestamp of verification */
+    verifiedAt: number;
+    /** Verifier identity (optional, for third-party verifications) */
+    verifier?: string;
+}
+/**
+ * Deposit information for accountable node
+ * Per whitepaper: Minimum 1M SBRIT, must satisfy D ≥ 2×TV
+ */
+export interface AccountableNodeDeposit {
+    /** Total SBRIT deposited and locked */
+    amount: string;
+    /** Address that made the deposit */
+    depositFrom: string;
+    /** Timestamp when deposit was made */
+    depositedAt: number;
+    /** Block height when deposit was locked */
+    depositedAtBlock: number;
+    /** For unbonding: timestamp when withdrawal is allowed */
+    unbondingCompletesAt?: number;
+    /** Total transaction value if currently producing blocks */
+    currentTV?: string;
+    /** Whether deposit currently satisfies D ≥ 2×TV requirement */
+    meetsRequirement?: boolean;
+}
+/**
+ * Officer signature requirements for accountable node operations
+ * Per governance rules: delegatedOfficerSignatures and thresholdM
+ */
+export interface AccountableNodeSigningRequirements {
+    /** Officer public keys authorized to sign */
+    authorizedOfficers: string[];
+    /** Minimum signatures required (M-of-N multisig) */
+    signatureThresholdM: number;
+    /** Policy for which operations require officer signatures */
+    requiresOfficerSignatures: 'all_operations' | 'critical_only' | 'all_listed';
+}
+/**
+ * Slashing case against an accountable node
+ */
+export interface SlashingCase {
+    /** Unique case identifier */
+    caseId: string;
+    /** Node being accused */
+    nodeId: string;
+    /** Reason/type of alleged misbehavior */
+    reason: 'double_signing' | 'invalid_block' | 'insufficient_deposit' | 'jurisdiction_violation' | 'false_disclosure' | 'other';
+    /** Detailed description of the case */
+    description: string;
+    /** Evidence hash/reference */
+    evidence: string;
+    /** Who opened the case */
+    reporter: string;
+    /** When case was opened */
+    openedAt: number;
+    /** Current status of the case */
+    status: 'open' | 'under_review' | 'dismissed' | 'slashed';
+    /** Resolution details */
+    resolution?: {
+        /** How case was resolved */
+        action: 'dismissed' | 'warning' | 'suspension' | 'slashing';
+        /** If slashed, the penalty amount */
+        penaltyAmount?: string;
+        /** Where slashed funds go */
+        penaltyRoute?: 'burn' | 'treasury';
+        /** Timestamp of resolution */
+        resolvedAt: number;
+        /** Governance transaction that resolved the case */
+        resolutionTxId: string;
+    };
+}
+/**
+ * Complete accountable node data structure
+ * Stored at: /accountable/<nodeId>/data
+ */
+export interface AccountableNodeData {
+    /** Unique node identifier */
+    nodeId: string;
+    /** Current lifecycle status */
+    status: AccountableNodeStatus;
+    /** Required business disclosure information */
+    disclosure: AccountableNodeDisclosure;
+    /** Verification evidence */
+    verifications: AccountableNodeVerification[];
+    /** Deposit information */
+    deposit: AccountableNodeDeposit;
+    /** Officer signing requirements */
+    signingRequirements?: AccountableNodeSigningRequirements;
+    /** Timestamps for lifecycle events */
+    lifecycle: {
+        /** When application was submitted */
+        appliedAt: number;
+        /** When approved by governance (if approved) */
+        approvedAt?: number;
+        /** Governance transaction that approved application */
+        approvalTxId?: string;
+        /** When suspended (if suspended) */
+        suspendedAt?: number;
+        /** Reason for suspension */
+        suspensionReason?: string;
+        /** When unbonding started (if unbonding) */
+        unbondingStartedAt?: number;
+        /** When deposit was withdrawn (if withdrawn) */
+        withdrawnAt?: number;
+    };
+    /** Block production statistics (optional, for monitoring) */
+    statistics?: {
+        /** Total blocks created */
+        blocksCreated: number;
+        /** Total transaction value processed */
+        totalTVProcessed: string;
+        /** Last block creation timestamp */
+        lastBlockAt?: number;
+        /** Reputation score (0-100) */
+        reputation?: number;
+    };
+    /** Active slashing cases against this node */
+    activeCases?: string[];
+    /** Metadata */
+    metadata: {
+        /** Contract version that created this record */
+        contractVersion: string;
+        /** Last update timestamp */
+        lastUpdatedAt: number;
+        /** Last update transaction ID */
+        lastUpdatedBy: string;
+    };
+}
+/**
+ * Simplified view for listing/querying accountable nodes
+ */
+export interface AccountableNodeSummary {
+    nodeId: string;
+    status: AccountableNodeStatus;
+    companyName: string;
+    jurisdiction: string;
+    depositAmount: string;
+    blocksCreated?: number;
+    reputation?: number;
+}
+/**
+ * Parameters for deposit() contract method
+ */
+export interface AccountableNodeDepositParams {
+    nodeId: string;
+    publicKey: string;
+    disclosure: AccountableNodeDisclosure;
+    verifications: AccountableNodeVerification[];
+    signingRequirements?: AccountableNodeSigningRequirements;
+}
+/**
+ * Result from deposit() contract method
+ */
+export interface AccountableNodeDepositResult {
+    success: boolean;
+    nodeId: string;
+    status: AccountableNodeStatus;
+    depositAmount: string;
+    message?: string;
+}
+/**
+ * Parameters for approveApplication() contract method
+ */
+export interface AccountableNodeApprovalParams {
+    nodeId: string;
+    approvalNotes?: string;
+}
+/**
+ * Result from approveApplication() contract method
+ */
+export interface AccountableNodeApprovalResult {
+    success: boolean;
+    nodeId: string;
+    status: AccountableNodeStatus;
+    approvedAt: number;
+    message?: string;
+}
 //# sourceMappingURL=consensus.d.ts.map

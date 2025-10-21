@@ -1,7 +1,7 @@
 "use strict";
 // node/src/types/consensus.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = void 0;
+exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = void 0;
 exports.POC_CONSTANTS = {
     MIN_VALIDATORS: 2,
     DEPOSIT_MULTIPLIER: 2,
@@ -41,3 +41,25 @@ var FraudType;
     FraudType["DEPOSIT_VIOLATION"] = "deposit_violation";
     FraudType["FALSE_APPROVAL"] = "false_approval";
 })(FraudType || (exports.FraudType = FraudType = {}));
+/**
+  * Accountable Node types for Proof of Collaboration consensus
+  * Defines registration, verification, and lifecycle management for accountable nodes
+  */
+/**
+ * Lifecycle status of an accountable node
+ */
+var AccountableNodeStatus;
+(function (AccountableNodeStatus) {
+    /** Application submitted with deposit, awaiting governance approval */
+    AccountableNodeStatus["APPLICATION_PENDING"] = "application_pending";
+    /** Approved by governance, eligible for block production */
+    AccountableNodeStatus["ACTIVE"] = "active";
+    /** Temporarily suspended by governance (can be reinstated) */
+    AccountableNodeStatus["SUSPENDED"] = "suspended";
+    /** Initiated withdrawal, waiting for unbonding period to complete */
+    AccountableNodeStatus["UNBONDING"] = "unbonding";
+    /** Deposit withdrawn, no longer accountable or eligible for block production */
+    AccountableNodeStatus["WITHDRAWN"] = "withdrawn";
+    /** Deposit slashed due to misbehavior, no longer eligible */
+    AccountableNodeStatus["SLASHED"] = "slashed";
+})(AccountableNodeStatus || (exports.AccountableNodeStatus = AccountableNodeStatus = {}));
