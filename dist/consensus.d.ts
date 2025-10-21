@@ -453,9 +453,7 @@ export interface AccountableNodeDeposit {
     /** Address that made the deposit */
     depositFrom: string;
     /** Timestamp when deposit was made */
-    depositedAt: number;
-    /** Block height when deposit was locked */
-    depositedAtBlock: number;
+    depositedAt?: number;
     /** For unbonding: timestamp when withdrawal is allowed */
     unbondingCompletesAt?: number;
     /** Total transaction value if currently producing blocks */
@@ -524,12 +522,10 @@ export interface AccountableNodeData {
     verifications: AccountableNodeVerification[];
     /** Deposit information */
     deposit: AccountableNodeDeposit;
-    /** Officer signing requirements */
-    signingRequirements?: AccountableNodeSigningRequirements;
     /** Timestamps for lifecycle events */
-    lifecycle: {
+    lifecycle?: {
         /** When application was submitted */
-        appliedAt: number;
+        appliedAt?: number;
         /** When approved by governance (if approved) */
         approvedAt?: number;
         /** Governance transaction that approved application */

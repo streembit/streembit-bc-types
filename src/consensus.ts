@@ -617,10 +617,7 @@ export interface AccountableNodeDeposit {
     depositFrom: string;
 
     /** Timestamp when deposit was made */
-    depositedAt: number;
-
-    /** Block height when deposit was locked */
-    depositedAtBlock: number;
+    depositedAt?: number;
 
     /** For unbonding: timestamp when withdrawal is allowed */
     unbondingCompletesAt?: number;
@@ -715,13 +712,10 @@ export interface AccountableNodeData {
     /** Deposit information */
     deposit: AccountableNodeDeposit;
 
-    /** Officer signing requirements */
-    signingRequirements?: AccountableNodeSigningRequirements;
-
     /** Timestamps for lifecycle events */
-    lifecycle: {
+    lifecycle?: {
         /** When application was submitted */
-        appliedAt: number;
+        appliedAt?: number;
 
         /** When approved by governance (if approved) */
         approvedAt?: number;
