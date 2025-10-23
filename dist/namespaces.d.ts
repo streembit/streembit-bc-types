@@ -30,6 +30,7 @@ declare const NS: {
     readonly SC_STATE: "sc/";
     readonly ASSET_SBRIT: "asset/SBRIT/meta";
     readonly ASSET_SSC: "asset/SSC/meta";
+    readonly ACCOUNTABLE_NODE_BASE: "acnode/";
     readonly WHITELIST: "poc/whitelist/";
     readonly BLACKLIST: "poc/blacklist/";
     readonly DEPOSITS: "poc/deposits/";
@@ -64,6 +65,9 @@ export declare const NSkey: {
     contractCode: (codeHash: string) => string;
     contractMeta: (codeHash: string) => string;
     contractState: (cid: string, key: string) => string;
+    accountableNodeData: (nodeId: string) => string;
+    accountableNodeList: () => string;
+    accountableNodeEvent: (nodeId: string, eventId: string) => string;
     whitelist: (nodeId: string) => string;
     blacklist: (nodeId: string) => string;
     deposit: (nodeId: string) => string;
@@ -71,13 +75,9 @@ export declare const NSkey: {
     validatorDeposit: (vid: string) => string;
     consortiumMeta: (id: string) => string;
     consortiumPublicKey: (id: string) => string;
-    consortiumVerification: (id: string, verifierPubkey: string) => string;
-    consortiumPolicy: (id: string, key: string) => string;
-    consortiumValidators: (id: string) => string;
     consortiumMembers: (id: string) => string;
     consortiumMemberData: (id: string, validatorId: string) => string;
     consortiumEncryptedKey: (id: string, validatorId: string) => string;
-    consortiumGlobalPolicy: () => string;
     touchLogEntry: (contractId: string, seq: bigint | number) => string;
     touchLogSeq: (contractId: string) => string;
     touchLogBookmark: (contractId: string) => string;

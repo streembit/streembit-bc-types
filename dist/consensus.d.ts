@@ -611,4 +611,24 @@ export interface AccountableNodeApprovalResult {
     approvedAt: number;
     message?: string;
 }
+/**
+* Event types for accountable node audit trail
+* Records all significant lifecycle, operational, and penalty events
+*/
+export declare enum AccountableNodeEventType {
+    NODE_SUSPENDED = "node_suspended",
+    NODE_TERMINATED = "node_terminated",
+    DEPOSIT_WITHDRAWN = "deposit_withdrawn",
+    DEPOSIT_CONFISCATED = "deposit_confiscated",
+    DEPOSIT_SLASHED = "deposit_slashed",
+    INVALID_BLOCK_CREATED = "invalid_block_created",
+    BLOCK_VALIDATION_FAILED = "block_validation_failed",
+    CONSENSUS_VIOLATION = "consensus_violation",
+    PENALTY_APPLIED = "penalty_applied",
+    FINE_IMPOSED = "fine_imposed",
+    DISPUTE_FILED = "dispute_filed",
+    DISPUTE_RESOLVED = "dispute_resolved",
+    VERIFICATION_UPDATED = "verification_updated",
+    COMPLIANCE_CHECK_FAILED = "compliance_check_failed"
+}
 //# sourceMappingURL=consensus.d.ts.map

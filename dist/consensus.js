@@ -1,7 +1,7 @@
 "use strict";
 // node/src/types/consensus.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = void 0;
+exports.AccountableNodeEventType = exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = void 0;
 exports.POC_CONSTANTS = {
     MIN_VALIDATORS: 2,
     DEPOSIT_MULTIPLIER: 2,
@@ -63,3 +63,30 @@ var AccountableNodeStatus;
     /** Deposit slashed due to misbehavior, no longer eligible */
     AccountableNodeStatus["SLASHED"] = "slashed";
 })(AccountableNodeStatus || (exports.AccountableNodeStatus = AccountableNodeStatus = {}));
+/**
+* Event types for accountable node audit trail
+* Records all significant lifecycle, operational, and penalty events
+*/
+var AccountableNodeEventType;
+(function (AccountableNodeEventType) {
+    // Lifecycle Events
+    AccountableNodeEventType["NODE_SUSPENDED"] = "node_suspended";
+    AccountableNodeEventType["NODE_TERMINATED"] = "node_terminated";
+    // Deposit Events
+    AccountableNodeEventType["DEPOSIT_WITHDRAWN"] = "deposit_withdrawn";
+    AccountableNodeEventType["DEPOSIT_CONFISCATED"] = "deposit_confiscated";
+    AccountableNodeEventType["DEPOSIT_SLASHED"] = "deposit_slashed";
+    // Block Creation Issues
+    AccountableNodeEventType["INVALID_BLOCK_CREATED"] = "invalid_block_created";
+    AccountableNodeEventType["BLOCK_VALIDATION_FAILED"] = "block_validation_failed";
+    AccountableNodeEventType["CONSENSUS_VIOLATION"] = "consensus_violation";
+    // Penalties & Warnings
+    AccountableNodeEventType["PENALTY_APPLIED"] = "penalty_applied";
+    AccountableNodeEventType["FINE_IMPOSED"] = "fine_imposed";
+    // Governance Actions
+    AccountableNodeEventType["DISPUTE_FILED"] = "dispute_filed";
+    AccountableNodeEventType["DISPUTE_RESOLVED"] = "dispute_resolved";
+    // Compliance & Verification
+    AccountableNodeEventType["VERIFICATION_UPDATED"] = "verification_updated";
+    AccountableNodeEventType["COMPLIANCE_CHECK_FAILED"] = "compliance_check_failed";
+})(AccountableNodeEventType || (exports.AccountableNodeEventType = AccountableNodeEventType = {}));

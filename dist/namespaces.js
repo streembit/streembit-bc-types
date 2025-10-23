@@ -40,6 +40,8 @@ const NS = {
     // Assets
     ASSET_SBRIT: 'asset/SBRIT/meta',
     ASSET_SSC: 'asset/SSC/meta',
+    // Accountable node base path
+    ACCOUNTABLE_NODE_BASE: "acnode/",
     // PoC consensus
     WHITELIST: 'poc/whitelist/', // poc/whitelist/<pubkey> → Whitelist entry
     BLACKLIST: 'poc/blacklist/', // poc/blacklist/<pubkey> → Blacklist entry
@@ -93,6 +95,11 @@ exports.NSkey = {
     contractCode: (codeHash) => `${NS.CODE_BYTES}${codeHash}`,
     contractMeta: (codeHash) => `${NS.CODE_METAV1}${codeHash}`,
     contractState: (cid, key) => `${NS.SC_STATE}${cid}/kv/${key}`,
+    // Accountable nodes
+    accountableNodeData: (nodeId) => `${NS.ACCOUNTABLE_NODE_BASE}data/${nodeId}`,
+    accountableNodeList: () => `${NS.ACCOUNTABLE_NODE_BASE}list/active`,
+    // Events for accountable nodes eg. cases of misbehavior, confiscations, slashing, etc.
+    accountableNodeEvent: (nodeId, eventId) => `${NS.ACCOUNTABLE_NODE_BASE}event/${eventId}/${nodeId}`,
     // PoC keys
     whitelist: (nodeId) => `${NS.WHITELIST}${nodeId}`,
     blacklist: (nodeId) => `${NS.BLACKLIST}${nodeId}`,
@@ -103,13 +110,9 @@ exports.NSkey = {
     // Consortium keys
     consortiumMeta: (id) => `${NS.CONSORTIUM_BASE}${id}/meta`,
     consortiumPublicKey: (id) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
-    consortiumVerification: (id, verifierPubkey) => `${NS.CONSORTIUM_BASE}${id}/verifications/${verifierPubkey}`,
-    consortiumPolicy: (id, key) => `${NS.CONSORTIUM_BASE}${id}/policy/${key}`,
-    consortiumValidators: (id) => `${NS.CONSORTIUM_BASE}${id}/validators`,
     consortiumMembers: (id) => `${NS.CONSORTIUM_BASE}${id}/members`,
     consortiumMemberData: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
-    consortiumGlobalPolicy: () => `${NS.CONSORTIUM_BASE}policy/`,
     touchLogEntry: (contractId, seq) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`, // individual log entry
     touchLogSeq: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/seq`, // monotonic sequence counter
     touchLogBookmark: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`, // replay cursor for consumers
