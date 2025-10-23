@@ -16,20 +16,20 @@ export interface AssetMeta {
   symbol: string;              // SBRIT or SSC
   decimals: number;            // 8 for SBRIT, 2 for SSC
   kind: 'native' | 'stablecoin';
-  totalSupply?: string;        // Only for SBRIT (1,000,000,000)
+  totalSupply?: string;        // Only for SBRIT 
 }
 
 // SBRIT specific configuration
 export interface SBRITConfig {
   symbol: 'SBRIT';
   decimals: 8;
-  totalSupply: string;         // "1000000000.00000000" (1 billion)
+  totalSupply: string;         
   
   // Genesis allocation per white paper
   genesisAllocation: {
-    foundation: string;        // "100000000.00000000" (10%)
-    collaborators: string;     // "200000000.00000000" (20%)
-    reserve: string;          // "700000000.00000000" (70%)
+    foundation: string;        
+    collaborators: string;   
+    reserve: string;          
   };
   
   // Use cases

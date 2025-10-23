@@ -56,6 +56,9 @@ const NS = {
     ASSET_SBRIT: 'asset/SBRIT/meta',
     ASSET_SSC: 'asset/SSC/meta',
 
+    // Accountable node base path
+    ACCOUNTABLE_NODE_BASE: "acnode/",
+
     // PoC consensus
     WHITELIST: 'poc/whitelist/', // poc/whitelist/<pubkey> → Whitelist entry
     BLACKLIST: 'poc/blacklist/', // poc/blacklist/<pubkey> → Blacklist entry
@@ -129,6 +132,12 @@ export const NSkey = {
     contractMeta: (codeHash: string) => `${NS.CODE_METAV1}${codeHash}`,
     contractState: (cid: string, key: string) => `${NS.SC_STATE}${cid}/kv/${key}`,
 
+    // Accountable nodes
+    accountableNodeData: (nodeId: string) => `${NS.ACCOUNTABLE_NODE_BASE}data/${nodeId}`,
+    accountableNodeList: () => `${NS.ACCOUNTABLE_NODE_BASE}list/active`,
+    // Events for accountable nodes eg. cases of misbehavior, confiscations, slashing, etc.
+    accountableNodeEvent: (nodeId: string, eventId: string) => `${NS.ACCOUNTABLE_NODE_BASE}event/${eventId}/${nodeId}`,
+
     // PoC keys
     whitelist: (nodeId: string) => `${NS.WHITELIST}${nodeId}`,
     blacklist: (nodeId: string) => `${NS.BLACKLIST}${nodeId}`,
@@ -141,13 +150,9 @@ export const NSkey = {
     // Consortium keys
     consortiumMeta: (id: string) => `${NS.CONSORTIUM_BASE}${id}/meta`,
     consortiumPublicKey: (id: string) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
-    consortiumVerification: (id: string, verifierPubkey: string) => `${NS.CONSORTIUM_BASE}${id}/verifications/${verifierPubkey}`,
-    consortiumPolicy: (id: string, key: string) => `${NS.CONSORTIUM_BASE}${id}/policy/${key}`,
-    consortiumValidators: (id: string) => `${NS.CONSORTIUM_BASE}${id}/validators`,
     consortiumMembers: (id: string) => `${NS.CONSORTIUM_BASE}${id}/members`,
     consortiumMemberData: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
-    consortiumGlobalPolicy: () => `${NS.CONSORTIUM_BASE}policy/`,
 
     touchLogEntry: (contractId: string, seq: bigint | number) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`,      // individual log entry
     touchLogSeq: (contractId: string) => `${NS.TOUCHLOG_BASE}${contractId}/seq`,                                        // monotonic sequence counter
