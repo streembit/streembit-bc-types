@@ -27,6 +27,7 @@ declare const NS: {
     readonly CODE_METAV1: "code/v1/meta/";
     readonly CODE_METAV2: "code/v2/meta/";
     readonly CODE_BYTES: "code/bytes/";
+    readonly SANDBOX_BYTES: "code/bytes/";
     readonly SC_STATE: "sc/";
     readonly ASSET_SBRIT: "asset/SBRIT/meta";
     readonly ASSET_SSC: "asset/SSC/meta";
@@ -62,7 +63,8 @@ export declare const NSkey: {
     accountMeta: (address: string) => string;
     accountBalance: (address: string, asset: string) => string;
     accountSequence: (address: string) => string;
-    contractCode: (codeHash: string) => string;
+    contractCodeBytes: (codeHash: string, version: string) => string;
+    contractSandboxBytes: (sandboxHash: string, version: string) => string;
     contractMeta: (codeHash: string) => string;
     contractState: (cid: string, key: string) => string;
     accountableNodeData: (nodeId: string) => string;

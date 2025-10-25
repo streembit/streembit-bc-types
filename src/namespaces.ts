@@ -47,9 +47,10 @@ const NS = {
     ACCT_SEQ: 'acct/',              // acct/<address>/sequence → number
 
     // Contract code & state
-    CODE_METAV1: 'code/v1/meta/',   // code/meta/<codeLocationHash> Phase 1: codeLocationHash eg. HASH('node\smart-contracts\genesis\treasury-control.ts')
-    CODE_METAV2: 'code/v2/meta/',   // code/meta/<codeLocationHash> Phase 2: codeHash 
-    CODE_BYTES: 'code/bytes/',      // code/bytes/<codeHash> → Raw JS bytes sandbox execution - Phase 2  
+    CODE_METAV1: 'code/v1/meta/',   // code/meta/<codeLocationHash> 
+    CODE_METAV2: 'code/v2/meta/',   // code/meta/<codeLocationHash> 
+    CODE_BYTES: 'code/bytes/',      // code/bytes/<version>/<codeHash>  -> stores the full source code of the contract
+    SANDBOX_BYTES: 'code/bytes/',   // sandbox/bytes/<version>/<sandboxHash> -> stores the full source code of the sandbox
     SC_STATE: 'sc/',                // sc/<cid>/kv/<keyHex32> → State value
 
     // Assets
@@ -128,7 +129,8 @@ export const NSkey = {
     accountSequence: (address: string) => `${NS.ACCT_SEQ}${address}/sequence`,
 
     // Contract keys
-    contractCode: (codeHash: string) => `${NS.CODE_BYTES}${codeHash}`,
+    contractCodeBytes: (codeHash: string, version: string) => `${NS.CODE_BYTES}${version}/${codeHash}`,
+    contractSandboxBytes: (sandboxHash: string, version: string) => `${NS.SANDBOX_BYTES}${version}/${sandboxHash}`,
     contractMeta: (codeHash: string) => `${NS.CODE_METAV1}${codeHash}`,
     contractState: (cid: string, key: string) => `${NS.SC_STATE}${cid}/kv/${key}`,
 
