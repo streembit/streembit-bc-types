@@ -36,7 +36,7 @@ const NS = {
     CODE_METAV1: 'code/v1/meta/', // code/meta/<codeLocationHash> 
     CODE_METAV2: 'code/v2/meta/', // code/meta/<codeLocationHash> 
     CODE_BYTES: 'code/bytes/', // code/bytes/<version>/<codeHash>  -> stores the full source code of the contract
-    SANDBOX_BYTES: 'code/bytes/', // sandbox/bytes/<version>/<sandboxHash> -> stores the full source code of the sandbox
+    SANDBOX_BYTES: 'sandbox/bytes/', // sandbox/bytes/<version>/<sandboxHash> -> stores the full source code of the sandbox
     SC_STATE: 'sc/', // sc/<cid>/kv/<keyHex32> → State value
     // Assets
     ASSET_SBRIT: 'asset/SBRIT/meta',

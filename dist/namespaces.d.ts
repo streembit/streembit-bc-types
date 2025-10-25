@@ -27,7 +27,7 @@ declare const NS: {
     readonly CODE_METAV1: "code/v1/meta/";
     readonly CODE_METAV2: "code/v2/meta/";
     readonly CODE_BYTES: "code/bytes/";
-    readonly SANDBOX_BYTES: "code/bytes/";
+    readonly SANDBOX_BYTES: "sandbox/bytes/";
     readonly SC_STATE: "sc/";
     readonly ASSET_SBRIT: "asset/SBRIT/meta";
     readonly ASSET_SSC: "asset/SSC/meta";

@@ -96,9 +96,7 @@ export const DEFAULT_LOCATION = {
 export interface ContractVersion {
     version: string | number;
     codeHash: string;          
-    sandboxHash: string;
-    code: string;
-    sandbox: string;   
+    sandboxHash: string; 
     deployedAt: number;
     deployer: string;
     active: boolean;

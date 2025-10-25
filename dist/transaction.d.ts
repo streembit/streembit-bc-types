@@ -67,8 +67,6 @@ export interface ContractVersion {
     version: string | number;
     codeHash: string;
     sandboxHash: string;
-    code: string;
-    sandbox: string;
     deployedAt: number;
     deployer: string;
     active: boolean;
