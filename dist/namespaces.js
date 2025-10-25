@@ -61,7 +61,6 @@ const NS = {
     //   consortium/<id>/members → JSON array ["Vid1", "Vid2", "Vid3"]
     //   consortium/<id>/members/<Vid> → Individual validator metadata
     //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
-    TOUCHLOG_BASE: 'touchlog/', // touchlog/<contractId>/... → contract execution logs
     GOVERNANCE_BASE: 'governance/',
     CONTRACT_BY_NAME: "contract/name/", // Named contracts (governance, treasury, etc.)
     // Undo records for rollback
@@ -109,15 +108,13 @@ exports.NSkey = {
     // Validator keys
     validatorData: (vid) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`, // Who made the deposit to become a validator
-    // Consortium keys
+    //  
     consortiumMeta: (id) => `${NS.CONSORTIUM_BASE}${id}/meta`,
     consortiumPublicKey: (id) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
     consortiumMembers: (id) => `${NS.CONSORTIUM_BASE}${id}/members`,
     consortiumMemberData: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
-    touchLogEntry: (contractId, seq) => `${NS.TOUCHLOG_BASE}${contractId}/${PAD20(seq)}`, // individual log entry
-    touchLogSeq: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/seq`, // monotonic sequence counter
-    touchLogBookmark: (contractId) => `${NS.TOUCHLOG_BASE}${contractId}/bookmark`, // replay cursor for consumers
+    consortiumDeposits: (id, count) => `${NS.CONSORTIUM_BASE}${id}/deposits/${count}`,
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,

@@ -37,7 +37,6 @@ declare const NS: {
     readonly DEPOSITS: "poc/deposits/";
     readonly VALIDATOR_BASE: "validator/";
     readonly CONSORTIUM_BASE: "consortium/";
-    readonly TOUCHLOG_BASE: "touchlog/";
     readonly GOVERNANCE_BASE: "governance/";
     readonly CONTRACT_BY_NAME: "contract/name/";
     readonly UNDO: "undo/";
@@ -80,9 +79,7 @@ export declare const NSkey: {
     consortiumMembers: (id: string) => string;
     consortiumMemberData: (id: string, validatorId: string) => string;
     consortiumEncryptedKey: (id: string, validatorId: string) => string;
-    touchLogEntry: (contractId: string, seq: bigint | number) => string;
-    touchLogSeq: (contractId: string) => string;
-    touchLogBookmark: (contractId: string) => string;
+    consortiumDeposits: (id: string, count: number) => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
     contractByName: (name: string) => string;
