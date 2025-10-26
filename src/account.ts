@@ -49,7 +49,6 @@ export interface AccountState {
     encumbered?: {
         pocDeposit?: string;      // PoC validator deposit
         escrow?: string;          // Escrow amounts
-        consortiumBond?: string;  // Consortium operator bond
     };
 
     // Contract-specific

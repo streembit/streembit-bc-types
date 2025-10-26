@@ -151,48 +151,11 @@ export interface BlacklistEntry {
 
 
 
-// Consortium Service Types
-
-export interface ConsortiumMeta{
-    id: string;
-    accountableNode: string;
-    createdAt: number;
-}
-
-export interface ConsortiumVerification {
-    verifierPubkey: string;              // Public key of attestor (e.g., Foundation)
-    signature: string;                   // Signature over consortium data
-    timestamp: number;                   // Unix timestamp
-    payload: string;                     // What was signed (e.g., JSON of meta)
-}
-
-export interface ConsortiumMemberMeta {
-    validatorId: string;
-    consortiumId: string;
-    joinedAt: number;                   
-}
-
-export interface ConsortiumPolicy {
-    admissionRule: 'open' | 'allowlist'; // How members are admitted
-    requiredProofs: string[];            // Required verification types
-    minDepositOverride?: string;         // Optional override for member deposit
-    rewardSplitHints?: Record<string, number>;  // Reward distribution hints
-    authorizedSigners: string[];         // Pubkeys for multisig
-    thresholdM: number;                  // M-of-N threshold
-}
-
-
 export interface AddVerificationRequest {
     id: string;
     verifierPubkey: string;
     signature: string;
     payload: string;
-}
-
-export interface UpdatePolicyRequest {
-    id: string;
-    policy: Partial<ConsortiumPolicy>;
-    signatures: string[];                // M-of-N multisig signatures
 }
 
 export interface ApproveMemberRequest {
@@ -206,12 +169,6 @@ export interface ApproveMemberRequest {
 
 export type ValidatorStatus = 'APPROVAL_REQUESTED' | 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
 
-export interface ValidatorConsortiumState {
-    consortium_id: string;                      // Which consortium manages this validator
-    signing_pubkey: string;                     // Consortium signing public key
-    signature: string;                          // Signature of the consortium to approve the validator
-    consent_ts: number;                         // Unix timestamp when validator granted control
-}
 
 export interface ValidatorData {
     vid: string;                                // Validator ID
@@ -219,7 +176,6 @@ export interface ValidatorData {
     status: ValidatorStatus;                    // Validator status
     deposit: string;                            // SBRIT amount deposited
     joinedAt: number;                           // Unix timestamp
-    consortium?: ValidatorConsortiumState;      // Consortium state, empty at validator deposit, updated by consortium upon approval
 }
 
 // ============================================================================

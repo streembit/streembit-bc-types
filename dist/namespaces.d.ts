@@ -36,7 +36,6 @@ declare const NS: {
     readonly BLACKLIST: "poc/blacklist/";
     readonly DEPOSITS: "poc/deposits/";
     readonly VALIDATOR_BASE: "validator/";
-    readonly CONSORTIUM_BASE: "consortium/";
     readonly GOVERNANCE_BASE: "governance/";
     readonly CONTRACT_BY_NAME: "contract/name/";
     readonly UNDO: "undo/";
@@ -75,11 +74,6 @@ export declare const NSkey: {
     validatorData: (vid: string) => string;
     validatorDeposit: (vid: string) => string;
     validatorDepositLock: (vid: string) => string;
-    consortiumMeta: (id: string) => string;
-    consortiumPublicKey: (id: string) => string;
-    consortiumMembers: (id: string) => string;
-    consortiumMemberData: (id: string, validatorId: string) => string;
-    consortiumEncryptedKey: (id: string, validatorId: string) => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
     contractByName: (name: string) => string;

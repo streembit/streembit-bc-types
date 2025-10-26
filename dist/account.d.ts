@@ -30,7 +30,6 @@ export interface AccountState {
     encumbered?: {
         pocDeposit?: string;
         escrow?: string;
-        consortiumBond?: string;
     };
     contractInfo?: {
         cid: string;

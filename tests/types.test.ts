@@ -108,19 +108,4 @@ test('ValidatorData type can be instantiated', () => {
   assert.strictEqual(validator.deposit, '5000');
 });
 
-test('ValidatorData with consortium can be instantiated', () => {
-  const validator: ValidatorData = {
-    vid: 'val123',
-    publicKey: 'pubkey456',
-    status: 'ACTIVE',
-    deposit: '5000',
-    joinedAt: Date.now(),
-    consortium: {
-      consortium_id: 'consortium1',
-      signing_pubkey: 'pubkey789',
-      consent_ts: Date.now()
-    }
-  };
 
-  assert.strictEqual(validator.consortium?.consortium_id, 'consortium1');
-});

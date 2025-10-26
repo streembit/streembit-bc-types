@@ -50,17 +50,7 @@ const NS = {
     // Validators - Phase 1 implementation
     VALIDATOR_BASE: 'validator/', // Base prefix for all validator data
     // Full paths constructed as:
-    //   validator/<Vid>/data → JSON {status, deposit, joinedAt, publicKey, consortium, ...}
-    // Consortiums - following APPNOTE design in consortium/index.ts 
-    CONSORTIUM_BASE: 'consortium/', // Base prefix for all consortium data
-    // Full paths constructed as:
-    //   consortium/<id>/meta
-    //   consortium/<id>/publickey
-    //   consortium/<id>/verifications/<verifier_pubkey>
-    //   consortium/<id>/policy/*
-    //   consortium/<id>/members → JSON array ["Vid1", "Vid2", "Vid3"]
-    //   consortium/<id>/members/<Vid> → Individual validator metadata
-    //   consortium/<id>/keys/<Vid>/encrypted_privkey → Encrypted validator signing key
+    //   validator/<Vid>/data → JSON {status, deposit, joinedAt, publicKey, ...}
     GOVERNANCE_BASE: 'governance/',
     CONTRACT_BY_NAME: "contract/name/", // Named contracts (governance, treasury, etc.)
     // Undo records for rollback
@@ -109,12 +99,6 @@ exports.NSkey = {
     validatorData: (vid) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,
     validatorDepositLock: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock`,
-    //  Consortium keys
-    consortiumMeta: (id) => `${NS.CONSORTIUM_BASE}${id}/meta`,
-    consortiumPublicKey: (id) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
-    consortiumMembers: (id) => `${NS.CONSORTIUM_BASE}${id}/members`,
-    consortiumMemberData: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
-    consortiumEncryptedKey: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,

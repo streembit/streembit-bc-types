@@ -107,59 +107,23 @@ export interface BlacklistEntry {
     addedAt: number;
     deposit: string;
 }
-export interface ConsortiumMeta {
-    id: string;
-    accountableNode: string;
-    createdAt: number;
-}
-export interface ConsortiumVerification {
-    verifierPubkey: string;
-    signature: string;
-    timestamp: number;
-    payload: string;
-}
-export interface ConsortiumMemberMeta {
-    validatorId: string;
-    consortiumId: string;
-    joinedAt: number;
-}
-export interface ConsortiumPolicy {
-    admissionRule: 'open' | 'allowlist';
-    requiredProofs: string[];
-    minDepositOverride?: string;
-    rewardSplitHints?: Record<string, number>;
-    authorizedSigners: string[];
-    thresholdM: number;
-}
 export interface AddVerificationRequest {
     id: string;
     verifierPubkey: string;
     signature: string;
     payload: string;
 }
-export interface UpdatePolicyRequest {
-    id: string;
-    policy: Partial<ConsortiumPolicy>;
-    signatures: string[];
-}
 export interface ApproveMemberRequest {
     id: string;
     validatorId: string;
 }
 export type ValidatorStatus = 'APPROVAL_REQUESTED' | 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
-export interface ValidatorConsortiumState {
-    consortium_id: string;
-    signing_pubkey: string;
-    signature: string;
-    consent_ts: number;
-}
 export interface ValidatorData {
     vid: string;
     publicKey: string;
     status: ValidatorStatus;
     deposit: string;
     joinedAt: number;
-    consortium?: ValidatorConsortiumState;
 }
 export interface EncryptedValidatorKey {
     ciphertext: string;
