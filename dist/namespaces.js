@@ -108,7 +108,7 @@ exports.NSkey = {
     // Validator keys
     validatorData: (vid) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,
-    validatorDepositLock: (vid, consortium_id) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock/${consortium_id}`,
+    validatorDepositLock: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock`,
     //  Consortium keys
     consortiumMeta: (id) => `${NS.CONSORTIUM_BASE}${id}/meta`,
     consortiumPublicKey: (id) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
