@@ -98,7 +98,7 @@ exports.NSkey = {
     // Validator keys
     validatorData: (vid) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,
-    validatorList: (vid) => `${NS.VALIDATOR_BASE}list`,
+    validatorList: () => `${NS.VALIDATOR_BASE}list`,
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,
