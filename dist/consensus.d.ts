@@ -107,6 +107,11 @@ export interface BlacklistEntry {
     addedAt: number;
     deposit: string;
 }
+export interface ConsortiumMeta {
+    id: string;
+    accountableNode: string;
+    createdAt: number;
+}
 export interface ConsortiumVerification {
     verifierPubkey: string;
     signature: string;
@@ -115,9 +120,7 @@ export interface ConsortiumVerification {
 }
 export interface ConsortiumMemberMeta {
     validatorId: string;
-    preferredRewardAddress?: string;
-    region?: string;
-    runtimeProfile?: string;
+    consortiumId: string;
     joinedAt: number;
 }
 export interface ConsortiumPolicy {

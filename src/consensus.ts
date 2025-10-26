@@ -151,8 +151,13 @@ export interface BlacklistEntry {
 
 
 
-// Consortium Service Types 
+// Consortium Service Types
 
+export interface ConsortiumMeta{
+    id: string;
+    accountableNode: string;
+    createdAt: number;
+}
 
 export interface ConsortiumVerification {
     verifierPubkey: string;              // Public key of attestor (e.g., Foundation)
@@ -163,10 +168,8 @@ export interface ConsortiumVerification {
 
 export interface ConsortiumMemberMeta {
     validatorId: string;
-    preferredRewardAddress?: string;     // Where to send rewards
-    region?: string;                     // Geographic region
-    runtimeProfile?: string;             // Technical capabilities
-    joinedAt: number;                    // Unix timestamp
+    consortiumId: string;
+    joinedAt: number;                   
 }
 
 export interface ConsortiumPolicy {
