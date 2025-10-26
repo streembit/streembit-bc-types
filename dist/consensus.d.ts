@@ -202,7 +202,7 @@ export interface ApproveMemberRequest {
     validatorId: string;
     signatures: string[];
 }
-export type ValidatorStatus = 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
+export type ValidatorStatus = 'APPROVAL_REQUESTED' | 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
 export interface ValidatorConsortiumState {
     consortium_id: string;
     signing_pubkey: string;

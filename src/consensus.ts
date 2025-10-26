@@ -271,7 +271,7 @@ export interface ApproveMemberRequest {
 // Validator State Types (Phase 1 Implementation)
 // ============================================================================
 
-export type ValidatorStatus = 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
+export type ValidatorStatus = 'APPROVAL_REQUESTED' | 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
 
 export interface ValidatorConsortiumState {
     consortium_id: string;               // Which consortium manages this validator
