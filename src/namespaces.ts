@@ -146,7 +146,7 @@ export const NSkey = {
     // Validator keys
     validatorData: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,  
-    validatorDepositLock: (vid: string, consortium_id: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock/${consortium_id}`,   
+    validatorDepositLock: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock`,   
 
     //  Consortium keys
     consortiumMeta: (id: string) => `${NS.CONSORTIUM_BASE}${id}/meta`,
