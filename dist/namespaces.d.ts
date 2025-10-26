@@ -74,12 +74,12 @@ export declare const NSkey: {
     deposit: (nodeId: string) => string;
     validatorData: (vid: string) => string;
     validatorDeposit: (vid: string) => string;
+    validatorDepositLock: (vid: string) => string;
     consortiumMeta: (id: string) => string;
     consortiumPublicKey: (id: string) => string;
     consortiumMembers: (id: string) => string;
     consortiumMemberData: (id: string, validatorId: string) => string;
     consortiumEncryptedKey: (id: string, validatorId: string) => string;
-    consortiumDeposits: (id: string, count: number) => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
     contractByName: (name: string) => string;

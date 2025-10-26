@@ -108,13 +108,13 @@ exports.NSkey = {
     // Validator keys
     validatorData: (vid) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,
+    validatorDepositLock: (vid) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock`,
     //  Consortium keys
     consortiumMeta: (id) => `${NS.CONSORTIUM_BASE}${id}/meta`,
     consortiumPublicKey: (id) => `${NS.CONSORTIUM_BASE}${id}/publickey`,
     consortiumMembers: (id) => `${NS.CONSORTIUM_BASE}${id}/members`,
     consortiumMemberData: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id, validatorId) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
-    consortiumDeposits: (id, count) => `${NS.CONSORTIUM_BASE}${id}/deposits/${count}`,
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,

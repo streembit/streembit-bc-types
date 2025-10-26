@@ -146,6 +146,7 @@ export const NSkey = {
     // Validator keys
     validatorData: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,  
+    validatorDepositLock: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock`,   
 
     //  Consortium keys
     consortiumMeta: (id: string) => `${NS.CONSORTIUM_BASE}${id}/meta`,
@@ -153,7 +154,6 @@ export const NSkey = {
     consortiumMembers: (id: string) => `${NS.CONSORTIUM_BASE}${id}/members`,
     consortiumMemberData: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/members/${validatorId}`,
     consortiumEncryptedKey: (id: string, validatorId: string) => `${NS.CONSORTIUM_BASE}${id}/keys/${validatorId}/encrypted_privkey`,
-    consortiumDeposits: (id: string, count: number) => `${NS.CONSORTIUM_BASE}${id}/deposits/${count}`,
 
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`, 
 

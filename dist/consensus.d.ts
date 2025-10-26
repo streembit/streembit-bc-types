@@ -107,39 +107,6 @@ export interface BlacklistEntry {
     addedAt: number;
     deposit: string;
 }
-export interface MintingConsortium {
-    id: string;
-    operator: {
-        entity: string;
-        jurisdiction: string;
-        assets: string;
-        liability: 'full';
-        officers: Array<{
-            name: string;
-            role: string;
-            personalLiability: true;
-        }>;
-    };
-    members: Array<{
-        id: string;
-        joinedAt: number;
-        rewardShare: number;
-    }>;
-    governance: {
-        votingPower: number;
-        proposalsSupported: string[];
-    };
-}
-export type ConsortiumMemberStatus = 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'EXITED';
-export interface ConsortiumMeta {
-    id: string;
-    companyName: string;
-    country: string;
-    companyRegistration: string;
-    assets: string;
-    displayName: string;
-    endpoints: string[];
-}
 export interface ConsortiumVerification {
     verifierPubkey: string;
     signature: string;
@@ -161,26 +128,6 @@ export interface ConsortiumPolicy {
     authorizedSigners: string[];
     thresholdM: number;
 }
-export interface ConsortiumState {
-    meta: ConsortiumMeta;
-    publicKey: string;
-    verifications: ConsortiumVerification[];
-    policy: ConsortiumPolicy;
-    validators: string[];
-    members: Map<string, {
-        status: ConsortiumMemberStatus;
-        meta: ConsortiumMemberMeta;
-    }>;
-}
-export interface CreateConsortiumRequest {
-    id: string;
-    meta: ConsortiumMeta;
-    publicKey: string;
-}
-export interface UpdateMetaRequest {
-    id: string;
-    meta: Partial<ConsortiumMeta>;
-}
 export interface AddVerificationRequest {
     id: string;
     verifierPubkey: string;
@@ -192,20 +139,15 @@ export interface UpdatePolicyRequest {
     policy: Partial<ConsortiumPolicy>;
     signatures: string[];
 }
-export interface JoinConsortiumRequest {
-    consortiumId: string;
-    validatorId: string;
-    meta: ConsortiumMemberMeta;
-}
 export interface ApproveMemberRequest {
     id: string;
     validatorId: string;
-    signatures: string[];
 }
 export type ValidatorStatus = 'APPROVAL_REQUESTED' | 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
 export interface ValidatorConsortiumState {
     consortium_id: string;
     signing_pubkey: string;
+    signature: string;
     consent_ts: number;
 }
 export interface ValidatorData {

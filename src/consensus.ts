@@ -149,51 +149,10 @@ export interface BlacklistEntry {
     deposit: string;                    // Confiscated deposit amount
 }
 
-// ============================================================================
-// Minting Consortium
-// ============================================================================
 
-export interface MintingConsortium {
-    id: string;
-    operator: {
-        entity: string;                   // Business entity name
-        jurisdiction: string;             // Must be approved jurisdiction
-        assets: string;                   // Minimum $1M
-        liability: 'full';                // Full liability for members
-        officers: Array<{
-            name: string;
-            role: string;
-            personalLiability: true;        // Personal liability per white paper
-        }>;
-    };
 
-    members: Array<{
-        id: string;                       // Member ID (anonymous to chain)
-        joinedAt: number;                 // Block index
-        rewardShare: number;              // Percentage of consortium rewards
-    }>;
+// Consortium Service Types 
 
-    governance: {
-        votingPower: number;              // Based on contribution
-        proposalsSupported: string[];    // Proposal IDs
-    };
-}
-
-// ============================================================================
-// Consortium Service Types (Phase 1 Implementation)
-// ============================================================================
-
-export type ConsortiumMemberStatus = 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'EXITED';
-
-export interface ConsortiumMeta {
-    id: string;
-    companyName: string;
-    country: string;                     // Must be in POC_CONSTANTS.APPROVED_JURISDICTIONS
-    companyRegistration: string;         // Business registration number
-    assets: string;                      // Claimed asset value (e.g., "5000000")
-    displayName: string;                 // Human-readable name
-    endpoints: string[];                 // API endpoints for the consortium
-}
 
 export interface ConsortiumVerification {
     verifierPubkey: string;              // Public key of attestor (e.g., Foundation)
@@ -219,28 +178,6 @@ export interface ConsortiumPolicy {
     thresholdM: number;                  // M-of-N threshold
 }
 
-export interface ConsortiumState {
-    meta: ConsortiumMeta;
-    publicKey: string;
-    verifications: ConsortiumVerification[];
-    policy: ConsortiumPolicy;
-    validators: string[];                // Active validator IDs (sorted)
-    members: Map<string, {
-        status: ConsortiumMemberStatus;
-        meta: ConsortiumMemberMeta;
-    }>;
-}
-
-export interface CreateConsortiumRequest {
-    id: string;
-    meta: ConsortiumMeta;
-    publicKey: string;
-}
-
-export interface UpdateMetaRequest {
-    id: string;
-    meta: Partial<ConsortiumMeta>;
-}
 
 export interface AddVerificationRequest {
     id: string;
@@ -255,16 +192,9 @@ export interface UpdatePolicyRequest {
     signatures: string[];                // M-of-N multisig signatures
 }
 
-export interface JoinConsortiumRequest {
-    consortiumId: string;
-    validatorId: string;
-    meta: ConsortiumMemberMeta;
-}
-
 export interface ApproveMemberRequest {
     id: string;
     validatorId: string;
-    signatures: string[];                // M-of-N multisig signatures
 }
 
 // ============================================================================
@@ -274,18 +204,19 @@ export interface ApproveMemberRequest {
 export type ValidatorStatus = 'APPROVAL_REQUESTED' | 'ACTIVE' | 'UNBONDING' | 'SLASHED' | 'EXITED';
 
 export interface ValidatorConsortiumState {
-    consortium_id: string;               // Which consortium manages this validator
-    signing_pubkey: string;              // Hex-encoded compressed public key (Ed25519)
-    consent_ts: number;                  // Unix timestamp when validator granted control
+    consortium_id: string;                      // Which consortium manages this validator
+    signing_pubkey: string;                     // Consortium signing public key
+    signature: string;                          // Signature of the consortium to approve the validator
+    consent_ts: number;                         // Unix timestamp when validator granted control
 }
 
 export interface ValidatorData {
-    vid: string;                         // Validator ID
-    publicKey: string;                   // Hex-encoded compressed public key (Ed25519)
-    status: ValidatorStatus;             // Validator status
-    deposit: string;                     // SBRIT amount deposited
-    joinedAt: number;                    // Unix timestamp
-    consortium?: ValidatorConsortiumState; // Optional consortium state
+    vid: string;                                // Validator ID
+    publicKey: string;                          // Hex-encoded compressed public key (Ed25519)
+    status: ValidatorStatus;                    // Validator status
+    deposit: string;                            // SBRIT amount deposited
+    joinedAt: number;                           // Unix timestamp
+    consortium?: ValidatorConsortiumState;      // Consortium state, empty at validator deposit, updated by consortium upon approval
 }
 
 // ============================================================================
