@@ -135,7 +135,7 @@ export const NSkey = {
     // Validator keys
     validatorData: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/data`,
     validatorDeposit: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_from`,  
-    validatorDepositLock: (vid: string) => `${NS.VALIDATOR_BASE}${vid}/deposit_lock`,   
+    validatorList: (vid: string) => `${NS.VALIDATOR_BASE}list`,   
 
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`, 
 

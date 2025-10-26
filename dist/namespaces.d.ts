@@ -73,7 +73,7 @@ export declare const NSkey: {
     deposit: (nodeId: string) => string;
     validatorData: (vid: string) => string;
     validatorDeposit: (vid: string) => string;
-    validatorDepositLock: (vid: string) => string;
+    validatorList: (vid: string) => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
     contractByName: (name: string) => string;
