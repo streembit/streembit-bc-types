@@ -105,6 +105,11 @@ exports.NSkey = {
     // Undo keys for journal
     undoPrefix: (index, blockHash) => exports.KeysStr.undoPrefix(index, blockHash),
     undoKey: (index, blockHash, idx) => exports.KeysStr.undoKey(index, blockHash, idx),
+    // Undo for block synchronization recovery
+    // Undo entries: undo/<blockHash>/<key> → original value
+    undoEntry: (blockHash, key) => `${NS.UNDO}${blockHash}/${key}`,
+    // Published marker: pub/<blockHash> → timestamp
+    publishedMarker: (blockHash) => `pub/${blockHash}`,
     // Meta keys (these are fixed singleton keys, no parameters needed)
     metaTip: () => NS.META_TIP,
     metaBlockCount: () => NS.META_BLOCK_COUNT,

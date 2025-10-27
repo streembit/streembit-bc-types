@@ -79,6 +79,8 @@ export declare const NSkey: {
     contractByName: (name: string) => string;
     undoPrefix: (index: bigint | number, blockHash: string) => string;
     undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => string;
+    undoEntry: (blockHash: string, key: string) => string;
+    publishedMarker: (blockHash: string) => string;
     metaTip: () => "meta/tiphash";
     metaBlockCount: () => "meta/blockcount";
     blockCountIndex: (blockCount: number) => string;
