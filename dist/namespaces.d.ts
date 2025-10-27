@@ -42,10 +42,6 @@ declare const NS: {
 };
 export type NamespaceKey = keyof typeof NS;
 export type NamespaceValue = typeof NS[NamespaceKey];
-export declare const KeysStr: {
-    undoPrefix: (index: bigint | number, blockHashHex: string) => string;
-    undoKey: (index: bigint | number, blockHashHex: string, idx: bigint | number) => string;
-};
 /**
  * Helper functions for key construction
  * Returns string keys for key value store
@@ -77,8 +73,6 @@ export declare const NSkey: {
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
     contractByName: (name: string) => string;
-    undoPrefix: (index: bigint | number, blockHash: string) => string;
-    undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => string;
     undoEntry: (blockHash: string, key: string) => string;
     publishedMarker: (blockHash: string) => string;
     metaTip: () => "meta/tiphash";

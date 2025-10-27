@@ -137,10 +137,6 @@ export const NSkey = {
 
     contractByName: (name: string) => `${ NS.CONTRACT_BY_NAME }${name}`,
 
-    // Undo keys for journal
-    undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),
-    undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => KeysStr.undoKey(index, blockHash, idx),
-
     // Undo for block synchronization recovery
     // Undo entries: undo/<blockHash>/<key> → original value
     undoEntry: (blockHash: string, key: string) => `${NS.UNDO}${blockHash}/${key}`,    

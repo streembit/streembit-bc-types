@@ -6,7 +6,7 @@
  * These MUST match exactly as specified in the white paper.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NSkey = exports.KeysStr = void 0;
+exports.NSkey = void 0;
 // Helper functions
 const PAD20 = (n) => n.toString().padStart(20, "0");
 const PAD6 = (n) => n.toString().padStart(6, "0");
@@ -58,11 +58,6 @@ const NS = {
 };
 // Freeze the NS object to make it truly immutable
 Object.freeze(NS);
-// String builders (nice for logs/tests)
-exports.KeysStr = {
-    undoPrefix: (index, blockHashHex) => `${NS.UNDO}${PAD20(index)}/${normHash(blockHashHex)}/`,
-    undoKey: (index, blockHashHex, idx) => `${NS.UNDO}${PAD20(index)}/${normHash(blockHashHex)}/${PAD6(idx)}`
-};
 /**
  * Helper functions for key construction
  * Returns string keys for key value store
@@ -102,9 +97,6 @@ exports.NSkey = {
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,
-    // Undo keys for journal
-    undoPrefix: (index, blockHash) => exports.KeysStr.undoPrefix(index, blockHash),
-    undoKey: (index, blockHash, idx) => exports.KeysStr.undoKey(index, blockHash, idx),
     // Undo for block synchronization recovery
     // Undo entries: undo/<blockHash>/<key> → original value
     undoEntry: (blockHash, key) => `${NS.UNDO}${blockHash}/${key}`,
