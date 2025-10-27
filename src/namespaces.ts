@@ -86,12 +86,6 @@ Object.freeze(NS);
 export type NamespaceKey = keyof typeof NS;
 export type NamespaceValue = typeof NS[NamespaceKey];
 
-// String builders (nice for logs/tests)
-export const KeysStr = {
-    undoPrefix: (index: bigint | number, blockHashHex: string) => `${NS.UNDO}${PAD20(index)}/${normHash(blockHashHex)}/`,
-    undoKey: (index: bigint | number, blockHashHex: string, idx: bigint | number) => `${NS.UNDO}${PAD20(index)}/${normHash(blockHashHex)}/${PAD6(idx)}`
-};
-
 
 /**
  * Helper functions for key construction
