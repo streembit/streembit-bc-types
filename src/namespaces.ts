@@ -147,6 +147,13 @@ export const NSkey = {
     undoPrefix: (index: bigint | number, blockHash: string) => KeysStr.undoPrefix(index, blockHash),
     undoKey: (index: bigint | number, blockHash: string, idx: bigint | number) => KeysStr.undoKey(index, blockHash, idx),
 
+    // Undo for block synchronization recovery
+    // Undo entries: undo/<blockHash>/<key> → original value
+    undoEntry: (blockHash: string, key: string) => `${NS.UNDO}${blockHash}/${key}`,    
+
+    // Published marker: pub/<blockHash> → timestamp
+    publishedMarker: (blockHash: string) => `pub/${blockHash}`,                 
+
     // Meta keys (these are fixed singleton keys, no parameters needed)
     metaTip: () => NS.META_TIP,
     metaBlockCount: () => NS.META_BLOCK_COUNT,
