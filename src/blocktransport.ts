@@ -37,10 +37,9 @@ export interface BlockTransport {
      *
      * @param block - The block to publish
      * @param blockCount - Current block count
-     * @param producerId - Node ID of the producer
      * @throws Error if publish fails (implementation-specific error)
      */
-    publishBlock(block: Block, blockCount: number, producerId: string): Promise<void>;
+    publishBlock(block: Block, blockCount: number): Promise<void>;
 
     /**
      * Start consuming blocks from the transport
