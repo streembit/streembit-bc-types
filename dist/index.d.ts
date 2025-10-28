@@ -8,4 +8,5 @@ export * from './system';
 export * from './transaction';
 export * from './namespaces';
 export * from './contract';
+export * from './blocktransport';
 //# sourceMappingURL=index.d.ts.map
