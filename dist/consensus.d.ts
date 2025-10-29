@@ -3,6 +3,7 @@
  * This file contains ALL consensus-related types and interfaces
  */
 import { Block } from './block';
+import { Transaction, ValidatorAttestation } from './transaction';
 export type Hash = string;
 export type Index = number;
 export type EpochId = number;
@@ -137,6 +138,26 @@ export interface EncryptedValidatorKey {
 export interface ValidatorKeyPair {
     publicKey: string;
     privateKey: string;
+}
+/**
+ * Validator information loaded from chain storage
+ * Represents network validators without private keys
+ */
+export interface ValidatorInfo {
+    id: string;
+    publicKey: string;
+}
+/**
+  * Validator instance interface for local validators with private keys
+  * Used for signing transactions with validator attestation
+  */
+export interface IValidator {
+    validatorId: string;
+    publicKey: string;
+    privateKey: string;
+    address: string;
+    idHash: Buffer;
+    signTx(tx: Transaction, txid: string): ValidatorAttestation;
 }
 export declare enum FraudType {
     SYNTHETIC_TRANSACTION = "synthetic_transaction",

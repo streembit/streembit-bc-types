@@ -6,6 +6,7 @@
  */
 
 import { Block } from './block';
+import { Transaction, ValidatorAttestation } from './transaction';
 
 // ============================================================================
 // Basic Type Aliases
@@ -195,6 +196,28 @@ export interface EncryptedValidatorKey {
 export interface ValidatorKeyPair {
     publicKey: string;                   // Hex-encoded compressed public key (Ed25519)
     privateKey: string;                  // Hex-encoded private key (Ed25519)
+}
+
+/**
+ * Validator information loaded from chain storage
+ * Represents network validators without private keys
+ */
+export interface ValidatorInfo {
+    id: string;
+    publicKey: string;
+}
+
+/**
+  * Validator instance interface for local validators with private keys
+  * Used for signing transactions with validator attestation
+  */
+export interface IValidator {
+    validatorId: string;
+    publicKey: string;
+    privateKey: string;
+    address: string;
+    idHash: Buffer;
+    signTx(tx: Transaction, txid: string): ValidatorAttestation;
 }
 
 // ============================================================================
