@@ -158,6 +158,7 @@ export interface IValidator {
     address: string;
     idHash: Buffer;
     signTx(tx: Transaction, txid: string): ValidatorAttestation;
+    validateDeposit(tx: Transaction, creatorId: string): boolean;
 }
 export declare enum FraudType {
     SYNTHETIC_TRANSACTION = "synthetic_transaction",
