@@ -71,7 +71,7 @@ var ErrorCode;
     ErrorCode["ERR_KEY_NOT_FOUND"] = "ERR_KEY_NOT_FOUND";
     ErrorCode["ERR_KEY_ALREADY_EXISTS"] = "ERR_KEY_ALREADY_EXISTS";
     ErrorCode["ERR_DOUBLE_MINT"] = "ERR_DOUBLE_MINT";
-    ErrorCode["ERR_INVALID_MINT"] = "ERR_DOUBLE_MINT";
+    ErrorCode["ERR_INVALID_MINT"] = "ERR_INVALID_MINT";
     ErrorCode["ERR_MINT_RULES_NOT_FOUND"] = "ERR_MINT_RULES_NOT_FOUND";
     // Generic/Unknown (9999)
     ErrorCode["ERR_INTERNAL"] = "ERR_INTERNAL";
