@@ -98,7 +98,8 @@ exports.NSkey = {
     validatorList: () => `${NS.VALIDATOR_BASE}list`,
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`,
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
-    governanceMintRules: (id) => `${NS.GOVERNANCE_BASE}rules/mint`,
+    governanceMintRules: (version) => `${NS.GOVERNANCE_BASE}rules/mint/v/${version}`,
+    governanceCurrentMintRules: () => `${NS.GOVERNANCE_BASE}rules/mint/current`, // current minting rules version so to avoid fetching/iterating all versions
     governanceSSCPegRatio: (id) => `${NS.GOVERNANCE_BASE}ssc/pegratio`, // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
     /*
         SSC buyback reserve for contract eg.

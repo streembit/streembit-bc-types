@@ -74,7 +74,8 @@ export declare const NSkey: {
     validatorList: () => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
-    governanceMintRules: (id: string) => string;
+    governanceMintRules: (version: number) => string;
+    governanceCurrentMintRules: () => string;
     governanceSSCPegRatio: (id: string) => string;
     sscBuybackReserve: (cid: string) => string;
     mintLastProcessingTime: () => string;

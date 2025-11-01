@@ -137,8 +137,9 @@ export const NSkey = {
 
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`, 
     governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`, 
-    governanceMintRules: (id: string) => `${NS.GOVERNANCE_BASE}rules/mint`, 
-    governanceSSCPegRatio: (id: string) => `${NS.GOVERNANCE_BASE}ssc/pegratio`,         // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
+    governanceMintRules: (version: number) => `${NS.GOVERNANCE_BASE}rules/mint/v/${version}`, 
+    governanceCurrentMintRules: () => `${NS.GOVERNANCE_BASE}rules/mint/current`,                // current minting rules version so to avoid fetching/iterating all versions
+    governanceSSCPegRatio: (id: string) => `${NS.GOVERNANCE_BASE}ssc/pegratio`,                 // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
 
     /*
         SSC buyback reserve for contract eg. 
