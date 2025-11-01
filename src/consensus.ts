@@ -766,3 +766,27 @@ export enum AccountableNodeEventType {
     VERIFICATION_UPDATED = 'verification_updated',
     COMPLIANCE_CHECK_FAILED = 'compliance_check_failed'
 }
+
+// Minting
+
+interface MintRuleset {
+    publishedAt: number;
+    publishedBy: string;
+    policyVersion: number;
+
+    intervalMilliSeconds: number;      // 3,600,000 for hourly
+    amountPerInterval: string;    	// "100" SBRIT
+
+    // Distribution of NEWLY MINTED coins (must sum to 100)
+    creatorShare: number;         	// 40
+    validatorShare: number;       	// 50
+    treasuryShare: number;        	// 10
+
+    // Eligibility
+    // minimumUptimePercent: number; // 90	// Phase 1 will not validate up time 
+    excludeSlashed: boolean;      // true
+    excludeUnbonding: boolean;    // true
+
+    notes?: string;
+}
+

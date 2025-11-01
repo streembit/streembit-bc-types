@@ -76,6 +76,8 @@ const NS = {
 
     SSC: "ssc/",
 
+    MINT: 'mint/',                        // mint/ mint related data for audit and mint processing
+
     // Undo records for rollback
     UNDO: 'undo/',                          // undo/<index>/<blockHash>/<idx> → Undo record
 
@@ -151,6 +153,8 @@ export const NSkey = {
         }
     */
     sscBuybackReserve: (cid: string) => `${NS.SSC}buyback_reserve/${cid}`,    
+
+    mintLastProcessingTime: () => `${NS.MINT}last_processing_time`,                  //  timestamp of last mint processing
     
     contractByName: (name: string) => `${ NS.CONTRACT_BY_NAME }${name}`,
 

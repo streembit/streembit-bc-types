@@ -39,6 +39,7 @@ declare const NS: {
     readonly GOVERNANCE_BASE: "governance/";
     readonly CONTRACT_BY_NAME: "contract/name/";
     readonly SSC: "ssc/";
+    readonly MINT: "mint/";
     readonly UNDO: "undo/";
 };
 export type NamespaceKey = keyof typeof NS;
@@ -76,6 +77,7 @@ export declare const NSkey: {
     governanceMintRules: (id: string) => string;
     governanceSSCPegRatio: (id: string) => string;
     sscBuybackReserve: (cid: string) => string;
+    mintLastProcessingTime: () => string;
     contractByName: (name: string) => string;
     undoEntry: (blockHash: string, key: string) => string;
     publishedMarker: (blockHash: string) => string;

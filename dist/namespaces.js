@@ -54,6 +54,7 @@ const NS = {
     GOVERNANCE_BASE: 'governance/',
     CONTRACT_BY_NAME: "contract/name/", // Named contracts (governance, treasury, etc.)
     SSC: "ssc/",
+    MINT: 'mint/', // mint/ mint related data for audit and mint processing
     // Undo records for rollback
     UNDO: 'undo/', // undo/<index>/<blockHash>/<idx> → Undo record
 };
@@ -112,6 +113,7 @@ exports.NSkey = {
         }
     */
     sscBuybackReserve: (cid) => `${NS.SSC}buyback_reserve/${cid}`,
+    mintLastProcessingTime: () => `${NS.MINT}last_processing_time`, //  timestamp of last mint processing
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,
     // Undo for block synchronization recovery
     // Undo entries: undo/<blockHash>/<key> → original value
