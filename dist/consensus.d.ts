@@ -562,4 +562,17 @@ export declare enum AccountableNodeEventType {
     VERIFICATION_UPDATED = "verification_updated",
     COMPLIANCE_CHECK_FAILED = "compliance_check_failed"
 }
+export interface MintRuleset {
+    publishedAt: number;
+    publishedBy: string;
+    policyVersion: number;
+    intervalMilliSeconds: number;
+    amountPerInterval: string;
+    creatorShare: number;
+    validatorShare: number;
+    treasuryShare: number;
+    excludeSlashed: boolean;
+    excludeUnbonding: boolean;
+    notes?: string;
+}
 //# sourceMappingURL=consensus.d.ts.map

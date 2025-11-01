@@ -769,7 +769,7 @@ export enum AccountableNodeEventType {
 
 // Minting
 
-interface MintRuleset {
+export interface MintRuleset {
     publishedAt: number;
     publishedBy: string;
     policyVersion: number;
