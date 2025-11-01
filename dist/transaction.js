@@ -5,7 +5,7 @@
  * Transaction uniqueness via timestamp, not nonces
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MAX_ALLOWED_SIGNATURES = exports.DEFAULT_LOCATION = exports.ContractLocation = exports.SSC_FEE_AMOUNT = exports.SBRIT_FEE_AMOUNT = exports.GENESIS_CONTRACT_LOCATION = exports.GENESIS_TOTAL_SUPPLY = exports.GENESIS_SALT = exports.GENESIS_TX_SIGNATURE = exports.GENESIS_SIGNATURE = exports.GENESIS_PUBKEY = exports.GENESIS_FROM = exports.TxType = void 0;
+exports.MintReward = exports.SYSTEM_MINT_ADDRESS = exports.MAX_ALLOWED_SIGNATURES = exports.DEFAULT_LOCATION = exports.ContractLocation = exports.SSC_FEE_AMOUNT = exports.SBRIT_FEE_AMOUNT = exports.GENESIS_CONTRACT_LOCATION = exports.GENESIS_TOTAL_SUPPLY = exports.GENESIS_SALT = exports.GENESIS_TX_SIGNATURE = exports.GENESIS_SIGNATURE = exports.GENESIS_PUBKEY = exports.GENESIS_FROM = exports.TxType = void 0;
 // Transaction types as defined in master spec
 var TxType;
 (function (TxType) {
@@ -15,6 +15,7 @@ var TxType;
     TxType["CONTRACT"] = "contract";
     TxType["CONTRACT_CALL"] = "contract_call";
     TxType["CONTRACT_UPGRADE"] = "contract_upgrade";
+    TxType["MINT"] = "mint";
 })(TxType || (exports.TxType = TxType = {}));
 ;
 exports.GENESIS_FROM = 'GENESIS';
@@ -38,3 +39,10 @@ exports.DEFAULT_LOCATION = {
 ;
 // Maximum allowed signatures for multisig transactions, increase this if needed for complex governance
 exports.MAX_ALLOWED_SIGNATURES = 3;
+exports.SYSTEM_MINT_ADDRESS = 'SYSTEM_MINT';
+var MintReward;
+(function (MintReward) {
+    MintReward["VALIDATOR"] = "validator_reward";
+    MintReward["CREATOR"] = "creator_reward";
+    MintReward["TREASURY"] = "treasury";
+})(MintReward || (exports.MintReward = MintReward = {}));

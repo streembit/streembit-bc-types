@@ -11,7 +11,8 @@ export declare enum TxType {
     CONTRACT_GENESIS = "genesis_system_contract",
     CONTRACT = "contract",
     CONTRACT_CALL = "contract_call",
-    CONTRACT_UPGRADE = "contract_upgrade"
+    CONTRACT_UPGRADE = "contract_upgrade",
+    MINT = "mint"
 }
 export interface TransactionSignature {
     publickey: string;
@@ -151,5 +152,29 @@ export interface TxSignParam {
     privatekey: string;
 }
 export declare const MAX_ALLOWED_SIGNATURES = 3;
-export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx;
+export declare const SYSTEM_MINT_ADDRESS = "SYSTEM_MINT";
+export declare enum MintReward {
+    VALIDATOR = "validator_reward",
+    CREATOR = "creator_reward",
+    TREASURY = "treasury"
+}
+export interface MintTx extends Omit<TransactionBase, 'signature' | 'fee' | 'to' | 'amount' | 'asset'> {
+    type: TxType.MINT;
+    from: typeof SYSTEM_MINT_ADDRESS;
+    asset: AssetId.SBRIT;
+    sequence: 0;
+    policyVersion: number;
+    epochId: number;
+    issuedTotal: string;
+    allocations: Array<{
+        address: string;
+        amount: string;
+        reason: MintReward;
+    }>;
+    metadata?: {
+        notes?: string;
+    };
+    validatorAttestations: ValidatorAttestation[];
+}
+export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx | MintTx;
 //# sourceMappingURL=transaction.d.ts.map

@@ -15,7 +15,8 @@ export enum TxType {
     CONTRACT_GENESIS = 'genesis_system_contract', 
     CONTRACT = 'contract',
     CONTRACT_CALL = 'contract_call',
-    CONTRACT_UPGRADE = 'contract_upgrade' 
+    CONTRACT_UPGRADE = 'contract_upgrade',
+    MINT = 'mint'
 }
 
 export interface TransactionSignature {
@@ -204,6 +205,32 @@ export interface TxSignParam {
 // Maximum allowed signatures for multisig transactions, increase this if needed for complex governance
 export const MAX_ALLOWED_SIGNATURES = 3;   
 
+
+export const SYSTEM_MINT_ADDRESS = 'SYSTEM_MINT';
+
+export enum MintReward {
+    VALIDATOR = 'validator_reward',  
+    CREATOR = 'creator_reward',
+    TREASURY = 'treasury',
+}
+
+export interface MintTx extends Omit<TransactionBase, 'signature' | 'fee' | 'to' | 'amount' | 'asset'> {
+    type: TxType.MINT;
+    from: typeof SYSTEM_MINT_ADDRESS;
+    asset: AssetId.SBRIT;
+    sequence: 0;                    // system tx, always zero
+    policyVersion: number;          // governance mint rules version
+    epochId: number;                // interval/epoch this mint covers
+    issuedTotal: string;            // newly created SBRIT
+    allocations: Array<{
+        address: string;
+        amount: string;
+        reason: MintReward;
+    }>;
+    metadata?: { notes?: string };
+    validatorAttestations: ValidatorAttestation[];  // accountability via validators
+}
+
 // Union type for all transactions
 export type Transaction =
     | GenesisAllocationTx
@@ -211,4 +238,5 @@ export type Transaction =
     | TransferTransaction
     | ContractCallTransaction
     | ContractTx
-    | ContractUpgradeTx;
+    | ContractUpgradeTx
+    | MintTx;
