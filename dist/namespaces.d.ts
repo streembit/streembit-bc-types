@@ -38,6 +38,7 @@ declare const NS: {
     readonly VALIDATOR_BASE: "validator/";
     readonly GOVERNANCE_BASE: "governance/";
     readonly CONTRACT_BY_NAME: "contract/name/";
+    readonly SSC: "ssc/";
     readonly UNDO: "undo/";
 };
 export type NamespaceKey = keyof typeof NS;
@@ -72,6 +73,9 @@ export declare const NSkey: {
     validatorList: () => string;
     governanceRules: () => string;
     governanceRulesAudit: (id: string) => string;
+    governanceMintRules: (id: string) => string;
+    governanceSSCPegRatio: (id: string) => string;
+    sscBuybackReserve: (cid: string) => string;
     contractByName: (name: string) => string;
     undoEntry: (blockHash: string, key: string) => string;
     publishedMarker: (blockHash: string) => string;

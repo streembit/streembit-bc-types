@@ -74,6 +74,8 @@ const NS = {
 
     CONTRACT_BY_NAME: "contract/name/",     // Named contracts (governance, treasury, etc.)
 
+    SSC: "ssc/",
+
     // Undo records for rollback
     UNDO: 'undo/',                          // undo/<index>/<blockHash>/<idx> → Undo record
 
@@ -132,9 +134,24 @@ export const NSkey = {
     validatorList: () => `${NS.VALIDATOR_BASE}list`,   
 
     governanceRules: () => `${NS.GOVERNANCE_BASE}rules`, 
-
     governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`, 
+    governanceMintRules: (id: string) => `${NS.GOVERNANCE_BASE}rules/mint`, 
+    governanceSSCPegRatio: (id: string) => `${NS.GOVERNANCE_BASE}ssc/pegratio`,         // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
 
+    /*
+        SSC buyback reserve for contract eg. 
+        {
+          "issuer": "node_01",
+          "issued_ssc": 1000000,
+          "reserve_usd": 1000000,
+          "proof_hash": "0x123abc...", 
+          "fiat_custody": "Bank XYZ","
+          "prof_of_fiat_custody: "0x456def...",
+          "attestation_time": "2025-10-31T12:00Z"
+        }
+    */
+    sscBuybackReserve: (cid: string) => `${NS.SSC}buyback_reserve/${cid}`,    
+    
     contractByName: (name: string) => `${ NS.CONTRACT_BY_NAME }${name}`,
 
     // Undo for block synchronization recovery
