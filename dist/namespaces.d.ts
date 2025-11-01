@@ -79,6 +79,7 @@ export declare const NSkey: {
     governanceSSCPegRatio: (id: string) => string;
     sscBuybackReserve: (cid: string) => string;
     mintLastProcessingTime: () => string;
+    mintLastProcessedEpoch: () => string;
     contractByName: (name: string) => string;
     undoEntry: (blockHash: string, key: string) => string;
     publishedMarker: (blockHash: string) => string;

@@ -156,6 +156,7 @@ export const NSkey = {
     sscBuybackReserve: (cid: string) => `${NS.SSC}buyback_reserve/${cid}`,    
 
     mintLastProcessingTime: () => `${NS.MINT}last_processing_time`,                  //  timestamp of last mint processing
+    mintLastProcessedEpoch: () => `${NS.MINT}lastEpoch`,
     
     contractByName: (name: string) => `${ NS.CONTRACT_BY_NAME }${name}`,
 

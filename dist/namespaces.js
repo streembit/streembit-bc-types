@@ -115,6 +115,7 @@ exports.NSkey = {
     */
     sscBuybackReserve: (cid) => `${NS.SSC}buyback_reserve/${cid}`,
     mintLastProcessingTime: () => `${NS.MINT}last_processing_time`, //  timestamp of last mint processing
+    mintLastProcessedEpoch: () => `${NS.MINT}lastEpoch`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,
     // Undo for block synchronization recovery
     // Undo entries: undo/<blockHash>/<key> → original value
