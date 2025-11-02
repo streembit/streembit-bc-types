@@ -214,10 +214,12 @@ export enum MintReward {
     TREASURY = 'treasury',
 }
 
-export interface MintTx extends Omit<TransactionBase, 'signature' | 'fee' | 'to' | 'amount' | 'asset'> {
+export interface MintTx extends TransactionBase {
     type: TxType.MINT;
     from: typeof SYSTEM_MINT_ADDRESS;
+    to: typeof SYSTEM_MINT_ADDRESS;
     asset: AssetId.SBRIT;
+    amount: '0';                    // no value transfer in mint tx
     sequence: 0;                    // system tx, always zero
     policyVersion: number;          // governance mint rules version
     epochId: number;                // interval/epoch this mint covers
