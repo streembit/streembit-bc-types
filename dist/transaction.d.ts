@@ -158,10 +158,12 @@ export declare enum MintReward {
     CREATOR = "creator_reward",
     TREASURY = "treasury"
 }
-export interface MintTx extends Omit<TransactionBase, 'signature' | 'fee' | 'to' | 'amount' | 'asset'> {
+export interface MintTx extends TransactionBase {
     type: TxType.MINT;
     from: typeof SYSTEM_MINT_ADDRESS;
+    to: typeof SYSTEM_MINT_ADDRESS;
     asset: AssetId.SBRIT;
+    amount: '0';
     sequence: 0;
     policyVersion: number;
     epochId: number;
