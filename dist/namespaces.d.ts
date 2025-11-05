@@ -77,7 +77,7 @@ export declare const NSkey: {
     governanceMintRules: (version: number) => string;
     governanceCurrentMintRules: () => string;
     sscPegRatio: () => string;
-    sscPauseFlag: (cid: string) => string;
+    sscPauseFlag: () => string;
     sscOracleState: (timestamp: number) => string;
     sscTotalOutstanding: () => string;
     sscTotalCollateral: () => string;
