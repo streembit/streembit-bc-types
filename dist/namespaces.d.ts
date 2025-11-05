@@ -76,8 +76,9 @@ export declare const NSkey: {
     governanceRulesAudit: (id: string) => string;
     governanceMintRules: (version: number) => string;
     governanceCurrentMintRules: () => string;
-    governanceSSCPegRatio: (id: string) => string;
-    sscBuybackReserve: (cid: string) => string;
+    sscPegRatio: (id: string) => string;
+    sscPauseFlag: (cid: string) => string;
+    sscOracleState: (timestamp: number) => string;
     mintLastProcessingTime: () => string;
     mintLastProcessedEpoch: () => string;
     contractByName: (name: string) => string;

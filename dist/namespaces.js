@@ -100,20 +100,9 @@ exports.NSkey = {
     governanceRulesAudit: (id) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`,
     governanceMintRules: (version) => `${NS.GOVERNANCE_BASE}rules/mint/v/${version}`,
     governanceCurrentMintRules: () => `${NS.GOVERNANCE_BASE}rules/mint/current`, // current minting rules version so to avoid fetching/iterating all versions
-    governanceSSCPegRatio: (id) => `${NS.GOVERNANCE_BASE}ssc/pegratio`, // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
-    /*
-        SSC buyback reserve for contract eg.
-        {
-          "issuer": "node_01",
-          "issued_ssc": 1000000,
-          "reserve_usd": 1000000,
-          "proof_hash": "0x123abc...",
-          "fiat_custody": "Bank XYZ","
-          "prof_of_fiat_custody: "0x456def...",
-          "attestation_time": "2025-10-31T12:00Z"
-        }
-    */
-    sscBuybackReserve: (cid) => `${NS.SSC}buyback_reserve/${cid}`,
+    sscPegRatio: (id) => `${NS.SSC}/pegratio`, // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
+    sscPauseFlag: (cid) => `${NS.SSC}pause`, // flag to indicate SSC mint is alloed/disallowed
+    sscOracleState: (timestamp) => `${NS.SSC}oracle/${timestamp}`,
     mintLastProcessingTime: () => `${NS.MINT}last_processing_time`, //  timestamp of last mint processing
     mintLastProcessedEpoch: () => `${NS.MINT}lastEpoch`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,
