@@ -105,6 +105,7 @@ exports.NSkey = {
     sscOracleState: (timestamp) => `${NS.SSC}oracle/${timestamp}`,
     sscTotalOutstanding: () => `${NS.SSC}outstanding`, // total SSC currently exists
     sscTotalCollateral: () => `${NS.SSC}totalCollateral`, // total SBRIT collateral at the contact CID
+    sscOracleLatest: () => `${NS.SSC}oracle/latest`, // latest oracle timestamp
     mintLastProcessingTime: () => `${NS.MINT}last_processing_time`, //  timestamp of last mint processing
     mintLastProcessedEpoch: () => `${NS.MINT}lastEpoch`,
     contractByName: (name) => `${NS.CONTRACT_BY_NAME}${name}`,

@@ -81,6 +81,7 @@ export declare const NSkey: {
     sscOracleState: (timestamp: number) => string;
     sscTotalOutstanding: () => string;
     sscTotalCollateral: () => string;
+    sscOracleLatest: () => string;
     mintLastProcessingTime: () => string;
     mintLastProcessedEpoch: () => string;
     contractByName: (name: string) => string;
