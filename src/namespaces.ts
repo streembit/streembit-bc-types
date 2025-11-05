@@ -141,7 +141,7 @@ export const NSkey = {
     governanceCurrentMintRules: () => `${NS.GOVERNANCE_BASE}rules/mint/current`,                // current minting rules version so to avoid fetching/iterating all versions
 
 
-    sscPegRatio: (id: string) => `${NS.SSC}/pegratio`,                                          // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
+    sscPegRatio: () => `${NS.SSC}/pegratio`,                                                    // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
     sscPauseFlag: (cid: string) => `${NS.SSC}pause`,                                            // flag to indicate SSC mint is alloed/disallowed
     sscOracleState: (timestamp: number) => `${NS.SSC}oracle/${timestamp}`,                      
     sscTotalOutstanding: () => `${NS.SSC}outstanding`,                                          // total SSC currently exists
