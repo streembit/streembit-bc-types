@@ -144,6 +144,8 @@ export const NSkey = {
     sscPegRatio: (id: string) => `${NS.SSC}/pegratio`,                                          // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
     sscPauseFlag: (cid: string) => `${NS.SSC}pause`,                                            // flag to indicate SSC mint is alloed/disallowed
     sscOracleState: (timestamp: number) => `${NS.SSC}oracle/${timestamp}`,                      
+    sscTotalOutstanding: () => `${NS.SSC}outstanding`,                                          // total SSC currently exists
+    sscTotalCollateral: () => `${NS.SSC}totalCollateral`,                                       // total SBRIT collateral at the contact CID
 
     mintLastProcessingTime: () => `${NS.MINT}last_processing_time`,                             //  timestamp of last mint processing
     mintLastProcessedEpoch: () => `${NS.MINT}lastEpoch`,

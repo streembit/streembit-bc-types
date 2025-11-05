@@ -79,6 +79,8 @@ export declare const NSkey: {
     sscPegRatio: (id: string) => string;
     sscPauseFlag: (cid: string) => string;
     sscOracleState: (timestamp: number) => string;
+    sscTotalOutstanding: () => string;
+    sscTotalCollateral: () => string;
     mintLastProcessingTime: () => string;
     mintLastProcessedEpoch: () => string;
     contractByName: (name: string) => string;
