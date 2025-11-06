@@ -12,7 +12,8 @@ export declare enum TxType {
     CONTRACT = "contract",
     CONTRACT_CALL = "contract_call",
     CONTRACT_UPGRADE = "contract_upgrade",
-    MINT = "mint"
+    SBRIT_MINT = "mint",
+    SSC_MINT = "ssc_create"
 }
 export interface TransactionSignature {
     publickey: string;
@@ -87,7 +88,7 @@ export interface ContractMetadata {
     versions: ContractVersion[];
 }
 export interface ContractTransaction extends TransactionBase {
-    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS;
+    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS | TxType.SBRIT_MINT;
     asset: AssetId.SBRIT;
     codeHash: string;
     sandboxHash: string;
@@ -126,7 +127,7 @@ export interface ContractTx extends ContractTransaction {
     contractVersion: ContractVersion[];
 }
 export interface ContractCallTransaction extends ContractTransaction {
-    type: TxType.CONTRACT_CALL;
+    type: TxType.CONTRACT_CALL | TxType.SBRIT_MINT;
     data: string;
     method: string;
 }
@@ -158,8 +159,30 @@ export declare enum MintReward {
     CREATOR = "creator_reward",
     TREASURY = "treasury"
 }
+export interface SBRITMintContractTx extends ContractCallTransaction {
+    type: TxType.SBRIT_MINT;
+    from: string;
+    to: string;
+    data: string;
+    method: string;
+    asset: AssetId.SBRIT;
+    amount: '0';
+    sequence: 0;
+    policyVersion: number;
+    epochId: number;
+    issuedTotal: string;
+    allocations: Array<{
+        address: string;
+        amount: string;
+        reason: MintReward;
+    }>;
+    metadata?: {
+        notes?: string;
+    };
+    validatorAttestations: ValidatorAttestation[];
+}
 export interface MintTx extends TransactionBase {
-    type: TxType.MINT;
+    type: TxType.SBRIT_MINT;
     from: typeof SYSTEM_MINT_ADDRESS;
     to: typeof SYSTEM_MINT_ADDRESS;
     asset: AssetId.SBRIT;

@@ -16,7 +16,8 @@ export enum TxType {
     CONTRACT = 'contract',
     CONTRACT_CALL = 'contract_call',
     CONTRACT_UPGRADE = 'contract_upgrade',
-    MINT = 'mint'
+    SBRIT_MINT = 'mint',
+    SSC_MINT = 'ssc_create',
 }
 
 export interface TransactionSignature {
@@ -119,7 +120,7 @@ export interface ContractMetadata {
 }
 
 export interface ContractTransaction extends TransactionBase {
-    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS;
+    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS | TxType.SBRIT_MINT;
     asset: AssetId.SBRIT;                       // fixed
     codeHash: string;                           // hex32 (hash of actual contract code)
     sandboxHash: string;                        // hex32 (hash of sandbox.js code)
@@ -169,10 +170,11 @@ export interface ContractTx extends ContractTransaction {
 
 // Contract call transaction
 export interface ContractCallTransaction extends ContractTransaction {
-    type: TxType.CONTRACT_CALL;
+    type: TxType.CONTRACT_CALL | TxType.SBRIT_MINT;
     data: string;                           // Call data (hex)
     method: string;                         // Method name being called
 }
+
 
 // Add upgrade transaction interface
 export interface ContractUpgradeTx extends TransactionBase {
@@ -214,8 +216,32 @@ export enum MintReward {
     TREASURY = 'treasury',
 }
 
+export interface SBRITMintContractTx extends ContractCallTransaction {
+    type: TxType.SBRIT_MINT;
+
+    from: string;                   // Sender address (Base58Check)
+    to: string;                     // Recipient address (Base58Check)
+    
+    data: string;                           // Call data (hex)
+    method: string;                         // Method name being called
+
+    asset: AssetId.SBRIT;
+    amount: '0';                    // no value transfer in mint tx
+    sequence: 0;                    // system tx, always zero
+    policyVersion: number;          // governance mint rules version
+    epochId: number;                // interval/epoch this mint covers
+    issuedTotal: string;            // newly created SBRIT
+    allocations: Array<{
+        address: string;
+        amount: string;
+        reason: MintReward;
+    }>;
+    metadata?: { notes?: string };
+    validatorAttestations: ValidatorAttestation[];  // accountability via validators
+}
+
 export interface MintTx extends TransactionBase {
-    type: TxType.MINT;
+    type: TxType.SBRIT_MINT;
     from: typeof SYSTEM_MINT_ADDRESS;
     to: typeof SYSTEM_MINT_ADDRESS;
     asset: AssetId.SBRIT;
