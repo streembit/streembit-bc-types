@@ -29,6 +29,7 @@ export interface ContractExecutionResult {
 export interface ContractMethodResult {
     result: any;                    
     success: boolean;
+    error?: string;
     balanceChanges: BalanceChange[];
     ops: BatchOp[];
 }
