@@ -5,7 +5,7 @@
  * Transaction uniqueness via timestamp, not nonces
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MintReward = exports.SYSTEM_MINT_ADDRESS = exports.MAX_ALLOWED_SIGNATURES = exports.DEFAULT_LOCATION = exports.ContractLocation = exports.SSC_FEE_AMOUNT = exports.SBRIT_FEE_AMOUNT = exports.GENESIS_CONTRACT_LOCATION = exports.GENESIS_TOTAL_SUPPLY = exports.GENESIS_SALT = exports.GENESIS_TX_SIGNATURE = exports.GENESIS_SIGNATURE = exports.GENESIS_PUBKEY = exports.GENESIS_FROM = exports.TxType = void 0;
+exports.MintReward = exports.SYSTEM_MINT_ADDRESS = exports.MAX_ALLOWED_SIGNATURES = exports.DEFAULT_LOCATION = exports.ContractLocation = exports.SSC_MINT_FEE_RATE = exports.SSC_FEE_AMOUNT = exports.SBRIT_FEE_AMOUNT = exports.GENESIS_CONTRACT_LOCATION = exports.GENESIS_TOTAL_SUPPLY = exports.GENESIS_SALT = exports.GENESIS_TX_SIGNATURE = exports.GENESIS_SIGNATURE = exports.GENESIS_PUBKEY = exports.GENESIS_FROM = exports.TxType = void 0;
 // Transaction types as defined in master spec
 var TxType;
 (function (TxType) {
@@ -29,6 +29,7 @@ exports.GENESIS_CONTRACT_LOCATION = "dist/node/smart-contracts/genesis/treasury_
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
 exports.SBRIT_FEE_AMOUNT = '0.01';
 exports.SSC_FEE_AMOUNT = '0.01';
+exports.SSC_MINT_FEE_RATE = '0.005'; // 0.5%  of created SSC amount as fee
 var ContractLocation;
 (function (ContractLocation) {
     ContractLocation["FS"] = "file_system";

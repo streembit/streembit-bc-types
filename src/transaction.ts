@@ -43,6 +43,7 @@ export interface ValidatorAttestation {
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
 export const SBRIT_FEE_AMOUNT: string = '0.01';
 export const SSC_FEE_AMOUNT: string = '0.01';
+export const SSC_MINT_FEE_RATE: string = '0.005';    // 0.5%  of created SSC amount as fee
 
 export interface TransactionFee {
     amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;      

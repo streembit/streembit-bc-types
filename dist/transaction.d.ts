@@ -33,6 +33,7 @@ export interface ValidatorAttestation {
 }
 export declare const SBRIT_FEE_AMOUNT: string;
 export declare const SSC_FEE_AMOUNT: string;
+export declare const SSC_MINT_FEE_RATE: string;
 export interface TransactionFee {
     amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
     asset: AssetId;
