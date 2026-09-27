@@ -50,11 +50,11 @@ export declare const POC_CONSTANTS: {
     readonly DEPOSIT_MULTIPLIER: 2;
     readonly MIN_ASSETS_USD: 5000000;
     readonly BLOCK_FINALIZE_WINDOW: 60;
-    readonly APPROVED_JURISDICTIONS: readonly ["US", "UK", "EU", "JP", "AU", "CH"];
-    readonly TOPIC_POC_PROPOSAL: "poc/proposal";
-    readonly TOPIC_POC_APPROVAL: "poc/approval";
-    readonly TOPIC_POC_COMMIT: "poc/commit";
-    readonly TOPIC_TX: "mempool/tx";
+    readonly APPROVED_JURISDICTIONS: readonly ['US', 'UK', 'EU', 'JP', 'AU', 'CH'];
+    readonly TOPIC_POC_PROPOSAL: 'poc/proposal';
+    readonly TOPIC_POC_APPROVAL: 'poc/approval';
+    readonly TOPIC_POC_COMMIT: 'poc/commit';
+    readonly TOPIC_TX: 'mempool/tx';
     readonly DEFAULT_ACTIVE_SET_SIZE: 7;
     readonly DEFAULT_QUORUM_THRESHOLD: 0.67;
     readonly INSTANT_MODE_TIMEOUT_MS: 500;

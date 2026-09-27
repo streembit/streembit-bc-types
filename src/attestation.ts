@@ -10,6 +10,8 @@ export enum AttestationType {
     AGE = 'age',
     CASHPAID = 'cashpaid',
     FUNDAVAILABLE = 'fundavailable',
+    AML = 'aml', //  Anti-Money Laundering 
+    KYC = 'kyc' // Know Your Customer
 }
 
 export interface AttestationBase {
@@ -55,6 +57,28 @@ export interface FundAvailableAttestation extends AttestationBase {
     expiryDate: number; // Timestamp, expiry date of the fund availability
 }
 
+export enum IdType {
+    PASSPORT = "passport",
+    DRIVINGLICENSE = "drivinglicense",
+    IDCARD = "identitycard"
+}
+
+export interface AttestationIdentity  {
+    name: string;               //  Currency of the amount available
+    birthday: string;           //  Amount available
+    idType: IdType;             //  Type of identity document
+    idNumber: number;           //  Timestamp, expiry date of the fund availability
+    idCountry: string;          //  Country code of ID document issuing country
+    idIssuingAuth: string       //  ID document issuing authority
+}
+
+export interface AMLAttestation extends AttestationBase {
+    type: AttestationType.AML;
+    identity: AttestationIdentity;
+    fundsource: "string";       //  Source of funds eg. savings, salary, pernsion, investment
+    fundcountry: "string";      //  Country, jurisdiction of the funds       
+}
+
 export type Attestation =
     IdentityAttestation |
     EmailAddressAttestation |
@@ -62,7 +86,8 @@ export type Attestation =
     AgeAttestation |
     MobileNumberAttestation |
     CashPaidAttestation |
-    FundAvailableAttestation;
+    FundAvailableAttestation |
+    AMLAttestation;
 
 export interface AttestationVerificationResult {
     attestation: Attestation;
@@ -71,8 +96,9 @@ export interface AttestationVerificationResult {
 }
 
 export interface AttestationCipherData {
-    cipherText: string; // Encrypted attestation data
-    issuerNodeId: string; // NodeId of the attestation issuer
-    issuerPublicKey: string; // Public key of the issuer    
-    auth_tag: string; // Authentication tag for the encrypted data
+    cipherText: string;         // Encrypted attestation data
+    issuerNodeId: string;       // NodeId of the attestation issuer
+    issuerPublicKey: string;    // Public key of the issuer    
+    authTag: string;            // Authentication tag for the encrypted data
+    iv: string;                 // Random bytes, needed to decrypt
 }

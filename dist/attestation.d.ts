@@ -5,7 +5,9 @@ export declare enum AttestationType {
     ADDRESS = "address",
     AGE = "age",
     CASHPAID = "cashpaid",
-    FUNDAVAILABLE = "fundavailable"
+    FUNDAVAILABLE = "fundavailable",
+    AML = "aml",//  Anti-Money Laundering 
+    KYC = "kyc"
 }
 export interface AttestationBase {
     type: AttestationType;
@@ -42,7 +44,26 @@ export interface FundAvailableAttestation extends AttestationBase {
     amount: string;
     expiryDate: number;
 }
-export type Attestation = IdentityAttestation | EmailAddressAttestation | AddressAttestation | AgeAttestation | MobileNumberAttestation | CashPaidAttestation | FundAvailableAttestation;
+export declare enum IdType {
+    PASSPORT = "passport",
+    DRIVINGLICENSE = "drivinglicense",
+    IDCARD = "identitycard"
+}
+export interface AttestationIdentity {
+    name: string;
+    birthday: string;
+    idType: IdType;
+    idNumber: number;
+    idCountry: string;
+    idIssuingAuth: string;
+}
+export interface AMLAttestation extends AttestationBase {
+    type: AttestationType.AML;
+    identity: AttestationIdentity;
+    fundsource: "string";
+    fundcountry: "string";
+}
+export type Attestation = IdentityAttestation | EmailAddressAttestation | AddressAttestation | AgeAttestation | MobileNumberAttestation | CashPaidAttestation | FundAvailableAttestation | AMLAttestation;
 export interface AttestationVerificationResult {
     attestation: Attestation;
     isValid: boolean;
@@ -52,6 +73,7 @@ export interface AttestationCipherData {
     cipherText: string;
     issuerNodeId: string;
     issuerPublicKey: string;
-    auth_tag: string;
+    authTag: string;
+    iv: string;
 }
 //# sourceMappingURL=attestation.d.ts.map
