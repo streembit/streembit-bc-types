@@ -768,19 +768,22 @@ export enum AccountableNodeEventType {
 }
 
 // Minting
+export interface MintEra {
+    era: number;
+    startMilliSeconds: number;      // offset from CHAIN_START_TIME
+    intervalMilliSeconds: number;   // 3,600,000 for hourly
+    amountPerInterval: string;      // SBRIT minted per interval
+    creatorShare: number;           // distribution of newly minted coins, must sum to 100
+    validatorShare: number;
+    treasuryShare: number;
+}
 
 export interface MintRuleset {
     publishedAt: number;
     publishedBy: string;
     policyVersion: number;
 
-    intervalMilliSeconds: number;      // 3,600,000 for hourly
-    amountPerInterval: string;    	// "100" SBRIT
-
-    // Distribution of NEWLY MINTED coins (must sum to 100)
-    creatorShare: number;         	// 40
-    validatorShare: number;       	// 50
-    treasuryShare: number;        	// 10
+    eras: MintEra[];
 
     // Eligibility
     // minimumUptimePercent: number; // 90	// Phase 1 will not validate up time 

@@ -562,15 +562,20 @@ export declare enum AccountableNodeEventType {
     VERIFICATION_UPDATED = "verification_updated",
     COMPLIANCE_CHECK_FAILED = "compliance_check_failed"
 }
-export interface MintRuleset {
-    publishedAt: number;
-    publishedBy: string;
-    policyVersion: number;
+export interface MintEra {
+    era: number;
+    startMilliSeconds: number;
     intervalMilliSeconds: number;
     amountPerInterval: string;
     creatorShare: number;
     validatorShare: number;
     treasuryShare: number;
+}
+export interface MintRuleset {
+    publishedAt: number;
+    publishedBy: string;
+    policyVersion: number;
+    eras: MintEra[];
     excludeSlashed: boolean;
     excludeUnbonding: boolean;
     notes?: string;

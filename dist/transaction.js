@@ -24,7 +24,7 @@ exports.GENESIS_PUBKEY = '0'.repeat(66);
 exports.GENESIS_SIGNATURE = 'GENESIS_SIGNATURE';
 exports.GENESIS_TX_SIGNATURE = { "publickey": exports.GENESIS_PUBKEY, "signature": exports.GENESIS_SIGNATURE };
 exports.GENESIS_SALT = 'GENESIS_SALT';
-exports.GENESIS_TOTAL_SUPPLY = (1).toString(); // Ten million SBRIT
+exports.GENESIS_TOTAL_SUPPLY = (1).toString();
 exports.GENESIS_CONTRACT_LOCATION = "dist/node/smart-contracts/genesis/treasury_v1.js";
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
 exports.SBRIT_FEE_AMOUNT = '0.01';
