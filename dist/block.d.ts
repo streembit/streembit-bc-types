@@ -3,7 +3,6 @@
  * As defined in white paper section "Block production" and master spec section 4.1
  */
 import type { Transaction } from './transaction';
-import { CHAIN_START_TIME } from './system';
 export interface CreatorApproval {
     creatorId: string;
     creatorPubKey: string;
@@ -22,7 +21,7 @@ export interface Block {
 }
 export declare const GENESIS_CREATOR: CreatorApproval;
 export interface GenesisBlockheader extends BlockHeader {
-    timestamp: typeof CHAIN_START_TIME;
+    timestamp: number;
     creatorApproval: typeof GENESIS_CREATOR;
 }
 export interface GenesisBlock extends Block {

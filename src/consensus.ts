@@ -770,7 +770,7 @@ export enum AccountableNodeEventType {
 // Minting
 export interface MintEra {
     era: number;
-    startMilliSeconds: number;      // offset from CHAIN_START_TIME
+    startMilliSeconds: number;      // offset from genesis timestamp
     intervalMilliSeconds: number;   // 3,600,000 for hourly
     amountPerInterval: string;      // SBRIT minted per interval
     creatorShare: number;           // distribution of newly minted coins, must sum to 100

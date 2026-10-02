@@ -4,8 +4,6 @@
  */
 
 import type { Transaction } from './transaction';
-import { CHAIN_START_TIME } from './system';
-
 
 export interface CreatorApproval {
     creatorId: string;              // address or 32B id
@@ -34,7 +32,7 @@ export interface Block {
 export const GENESIS_CREATOR: CreatorApproval = { "creatorId": '0', "creatorPubKey": '0', "signature": '0' };
 
 export interface GenesisBlockheader extends BlockHeader {
-    timestamp: typeof CHAIN_START_TIME;                 // Fixed timestamp for genesis block
+    timestamp: number;                 // Fixed timestamp for genesis block
     creatorApproval: typeof GENESIS_CREATOR;            // No creator approval in genesis block
 }
 export interface GenesisBlock extends Block {

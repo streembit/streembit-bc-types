@@ -4,7 +4,6 @@
  * Transaction uniqueness via timestamp, not nonces
  */
 import { AssetId } from './asset';
-import { CHAIN_START_TIME } from './system';
 export declare enum TxType {
     GENESIS = "genesis",
     TRANSFER = "transfer",
@@ -99,7 +98,7 @@ export interface ContractTransaction extends TransactionBase {
 export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
     type: TxType.GENESIS;
     from: typeof GENESIS_FROM;
-    timestamp: typeof CHAIN_START_TIME;
+    timestamp: number;
     signature: [typeof GENESIS_TX_SIGNATURE];
     validatorAttestations: [];
     fee: null;
@@ -107,7 +106,7 @@ export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
 export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
     type: TxType.CONTRACT_GENESIS;
     from: typeof GENESIS_FROM;
-    timestamp: typeof CHAIN_START_TIME;
+    timestamp: number;
     amount: '0';
     sequence: 0;
     signature: [typeof GENESIS_TX_SIGNATURE];

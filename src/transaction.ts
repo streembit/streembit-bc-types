@@ -5,7 +5,6 @@
  */
 
 import { AssetId } from './asset';
-import { CHAIN_START_TIME } from './system';
 
 
 // Transaction types as defined in master spec
@@ -132,7 +131,7 @@ export interface ContractTransaction extends TransactionBase {
 export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
     type: TxType.GENESIS;
     from: typeof GENESIS_FROM;
-    timestamp: typeof CHAIN_START_TIME;              // fixed
+    timestamp: number;              // fixed
     signature: [typeof GENESIS_TX_SIGNATURE];
     validatorAttestations: [];                      // MUST be empty
     fee: null;                                      // Genesis transactions have no fees
@@ -142,7 +141,7 @@ export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
 export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
     type: TxType.CONTRACT_GENESIS;
     from: typeof GENESIS_FROM;
-    timestamp: typeof CHAIN_START_TIME;         // fixed
+    timestamp: number;         // fixed
     amount: '0';                                // no value transfer in declaration   
     sequence: 0;                                // REQUIRED
     signature: [typeof GENESIS_TX_SIGNATURE];
