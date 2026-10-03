@@ -81,11 +81,7 @@ const NS = {
     // Undo records for rollback
     UNDO: 'undo/',                          // undo/<index>/<blockHash>/<idx> → Undo record
 
-    MULTISIG: 'multisig/',                            
-    
-    multisigPending: (id: string) => `${NS.MULTISIG}pending/${id}`,
-
-    multisigSender: (address: string) => `${NS.MULTISIG}sender/${address}`
+    MULTISIG: 'multisig/'                       
 
 } as const;
 
@@ -172,4 +168,8 @@ export const NSkey = {
 
     // Block count reverse index
     blockCountIndex: (blockCount: number) => `${NS.BLOCK_COUNT_INDEX}${blockCount}`,
+
+    multisigPending: (id: string) => `${NS.MULTISIG}pending/${id}`,
+
+    multisigSender: (address: string) => `${NS.MULTISIG}sender/${address}`
 };

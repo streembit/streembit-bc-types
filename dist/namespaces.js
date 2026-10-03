@@ -57,9 +57,7 @@ const NS = {
     MINT: 'mint/', // mint/ mint related data for audit and mint processing
     // Undo records for rollback
     UNDO: 'undo/', // undo/<index>/<blockHash>/<idx> → Undo record
-    MULTISIG: 'multisig/',
-    multisigPending: (id) => `${NS.MULTISIG}pending/${id}`,
-    multisigSender: (address) => `${NS.MULTISIG}sender/${address}`
+    MULTISIG: 'multisig/'
 };
 // Freeze the NS object to make it truly immutable
 Object.freeze(NS);
@@ -122,4 +120,6 @@ exports.NSkey = {
     metaBlockCount: () => NS.META_BLOCK_COUNT,
     // Block count reverse index
     blockCountIndex: (blockCount) => `${NS.BLOCK_COUNT_INDEX}${blockCount}`,
+    multisigPending: (id) => `${NS.MULTISIG}pending/${id}`,
+    multisigSender: (address) => `${NS.MULTISIG}sender/${address}`
 };

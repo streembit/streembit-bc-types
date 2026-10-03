@@ -42,8 +42,6 @@ declare const NS: {
     readonly MINT: 'mint/';
     readonly UNDO: 'undo/';
     readonly MULTISIG: 'multisig/';
-    readonly multisigPending: (id: string) => string;
-    readonly multisigSender: (address: string) => string;
 };
 export type NamespaceKey = keyof typeof NS;
 export type NamespaceValue = typeof NS[NamespaceKey];
@@ -93,6 +91,8 @@ export declare const NSkey: {
     metaTip: () => "meta/tiphash";
     metaBlockCount: () => "meta/blockcount";
     blockCountIndex: (blockCount: number) => string;
+    multisigPending: (id: string) => string;
+    multisigSender: (address: string) => string;
 };
 export {};
 //# sourceMappingURL=namespaces.d.ts.map
