@@ -290,5 +290,4 @@ export type Transaction =
     | ContractCallTransaction
     | ContractTx
     | ContractUpgradeTx
-    | MintTx 
-    | PendingMultisigTx;
+    | MintTx;

@@ -220,5 +220,5 @@ export interface PendingMultisigTx {
     expiresAt: number;
     submittedTxId?: string;
 }
-export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx | MintTx | PendingMultisigTx;
+export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx | MintTx;
 //# sourceMappingURL=transaction.d.ts.map
