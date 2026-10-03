@@ -57,6 +57,9 @@ const NS = {
     MINT: 'mint/', // mint/ mint related data for audit and mint processing
     // Undo records for rollback
     UNDO: 'undo/', // undo/<index>/<blockHash>/<idx> → Undo record
+    MULTISIG: 'multisig/',
+    multisigPending: (id) => `${NS.MULTISIG}pending/${id}`,
+    multisigSender: (address) => `${NS.MULTISIG}sender/${address}`
 };
 // Freeze the NS object to make it truly immutable
 Object.freeze(NS);

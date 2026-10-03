@@ -201,5 +201,24 @@ export interface MintTx extends TransactionBase {
     };
     validatorAttestations: ValidatorAttestation[];
 }
-export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx | MintTx;
+export type PendingMultisigStatus = 'pending' | 'submitted' | 'expired' | 'stale';
+export interface PendingMultisigSignature {
+    publickey: string;
+    signature: string;
+    receivedAt: number;
+}
+export interface PendingMultisigTx {
+    id: string;
+    unsignedTx: ContractCallTransaction;
+    contract: string;
+    method: string;
+    thresholdM: number;
+    authorizedSigners: string[];
+    signatures: PendingMultisigSignature[];
+    status: PendingMultisigStatus;
+    createdAt: number;
+    expiresAt: number;
+    submittedTxId?: string;
+}
+export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx | MintTx | PendingMultisigTx;
 //# sourceMappingURL=transaction.d.ts.map

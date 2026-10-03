@@ -41,6 +41,9 @@ declare const NS: {
     readonly SSC: "ssc/";
     readonly MINT: 'mint/';
     readonly UNDO: 'undo/';
+    readonly MULTISIG: 'multisig/';
+    readonly multisigPending: (id: string) => string;
+    readonly multisigSender: (address: string) => string;
 };
 export type NamespaceKey = keyof typeof NS;
 export type NamespaceValue = typeof NS[NamespaceKey];

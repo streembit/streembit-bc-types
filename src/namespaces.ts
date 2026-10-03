@@ -81,6 +81,12 @@ const NS = {
     // Undo records for rollback
     UNDO: 'undo/',                          // undo/<index>/<blockHash>/<idx> → Undo record
 
+    MULTISIG: 'multisig/',                            
+    
+    multisigPending: (id: string) => `${NS.MULTISIG}pending/${id}`,
+
+    multisigSender: (address: string) => `${NS.MULTISIG}sender/${address}`
+
 } as const;
 
 // Freeze the NS object to make it truly immutable

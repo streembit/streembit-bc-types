@@ -259,6 +259,29 @@ export interface MintTx extends TransactionBase {
     validatorAttestations: ValidatorAttestation[];  // accountability via validators
 }
 
+export type PendingMultisigStatus = 'pending' | 'submitted' | 'expired' | 'stale';
+
+export interface PendingMultisigSignature {
+    publickey: string;
+    signature: string;
+    receivedAt: number;
+}
+
+export interface PendingMultisigTx {
+    id: string;                          // hex hash of the deterministic unsigned tx bytes
+    unsignedTx: ContractCallTransaction; // sender = officer address, signature: []
+    contract: string;                    // target contract address
+    method: string;
+    thresholdM: number;                  // from the contract's policy at creation
+    authorizedSigners: string[];         // snapshot from the contract's policy at creation
+    signatures: PendingMultisigSignature[];
+    status: PendingMultisigStatus;
+    createdAt: number;
+    expiresAt: number;                   // unsignedTx.timestamp + 1 hour
+    submittedTxId?: string;
+}
+
+
 // Union type for all transactions
 export type Transaction =
     | GenesisAllocationTx
@@ -267,4 +290,5 @@ export type Transaction =
     | ContractCallTransaction
     | ContractTx
     | ContractUpgradeTx
-    | MintTx;
+    | MintTx 
+    | PendingMultisigTx;
