@@ -16,6 +16,8 @@ declare const NS: {
     readonly BLOCK_INDEX: 'bidx/';
     readonly BLOCK_DATA: 'blk/';
     readonly BLOCK_COUNT_INDEX: 'bcnt/';
+    readonly TX_INDEX: 'tx/';
+    readonly ADDRESS_TX: 'addrtx/';
     readonly META_TIP: 'meta/tiphash';
     readonly META_BLOCK_COUNT: 'meta/blockcount';
     readonly GENESIS_PROCESSED: 'genesis/processed';
@@ -91,6 +93,9 @@ export declare const NSkey: {
     metaTip: () => "meta/tiphash";
     metaBlockCount: () => "meta/blockcount";
     blockCountIndex: (blockCount: number) => string;
+    txIndex: (txid: string) => string;
+    addressTx: (address: string, blockCount: number) => string;
+    addressTxPrefix: (address: string) => string;
     multisigPending: (id: string) => string;
     multisigSender: (address: string) => string;
 };

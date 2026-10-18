@@ -24,11 +24,15 @@ const normHash = (hex: string) => hex.toLowerCase(); // validate elsewhere if yo
 const NS = {
 
     // Blocks & chain metadata
-    BLOCK_INDEX: 'bidx/',           // bidx/<blockHash> → Block index metadata
-    BLOCK_DATA: 'blk/',             // blk/<blockHash> → Raw block bytes
-    BLOCK_COUNT_INDEX: 'bcnt/',     // bcnt/<blockCount> → Block hash (reverse index)
-    META_TIP: 'meta/tiphash',       // Current chain tip hash
-    META_BLOCK_COUNT: 'meta/blockcount',  // Total number of blocks
+    BLOCK_INDEX: 'bidx/',                       // bidx/<blockHash> → Block index metadata
+    BLOCK_DATA: 'blk/',                         // blk/<blockHash> → Raw block bytes
+    BLOCK_COUNT_INDEX: 'bcnt/',                 // bcnt/<blockCount> → Block hash (reverse index)
+
+    TX_INDEX: 'tx/',                            // tx/<txid> → Block hash of the block holding the transaction (one tx per block)
+    ADDRESS_TX: 'addrtx/',                      // addrtx/<address>/<PAD20(blockCount)> → Block hash; newest first on reverse iteration
+
+    META_TIP: 'meta/tiphash',                   // Current chain tip hash
+    META_BLOCK_COUNT: 'meta/blockcount',        // Total number of blocks
 
     // Genesis & chain initialization
     GENESIS_PROCESSED: 'genesis/processed',     // Boolean flag: has genesis been processed?
@@ -168,6 +172,10 @@ export const NSkey = {
 
     // Block count reverse index
     blockCountIndex: (blockCount: number) => `${NS.BLOCK_COUNT_INDEX}${blockCount}`,
+
+    txIndex: (txid: string) => `${NS.TX_INDEX}${txid}`,
+    addressTx: (address: string, blockCount: number) => `${NS.ADDRESS_TX}${address}/${PAD20(blockCount)}`,
+    addressTxPrefix: (address: string) => `${NS.ADDRESS_TX}${address}/`,
 
     multisigPending: (id: string) => `${NS.MULTISIG}pending/${id}`,
 

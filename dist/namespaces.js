@@ -16,6 +16,8 @@ const NS = {
     BLOCK_INDEX: 'bidx/', // bidx/<blockHash> → Block index metadata
     BLOCK_DATA: 'blk/', // blk/<blockHash> → Raw block bytes
     BLOCK_COUNT_INDEX: 'bcnt/', // bcnt/<blockCount> → Block hash (reverse index)
+    TX_INDEX: 'tx/', // tx/<txid> → Block hash of the block holding the transaction (one tx per block)
+    ADDRESS_TX: 'addrtx/', // addrtx/<address>/<PAD20(blockCount)> → Block hash; newest first on reverse iteration
     META_TIP: 'meta/tiphash', // Current chain tip hash
     META_BLOCK_COUNT: 'meta/blockcount', // Total number of blocks
     // Genesis & chain initialization
@@ -120,6 +122,9 @@ exports.NSkey = {
     metaBlockCount: () => NS.META_BLOCK_COUNT,
     // Block count reverse index
     blockCountIndex: (blockCount) => `${NS.BLOCK_COUNT_INDEX}${blockCount}`,
+    txIndex: (txid) => `${NS.TX_INDEX}${txid}`,
+    addressTx: (address, blockCount) => `${NS.ADDRESS_TX}${address}/${PAD20(blockCount)}`,
+    addressTxPrefix: (address) => `${NS.ADDRESS_TX}${address}/`,
     multisigPending: (id) => `${NS.MULTISIG}pending/${id}`,
     multisigSender: (address) => `${NS.MULTISIG}sender/${address}`
 };
