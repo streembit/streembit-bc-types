@@ -4,6 +4,7 @@
  */
 
 import type { Transaction } from './transaction';
+import type { AssetId } from './asset';
 
 export interface CreatorApproval {
     creatorId: string;              // address or 32B id
@@ -50,4 +51,25 @@ export interface BlockIndex {
     creatorId: string;              // Creator ID
 }
 
+// For storage: statediff/<height> -> StateDiff, written in the block's batch for the read mirror
+export type StateDiffRole = 'sent' | 'received' | 'contract' | 'fee';
 
+export interface StateDiffTxEntry {
+    txid: string;                   // Transaction in the block that touched the account
+    role: StateDiffRole;            // The account's role in that transaction
+    change: string;                 // Signed decimal change to the balance, e.g. "-5.01" or "0.01"
+}
+
+export interface StateDiffAccount {
+    address: string;
+    asset: AssetId;
+    balance: string;                // Balance after the block; "0" when the key was deleted
+    sequence?: number;              // Sequence after the block, present only when the block wrote it
+    transactions: StateDiffTxEntry[];
+}
+
+export interface StateDiff {
+    height: number;
+    hash: string;                   // Hash of the block the diff belongs to
+    accounts: StateDiffAccount[];
+}

@@ -18,6 +18,7 @@ const NS = {
     BLOCK_COUNT_INDEX: 'bcnt/', // bcnt/<blockCount> → Block hash (reverse index)
     TX_INDEX: 'tx/', // tx/<txid> → Block hash of the block holding the transaction (one tx per block)
     ADDRESS_TX: 'addrtx/', // addrtx/<address>/<PAD20(blockCount)> → Block hash; newest first on reverse iteration
+    STATE_DIFF: 'statediff/', // statediff/<height> → StateDiff JSON: accounts the block changed, for the read mirror
     META_TIP: 'meta/tiphash', // Current chain tip hash
     META_BLOCK_COUNT: 'meta/blockcount', // Total number of blocks
     // Genesis & chain initialization
@@ -125,6 +126,7 @@ exports.NSkey = {
     txIndex: (txid) => `${NS.TX_INDEX}${txid}`,
     addressTx: (address, blockCount) => `${NS.ADDRESS_TX}${address}/${PAD20(blockCount)}`,
     addressTxPrefix: (address) => `${NS.ADDRESS_TX}${address}/`,
+    stateDiff: (height) => `${NS.STATE_DIFF}${height}`,
     multisigPending: (id) => `${NS.MULTISIG}pending/${id}`,
     multisigSender: (address) => `${NS.MULTISIG}sender/${address}`
 };

@@ -3,6 +3,7 @@
  * As defined in white paper section "Block production" and master spec section 4.1
  */
 import type { Transaction } from './transaction';
+import type { AssetId } from './asset';
 export interface CreatorApproval {
     creatorId: string;
     creatorPubKey: string;
@@ -35,5 +36,23 @@ export interface BlockIndex {
     txCount: number;
     totalValue: string;
     creatorId: string;
+}
+export type StateDiffRole = 'sent' | 'received' | 'contract' | 'fee';
+export interface StateDiffTxEntry {
+    txid: string;
+    role: StateDiffRole;
+    change: string;
+}
+export interface StateDiffAccount {
+    address: string;
+    asset: AssetId;
+    balance: string;
+    sequence?: number;
+    transactions: StateDiffTxEntry[];
+}
+export interface StateDiff {
+    height: number;
+    hash: string;
+    accounts: StateDiffAccount[];
 }
 //# sourceMappingURL=block.d.ts.map
