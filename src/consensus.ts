@@ -31,10 +31,13 @@ export interface NodeIdentity {
     role?: string;                  // 'creator' | 'validator'
 }
 
+// Roles a peer may hold; a mirror pulls blocks and state diffs and is never pushed to
+export type PeerRole = 'public' | 'validator' | 'creator' | 'officer' | 'mirror';
+
 export interface PeerInfo extends NodeIdentity {
     name?: string;
     baseUrl?: string;
-    roles?: string[];
+    roles?: PeerRole[];
 }
 
 export interface Attestor {

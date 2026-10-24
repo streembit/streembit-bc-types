@@ -62,6 +62,31 @@ export const VALIDATOR = {
 export type ValidatorRoute = typeof VALIDATOR[keyof typeof VALIDATOR];
 
 // ============================================================================
+// Signed Peer Routes (POST, canonical JSON body, peer-authenticated, signed responses)
+// ============================================================================
+
+export const P2P_ROUTES = {
+    LATEST: '/p2p/latest',                  // chain tip: creator, validator and mirror peers
+    BLOCKS: '/p2p/blocks',                  // block range by height: creator, validator and mirror peers
+    STATEDIFFS: '/p2p/statediffs',          // state diff range by height: creator, validator and mirror peers
+    PUBLISH: '/p2p/stream/publish',         // block push: creator peers only
+    ATTEST: '/p2p/attest',                  // attestation request: creator peers only
+} as const;
+
+export type P2PRoute = typeof P2P_ROUTES[keyof typeof P2P_ROUTES];
+
+/**
+ * Headers of a signed peer request and of its signed response, lowercase as Node exposes them.
+ * The signature covers method, path, SHA-256 of the canonical body, node id, timestamp and nonce.
+ */
+export const PEER_AUTH_HEADERS = {
+    NODE_ID: 'x-sb-nodeid',
+    TIMESTAMP: 'x-sb-timestamp',
+    NONCE: 'x-sb-nonce',
+    SIGNATURE: 'x-sb-signature',
+} as const;
+
+// ============================================================================
 // All Routes Union Type
 // ============================================================================
 
@@ -70,7 +95,8 @@ export type ApiRoute =
     | ChainRoute
     | BlockRoute
     | TxRoute
-    | ValidatorRoute;
+    | ValidatorRoute
+    | P2PRoute;
 
 // ============================================================================
 // API Constants

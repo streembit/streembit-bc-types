@@ -11,3 +11,4 @@ export * from './transaction';
 export * from './namespaces';
 export * from './contract';
 export * from './blocktransport';
+export * from './p2p';
