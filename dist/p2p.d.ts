@@ -12,6 +12,7 @@ export interface BlockEnvelope {
     cursor: BlockCursor;
     parentHash: string;
     block: Block;
+    stateDiff?: StateDiff;
 }
 export interface LatestResponse extends BlockCursor {
 }

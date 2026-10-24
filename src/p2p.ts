@@ -16,6 +16,7 @@ export interface BlockEnvelope {
     cursor: BlockCursor;
     parentHash: string;             // Hash of the block at height - 1; '' for height 1
     block: Block;
+    stateDiff?: StateDiff;          // The block's state diff; present only in a push to a read mirror, never when served to validators or by /p2p/blocks
 }
 
 // /p2p/latest response: the node's chain tip; height 0 and hash '' on an empty chain
