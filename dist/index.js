@@ -25,3 +25,4 @@ __exportStar(require("./transaction"), exports);
 __exportStar(require("./namespaces"), exports);
 __exportStar(require("./contract"), exports);
 __exportStar(require("./blocktransport"), exports);
+__exportStar(require("./p2p"), exports);

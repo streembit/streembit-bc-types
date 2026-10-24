@@ -30,7 +30,25 @@ export declare const VALIDATOR: {
     readonly SUBMIT_ATTESTATION: '/attestations/submit';
 };
 export type ValidatorRoute = typeof VALIDATOR[keyof typeof VALIDATOR];
-export type ApiRoute = PeerRoute | ChainRoute | BlockRoute | TxRoute | ValidatorRoute;
+export declare const P2P_ROUTES: {
+    readonly LATEST: '/p2p/latest';
+    readonly BLOCKS: '/p2p/blocks';
+    readonly STATEDIFFS: '/p2p/statediffs';
+    readonly PUBLISH: '/p2p/stream/publish';
+    readonly ATTEST: '/p2p/attest';
+};
+export type P2PRoute = typeof P2P_ROUTES[keyof typeof P2P_ROUTES];
+/**
+ * Headers of a signed peer request and of its signed response, lowercase as Node exposes them.
+ * The signature covers method, path, SHA-256 of the canonical body, node id, timestamp and nonce.
+ */
+export declare const PEER_AUTH_HEADERS: {
+    readonly NODE_ID: 'x-sb-nodeid';
+    readonly TIMESTAMP: 'x-sb-timestamp';
+    readonly NONCE: 'x-sb-nonce';
+    readonly SIGNATURE: 'x-sb-signature';
+};
+export type ApiRoute = PeerRoute | ChainRoute | BlockRoute | TxRoute | ValidatorRoute | P2PRoute;
 /**
  * Maximum number of blocks that can be requested in a single inventory query.
  * Used by both client (PeerClient/Synchronizer) and server (route handlers).

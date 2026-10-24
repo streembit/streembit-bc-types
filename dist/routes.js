@@ -6,7 +6,7 @@
  * and ensure type safety across the REST API.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MAX_BLOCK_COUNT = exports.VALIDATOR = exports.TX = exports.BLOCK = exports.CHAIN = exports.PEER = void 0;
+exports.MAX_BLOCK_COUNT = exports.PEER_AUTH_HEADERS = exports.P2P_ROUTES = exports.VALIDATOR = exports.TX = exports.BLOCK = exports.CHAIN = exports.PEER = void 0;
 exports.buildBlockByHashRoute = buildBlockByHashRoute;
 exports.buildTxByIdRoute = buildTxByIdRoute;
 // ============================================================================
@@ -44,6 +44,26 @@ exports.TX = {
 // ============================================================================
 exports.VALIDATOR = {
     SUBMIT_ATTESTATION: '/attestations/submit',
+};
+// ============================================================================
+// Signed Peer Routes (POST, canonical JSON body, peer-authenticated, signed responses)
+// ============================================================================
+exports.P2P_ROUTES = {
+    LATEST: '/p2p/latest', // chain tip: creator, validator and mirror peers
+    BLOCKS: '/p2p/blocks', // block range by height: creator, validator and mirror peers
+    STATEDIFFS: '/p2p/statediffs', // state diff range by height: creator, validator and mirror peers
+    PUBLISH: '/p2p/stream/publish', // block push: creator peers only
+    ATTEST: '/p2p/attest', // attestation request: creator peers only
+};
+/**
+ * Headers of a signed peer request and of its signed response, lowercase as Node exposes them.
+ * The signature covers method, path, SHA-256 of the canonical body, node id, timestamp and nonce.
+ */
+exports.PEER_AUTH_HEADERS = {
+    NODE_ID: 'x-sb-nodeid',
+    TIMESTAMP: 'x-sb-timestamp',
+    NONCE: 'x-sb-nonce',
+    SIGNATURE: 'x-sb-signature',
 };
 // ============================================================================
 // API Constants

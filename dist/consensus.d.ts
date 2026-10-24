@@ -20,10 +20,11 @@ export interface NodeIdentity {
     address?: string;
     role?: string;
 }
+export type PeerRole = 'public' | 'validator' | 'creator' | 'officer' | 'mirror';
 export interface PeerInfo extends NodeIdentity {
     name?: string;
     baseUrl?: string;
-    roles?: string[];
+    roles?: PeerRole[];
 }
 export interface Attestor {
     id: string;
