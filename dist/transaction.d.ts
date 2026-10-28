@@ -25,18 +25,12 @@ export declare const GENESIS_TX_SIGNATURE: TransactionSignature;
 export declare const GENESIS_SALT: string;
 export declare const GENESIS_TOTAL_SUPPLY: string;
 export declare const GENESIS_CONTRACT_LOCATION: string;
-export interface ValidatorAttestation {
-    validatorId: string;
-    attestorPubKey: string;
-    signature: string;
-}
 export declare const SBRIT_FEE_AMOUNT: string;
 export declare const SSC_FEE_AMOUNT: string;
 export declare const SSC_MINT_FEE_RATE: string;
 export interface TransactionFee {
     amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
     asset: AssetId;
-    to: string;
 }
 export interface GovernanceInit {
     authorizedSigners: string[];
@@ -56,7 +50,6 @@ export interface TransactionBase {
     salt: string;
     fee?: TransactionFee;
     signature: TransactionSignature[];
-    validatorAttestations: ValidatorAttestation[];
 }
 export declare enum ContractLocation {
     FS = "file_system",
@@ -100,7 +93,6 @@ export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
     from: typeof GENESIS_FROM;
     timestamp: number;
     signature: [typeof GENESIS_TX_SIGNATURE];
-    validatorAttestations: [];
     fee: null;
 }
 export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
@@ -110,12 +102,11 @@ export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
     amount: '0';
     sequence: 0;
     signature: [typeof GENESIS_TX_SIGNATURE];
-    validatorAttestations: [];
     init: GovernanceInit;
-    fee: null;
     code: string;
     sandbox: string;
     contractVersion: ContractVersion[];
+    fee: null;
 }
 export interface TransferTransaction extends TransactionBase {
     type: TxType.TRANSFER;
@@ -179,7 +170,6 @@ export interface SBRITMintContractTx extends ContractCallTransaction {
     metadata?: {
         notes?: string;
     };
-    validatorAttestations: ValidatorAttestation[];
 }
 export interface MintTx extends TransactionBase {
     type: TxType.SBRIT_MINT;
@@ -199,7 +189,6 @@ export interface MintTx extends TransactionBase {
     metadata?: {
         notes?: string;
     };
-    validatorAttestations: ValidatorAttestation[];
 }
 export type PendingMultisigStatus = 'pending' | 'submitted' | 'expired' | 'stale';
 export interface PendingMultisigSignature {

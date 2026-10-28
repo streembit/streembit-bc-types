@@ -5,8 +5,8 @@
  * This file contains ALL consensus-related types and interfaces
  */
 
-import { Block } from './block';
-import { Transaction, ValidatorAttestation } from './transaction';
+import { Transaction } from './transaction';
+import { Block, SetAttestation, SetVerdict } from './block';
 
 // ============================================================================
 // Basic Type Aliases
@@ -220,8 +220,10 @@ export interface IValidator {
     privateKey: string;
     address: string;
     idHash: Buffer;
-    signTx(tx: Transaction, txid: string): ValidatorAttestation;
+    /** Verdict on one transaction of a set, checked read-only on this node's state; throws with the reason when invalid. */
     validateTx(tx: Transaction, creatorId: string): Promise<boolean>;
+    /** One signature per set over { setNumber, parentHash, verdicts }; the attestation the block header carries. */
+    signSet(setNumber: number, parentHash: string, verdicts: SetVerdict[]): SetAttestation;
 }
 
 // ============================================================================

@@ -32,22 +32,14 @@ export const GENESIS_SALT: string = 'GENESIS_SALT';
 export const GENESIS_TOTAL_SUPPLY: string = (1).toString();                                                      
 export const GENESIS_CONTRACT_LOCATION: string = "dist/node/smart-contracts/genesis/treasury_v1.js";
 
-
-export interface ValidatorAttestation {
-    validatorId: string;          // address or 32B id
-    attestorPubKey: string;       // Attestor's public key (hex)
-    signature: string;            // Sign(H(chainId || txid || from || sequence))
-}
-
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
 export const SBRIT_FEE_AMOUNT: string = '0.01';
 export const SSC_FEE_AMOUNT: string = '0.01';
 export const SSC_MINT_FEE_RATE: string = '0.005';    // 0.5%  of created SSC amount as fee
 
 export interface TransactionFee {
-    amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;      
-    asset: AssetId;        
-    to: string;                     // Fee recipient, address of validator
+    amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
+    asset: AssetId;      
 }
 
 export interface GovernanceInit {
@@ -78,12 +70,10 @@ export interface TransactionBase {
     timestamp: number;              // Unix timestamp for txid uniqueness
     salt: string;                   // Random value for guaranteed uniqueness (hex, 16 bytes)
 
-    fee?: TransactionFee;           // Fee payment details
+    fee?: TransactionFee;           // Fee amount and asset; the recipient is the attester in the block header
 
     // Cryptographic proof
     signature: TransactionSignature[];             
-
-    validatorAttestations: ValidatorAttestation[];
 }
 
 export enum ContractLocation {
@@ -133,7 +123,6 @@ export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
     from: typeof GENESIS_FROM;
     timestamp: number;              // fixed
     signature: [typeof GENESIS_TX_SIGNATURE];
-    validatorAttestations: [];                      // MUST be empty
     fee: null;                                      // Genesis transactions have no fees
 }
 
@@ -145,12 +134,11 @@ export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
     amount: '0';                                // no value transfer in declaration   
     sequence: 0;                                // REQUIRED
     signature: [typeof GENESIS_TX_SIGNATURE];
-    validatorAttestations: [];                  // MUST be empty
     init: GovernanceInit; 
-    fee: null;                                  // Genesis transactions have no fees
     code: string;                               // REQUIRED
     sandbox: string;                            // REQUIRED
     contractVersion: ContractVersion[];         // REQUIRED
+    fee: null;                                  // Genesis transactions have no fees
 };
 
 // END Genesis only
@@ -237,7 +225,6 @@ export interface SBRITMintContractTx extends ContractCallTransaction {
         reason: MintReward;
     }>;
     metadata?: { notes?: string };
-    validatorAttestations: ValidatorAttestation[];  // accountability via validators
 }
 
 export interface MintTx extends TransactionBase {
@@ -256,7 +243,6 @@ export interface MintTx extends TransactionBase {
         reason: MintReward;
     }>;
     metadata?: { notes?: string };
-    validatorAttestations: ValidatorAttestation[];  // accountability via validators
 }
 
 export type PendingMultisigStatus = 'pending' | 'submitted' | 'expired' | 'stale';
