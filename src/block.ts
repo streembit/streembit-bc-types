@@ -79,6 +79,7 @@ export interface BlockIndex {
     txCount: number;                // Number of transactions
     totalValue: string;             // Total transaction value
     creatorId: string;              // Creator ID
+    stateHash?: string;             // Hash (hex) over the ordered state writes of the block's pass
 }
 
 // For storage: statediff/<height> -> StateDiff, written in the block's batch for the read mirror

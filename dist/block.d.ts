@@ -60,6 +60,7 @@ export interface BlockIndex {
     txCount: number;
     totalValue: string;
     creatorId: string;
+    stateHash?: string;
 }
 export type StateDiffRole = 'sent' | 'received' | 'contract' | 'fee';
 export interface StateDiffTxEntry {

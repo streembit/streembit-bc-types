@@ -9,6 +9,8 @@ import type { Block, StateDiff } from './block';
 export interface BlockCursor {
     height: number;                 // Sequential block number (1, 2, 3, ...)
     hash: string;                   // Block hash (hex)
+    // Hash (hex) over the ordered state writes of the block's pass; a receiver compares it with its own pass before persisting
+    stateHash?: string;
 }
 
 // One block as served by /p2p/blocks and pushed by /p2p/stream/publish
@@ -20,7 +22,10 @@ export interface BlockEnvelope {
 }
 
 // /p2p/latest response: the node's chain tip; height 0 and hash '' on an empty chain
-export interface LatestResponse extends BlockCursor {}
+export interface LatestResponse extends BlockCursor {
+    // Set while the node is halted after rejecting the creator's block deterministically: operator action required
+    halted?: { height: number; reason: string };
+}
 
 // /p2p/blocks and /p2p/statediffs request: inclusive height range, start >= 1, end >= start
 export interface BlockRangeRequest {

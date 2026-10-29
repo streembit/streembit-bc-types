@@ -7,6 +7,7 @@ import type { Block, StateDiff } from './block';
 export interface BlockCursor {
     height: number;
     hash: string;
+    stateHash?: string;
 }
 export interface BlockEnvelope {
     cursor: BlockCursor;
@@ -15,6 +16,10 @@ export interface BlockEnvelope {
     stateDiff?: StateDiff;
 }
 export interface LatestResponse extends BlockCursor {
+    halted?: {
+        height: number;
+        reason: string;
+    };
 }
 export interface BlockRangeRequest {
     start: number;
