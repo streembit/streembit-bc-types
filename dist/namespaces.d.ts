@@ -45,6 +45,8 @@ declare const NS: {
     readonly MINT: 'mint/';
     readonly UNDO: 'undo/';
     readonly MULTISIG: 'multisig/';
+    readonly LOOKUP_REQUEST: 'lookup/request/';
+    readonly IDENTITY: 'identity/';
 };
 export type NamespaceKey = keyof typeof NS;
 export type NamespaceValue = typeof NS[NamespaceKey];
@@ -67,6 +69,9 @@ export declare const NSkey: {
     contractSandboxBytes: (sandboxHash: string, version: string) => string;
     contractMeta: (codeHash: string) => string;
     contractState: (cid: string, key: string) => string;
+    lookupRequest: (cid: string, id: string) => string;
+    lookupRequestPrefix: () => "lookup/request/";
+    identity: (address: string) => string;
     accountableNodeData: (nodeId: string) => string;
     accountableNodeList: () => string;
     accountableNodeEvent: (nodeId: string, eventId: string) => string;

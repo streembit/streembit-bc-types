@@ -60,7 +60,11 @@ const NS = {
     MINT: 'mint/', // mint/ mint related data for audit and mint processing
     // Undo records for rollback
     UNDO: 'undo/', // undo/<index>/<blockHash>/<idx> → Undo record
-    MULTISIG: 'multisig/'
+    MULTISIG: 'multisig/',
+    // Lookup requests a contract writes for the Accountable Node: lookup/request/<cid>/<id> → LookupRequest JSON
+    LOOKUP_REQUEST: 'lookup/request/',
+    // Identity attestations by the Foundation: identity/<address> → IdentityRecord JSON
+    IDENTITY: 'identity/'
 };
 // Freeze the NS object to make it truly immutable
 Object.freeze(NS);
@@ -87,6 +91,11 @@ exports.NSkey = {
     contractSandboxBytes: (sandboxHash, version) => `${NS.SANDBOX_BYTES}${version}/${sandboxHash}`,
     contractMeta: (codeHash) => `${NS.CODE_METAV1}${codeHash}`,
     contractState: (cid, key) => `${NS.SC_STATE}${cid}/kv/${key}`,
+    // Lookup requests: one per external fact a contract waits for; the prefix lists them for the Accountable Node
+    lookupRequest: (cid, id) => `${NS.LOOKUP_REQUEST}${cid}/${id}`,
+    lookupRequestPrefix: () => NS.LOOKUP_REQUEST,
+    // Identity attestation of a wallet address
+    identity: (address) => `${NS.IDENTITY}${address}`,
     // Accountable nodes
     accountableNodeData: (nodeId) => `${NS.ACCOUNTABLE_NODE_BASE}data/${nodeId}`,
     accountableNodeList: () => `${NS.ACCOUNTABLE_NODE_BASE}list/active`,

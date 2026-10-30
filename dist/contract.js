@@ -8,5 +8,6 @@ var ContractFiles;
     ContractFiles["GOVERNANCE"] = "dist/node/smart-contracts/governance/governance_v1.js";
     ContractFiles["VALIDATOR"] = "dist/node/smart-contracts/validators/validator_v1.js";
     ContractFiles["SSCMINT"] = "dist/node/smart-contracts/ssc/ssc_v1.js";
+    ContractFiles["EXTERNAL_PAYMENT"] = "dist/node/smart-contracts/sbritsell/external_payment_v1.js";
 })(ContractFiles || (exports.ContractFiles = ContractFiles = {}));
 ;
