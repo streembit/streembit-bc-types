@@ -135,7 +135,8 @@ export interface IdentityRecord {
 /** A lookup the contract asks the Accountable Node to run, written under NSkey.lookupRequest */
 export interface LookupRequest {
     id: string;
-    type: 'btc-address';
+    type: 'btc-address';                // the procedure the worker runs; drives its dispatch
+    origin: string;                     // the contract that asked, for example 'external_payment_v1'; a label for grouping, status and logs only
     params: { address: string; expectedSats: number; confirmations: number; deadline: number };
     callback: { method: string; params: Record<string, unknown> };
 }

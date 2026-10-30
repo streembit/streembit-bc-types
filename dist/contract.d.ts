@@ -119,6 +119,7 @@ export interface IdentityRecord {
 export interface LookupRequest {
     id: string;
     type: 'btc-address';
+    origin: string;
     params: {
         address: string;
         expectedSats: number;
