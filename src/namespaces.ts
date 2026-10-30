@@ -86,7 +86,13 @@ const NS = {
     // Undo records for rollback
     UNDO: 'undo/',                          // undo/<index>/<blockHash>/<idx> → Undo record
 
-    MULTISIG: 'multisig/'                       
+    MULTISIG: 'multisig/',
+
+    // Lookup requests a contract writes for the Accountable Node: lookup/request/<cid>/<id> → LookupRequest JSON
+    LOOKUP_REQUEST: 'lookup/request/',
+
+    // Identity attestations by the Foundation: identity/<address> → IdentityRecord JSON
+    IDENTITY: 'identity/'
 
 } as const;
 
@@ -125,6 +131,13 @@ export const NSkey = {
     contractSandboxBytes: (sandboxHash: string, version: string) => `${NS.SANDBOX_BYTES}${version}/${sandboxHash}`,
     contractMeta: (codeHash: string) => `${NS.CODE_METAV1}${codeHash}`,
     contractState: (cid: string, key: string) => `${NS.SC_STATE}${cid}/kv/${key}`,
+
+    // Lookup requests: one per external fact a contract waits for; the prefix lists them for the Accountable Node
+    lookupRequest: (cid: string, id: string) => `${NS.LOOKUP_REQUEST}${cid}/${id}`,
+    lookupRequestPrefix: () => NS.LOOKUP_REQUEST,
+
+    // Identity attestation of a wallet address
+    identity: (address: string) => `${NS.IDENTITY}${address}`,
 
     // Accountable nodes
     accountableNodeData: (nodeId: string) => `${NS.ACCOUNTABLE_NODE_BASE}data/${nodeId}`,
