@@ -3,7 +3,8 @@ import assert from 'node:assert';
 import {
   POC_CONSTANTS,
   ADDRESS_PREFIX_USER,
-  ADDRESS_PREFIX_CONTRACT
+  ADDRESS_PREFIX_CONTRACT,
+  SALE_ACCEPTANCE_KIND
 } from '../src/index';
 
 test('POC_CONSTANTS.MIN_VALIDATORS has correct value', () => {
@@ -56,4 +57,9 @@ test('ADDRESS_PREFIX_USER has correct value for S prefix', () => {
 
 test('ADDRESS_PREFIX_CONTRACT has correct value for C prefix', () => {
   assert.strictEqual(ADDRESS_PREFIX_CONTRACT, 0x1C);
+});
+
+test('SALE_ACCEPTANCE_KIND is the kind of the external payment contract buyer acceptance', () => {
+  assert.strictEqual(SALE_ACCEPTANCE_KIND, 'SBRIT-EXTERNAL-PAYMENT-ACCEPT');
+  assert.ok(!SALE_ACCEPTANCE_KIND.includes('|'));
 });

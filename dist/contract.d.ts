@@ -59,12 +59,30 @@ export interface ExternalPaymentLimits {
     confirmations: number;
     recoverAfterMs: number;
 }
-/** The buyer's signed acceptance of an offer; the buyer never sends a transaction */
+export interface ContractStatement {
+    kind: string;
+    chainId: number;
+    cid: string;
+    fields: string[];
+}
+export interface SignedContractStatement extends ContractStatement {
+    publicKey: string;
+    signature: string;
+}
+/** The kind and field order of the external payment contract's buyer acceptance */
+export declare const SALE_ACCEPTANCE_KIND = "SBRIT-EXTERNAL-PAYMENT-ACCEPT";
+/** The buyer's signed acceptance of an offer as the contract's accept method takes it; the buyer never sends a transaction */
 export interface SaleAcceptance {
     saleId: string;
     buyerAddress: string;
     buyerPublicKey: string;
     btcRefundAddress: string;
+}
+/** The portable form the buyer's wallet exports and the seller's wallet imports and submits */
+export interface SignedSaleAcceptance extends SaleAcceptance {
+    chainId: number;
+    cid: string;
+    signature: string;
 }
 export interface SaleRecord {
     saleId: string;

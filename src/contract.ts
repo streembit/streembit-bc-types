@@ -76,12 +76,42 @@ export interface ExternalPaymentLimits {
     recoverAfterMs: number;
 }
 
-/** The buyer's signed acceptance of an offer; the buyer never sends a transaction */
+// ----------------------------------------------------------------------------
+// Off-chain contract statements: a party signs a statement about a contract off chain, someone else submits it
+// in a contract call, and the contract verifies the signature through the sandbox. The canonical string is
+// `<kind>|<chainId>|<cid>|<fields joined by |>`, no escaping, so a field may not contain '|'. The signer's public
+// key is one of the fields, where the contract's own preimage places it. Built and checked by the SDK
+// (signContractStatement / verifyContractStatement); the sale acceptance is the first kind.
+// ----------------------------------------------------------------------------
+
+export interface ContractStatement {
+    kind: string;                       // the statement type, a fixed upper-case name such as SALE_ACCEPTANCE_KIND
+    chainId: number;
+    cid: string;                        // the contract the statement is about
+    fields: string[];                   // in the order the contract's preimage defines; none may contain '|'
+}
+
+export interface SignedContractStatement extends ContractStatement {
+    publicKey: string;                  // the signer's compressed public key, 66 hex; also one of the fields
+    signature: string;                  // DER hex over SHA-256 of the UTF-8 canonical string
+}
+
+/** The kind and field order of the external payment contract's buyer acceptance */
+export const SALE_ACCEPTANCE_KIND = 'SBRIT-EXTERNAL-PAYMENT-ACCEPT';
+
+/** The buyer's signed acceptance of an offer as the contract's accept method takes it; the buyer never sends a transaction */
 export interface SaleAcceptance {
     saleId: string;
-    buyerAddress: string;
+    buyerAddress: string;               // the address the SBRIT is credited to; the address of buyerPublicKey
     buyerPublicKey: string;
-    btcRefundAddress: string;
+    btcRefundAddress: string;           // where an off-chain refund of a short payment goes
+}
+
+/** The portable form the buyer's wallet exports and the seller's wallet imports and submits */
+export interface SignedSaleAcceptance extends SaleAcceptance {
+    chainId: number;
+    cid: string;
+    signature: string;
 }
 
 export interface SaleRecord {

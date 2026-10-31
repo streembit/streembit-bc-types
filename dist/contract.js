@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContractFiles = void 0;
+exports.SALE_ACCEPTANCE_KIND = exports.ContractFiles = void 0;
 var ContractFiles;
 (function (ContractFiles) {
     ContractFiles["SANDBOX"] = "dist/node/smart-contracts/sandbox.js";
@@ -11,3 +11,5 @@ var ContractFiles;
     ContractFiles["EXTERNAL_PAYMENT"] = "dist/node/smart-contracts/sbritsell/external_payment_v1.js";
 })(ContractFiles || (exports.ContractFiles = ContractFiles = {}));
 ;
+/** The kind and field order of the external payment contract's buyer acceptance */
+exports.SALE_ACCEPTANCE_KIND = 'SBRIT-EXTERNAL-PAYMENT-ACCEPT';
