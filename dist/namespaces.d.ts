@@ -24,6 +24,7 @@ declare const NS: {
     readonly GENESIS_PROCESSED: 'genesis/processed';
     readonly GENESIS_CONFIG: 'genesis/config/';
     readonly GENESIS_BLOCK: 'genesis/block';
+    readonly BOOTSTRAP: 'bootstrap/';
     readonly ACCT_META: 'acct/';
     readonly ACCT_BAL: 'acct/';
     readonly ACCT_SEQ: 'acct/';
@@ -62,6 +63,8 @@ export declare const NSkey: {
     genesisBlock: () => "genesis/block";
     treasuryCID: () => string;
     genesisTimestamp: () => string;
+    bootstrapPolicy: () => string;
+    bootstrapCompletion: () => string;
     accountMeta: (address: string) => string;
     accountBalance: (address: string, asset: string) => string;
     accountSequence: (address: string) => string;

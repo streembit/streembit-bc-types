@@ -4,15 +4,17 @@
  * Transaction uniqueness via timestamp, not nonces
  */
 import { AssetId } from './asset';
+import type { BootstrapPolicy } from './consensus';
 export declare enum TxType {
     GENESIS = "genesis",
     TRANSFER = "transfer",
-    CONTRACT_GENESIS = "genesis_system_contract",
     CONTRACT = "contract",
     CONTRACT_CALL = "contract_call",
     CONTRACT_UPGRADE = "contract_upgrade",
     SBRIT_MINT = "mint",
-    SSC_MINT = "ssc_create"
+    SSC_MINT = "ssc_create",
+    BOOTSTRAP_DEPLOY = "bootstrap_deploy",// system contract deployment during the bootstrap; no fee
+    BOOTSTRAP_CALL = "bootstrap_call"
 }
 export interface TransactionSignature {
     publickey: string;
@@ -23,19 +25,12 @@ export declare const GENESIS_PUBKEY: string;
 export declare const GENESIS_SIGNATURE: string;
 export declare const GENESIS_TX_SIGNATURE: TransactionSignature;
 export declare const GENESIS_SALT: string;
-export declare const GENESIS_TOTAL_SUPPLY: string;
-export declare const GENESIS_CONTRACT_LOCATION: string;
 export declare const SBRIT_FEE_AMOUNT: string;
 export declare const SSC_FEE_AMOUNT: string;
 export declare const SSC_MINT_FEE_RATE: string;
 export interface TransactionFee {
     amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
     asset: AssetId;
-}
-export interface GovernanceInit {
-    authorizedSigners: string[];
-    thresholdM: number;
-    minDelaySec: number;
 }
 export interface TransactionBase {
     version: number;
@@ -81,31 +76,22 @@ export interface ContractMetadata {
     versions: ContractVersion[];
 }
 export interface ContractTransaction extends TransactionBase {
-    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.CONTRACT_GENESIS | TxType.SBRIT_MINT;
+    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.SBRIT_MINT;
     asset: AssetId.SBRIT;
     codeHash: string;
     sandboxHash: string;
     cid: string;
     location: typeof DEFAULT_LOCATION.location;
 }
-export interface GenesisAllocationTx extends Omit<TransactionBase, 'fee'> {
+export interface GenesisPolicyTx extends Omit<TransactionBase, 'fee'> {
     type: TxType.GENESIS;
     from: typeof GENESIS_FROM;
-    timestamp: number;
-    signature: [typeof GENESIS_TX_SIGNATURE];
-    fee: null;
-}
-export interface GenesisTreasuryTx extends Omit<ContractTransaction, 'fee'> {
-    type: TxType.CONTRACT_GENESIS;
-    from: typeof GENESIS_FROM;
-    timestamp: number;
+    to: typeof GENESIS_FROM;
     amount: '0';
     sequence: 0;
+    timestamp: number;
     signature: [typeof GENESIS_TX_SIGNATURE];
-    init: GovernanceInit;
-    code: string;
-    sandbox: string;
-    contractVersion: ContractVersion[];
+    policy: BootstrapPolicy;
     fee: null;
 }
 export interface TransferTransaction extends TransactionBase {
@@ -121,6 +107,14 @@ export interface ContractCallTransaction extends ContractTransaction {
     type: TxType.CONTRACT_CALL | TxType.SBRIT_MINT;
     data: string;
     method: string;
+}
+export interface BootstrapDeployTx extends Omit<ContractTx, 'type' | 'fee'> {
+    type: TxType.BOOTSTRAP_DEPLOY;
+    fee: null;
+}
+export interface BootstrapCallTx extends Omit<ContractCallTransaction, 'type' | 'fee'> {
+    type: TxType.BOOTSTRAP_CALL;
+    fee: null;
 }
 export interface ContractUpgradeTx extends TransactionBase {
     type: TxType.CONTRACT_UPGRADE;
@@ -171,7 +165,7 @@ export interface SBRITMintContractTx extends ContractCallTransaction {
         notes?: string;
     };
 }
-export interface MintTx extends TransactionBase {
+export interface MintTx extends Omit<TransactionBase, 'fee'> {
     type: TxType.SBRIT_MINT;
     from: typeof SYSTEM_MINT_ADDRESS;
     to: typeof SYSTEM_MINT_ADDRESS;
@@ -189,6 +183,7 @@ export interface MintTx extends TransactionBase {
     metadata?: {
         notes?: string;
     };
+    fee: null;
 }
 export type PendingMultisigStatus = 'pending' | 'submitted' | 'expired' | 'stale';
 export interface PendingMultisigSignature {
@@ -198,7 +193,7 @@ export interface PendingMultisigSignature {
 }
 export interface PendingMultisigTx {
     id: string;
-    unsignedTx: ContractCallTransaction;
+    unsignedTx: ContractCallTransaction | BootstrapCallTx;
     contract: string;
     method: string;
     thresholdM: number;
@@ -209,5 +204,5 @@ export interface PendingMultisigTx {
     expiresAt: number;
     submittedTxId?: string;
 }
-export type Transaction = GenesisAllocationTx | GenesisTreasuryTx | TransferTransaction | ContractCallTransaction | ContractTx | ContractUpgradeTx | MintTx;
+export type Transaction = GenesisPolicyTx | TransferTransaction | ContractCallTransaction | ContractTx | BootstrapDeployTx | BootstrapCallTx | ContractUpgradeTx | MintTx;
 //# sourceMappingURL=transaction.d.ts.map

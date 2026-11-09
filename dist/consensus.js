@@ -1,7 +1,9 @@
 "use strict";
 // node/src/types/consensus.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountableNodeEventType = exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = void 0;
+exports.AccountableNodeEventType = exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = exports.BOOTSTRAP_MIN_VALIDATORS = void 0;
+/** The spec's minimum: the bootstrap needs at least 2 validators */
+exports.BOOTSTRAP_MIN_VALIDATORS = 2;
 exports.POC_CONSTANTS = {
     MIN_VALIDATORS: 2,
     DEPOSIT_MULTIPLIER: 2,

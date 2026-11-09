@@ -31,6 +31,30 @@ export interface Attestor {
     publicKey: string;
     privateKey: string;
 }
+/** The spec's minimum: the bootstrap needs at least 2 validators */
+export declare const BOOTSTRAP_MIN_VALIDATORS = 2;
+/**
+ * The bootstrap policy: the selected Accountable Node, the admitted genesis validators and the approval rule of the
+ * Accountable Node's application. Every node holds the same policy in its config; the genesis block records it,
+ * and each node compares the recorded policy with its own before it applies genesis.
+ */
+export interface BootstrapPolicy {
+    accountableNode: {
+        nodeId: string;
+        publicKey: string;
+    };
+    validators: {
+        validatorId: string;
+        publicKey: string;
+    }[];
+    approvalThreshold: number;
+    approvalSender: string;
+}
+/** Written once by approveApplication when the bootstrap completes; the bootstrap permissions end with it */
+export interface BootstrapCompletion {
+    approvalTxId: string;
+    completedAt: number;
+}
 export interface GenesisPublicKey {
     genesisId: string;
     publicKey: string;

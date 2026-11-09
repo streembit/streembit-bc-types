@@ -46,6 +46,9 @@ const NS = {
     GENESIS_CONFIG: 'genesis/config/',         
     GENESIS_BLOCK: 'genesis/block',             // Reference to the genesis block genesis/block<genesis block data>
 
+    // Bootstrap: bootstrap/policy → BootstrapPolicy JSON (written by genesis); bootstrap/completed → BootstrapCompletion JSON
+    BOOTSTRAP: 'bootstrap/',
+
     // Accounts & balances
     ACCT_META: 'acct/',             // acct/<address>/meta → AccountMeta
     ACCT_BAL: 'acct/',              // acct/<address>/balance/<asset> → decimal string
@@ -120,6 +123,10 @@ export const NSkey = {
     // Specific genesis config helpers
     treasuryCID: () => `${NS.GENESIS_CONFIG}treasury_cid`,
     genesisTimestamp: () => `${NS.GENESIS_CONFIG}timestamp`,
+
+    // Bootstrap policy recorded by genesis, and the completion record written by approveApplication
+    bootstrapPolicy: () => `${NS.BOOTSTRAP}policy`,
+    bootstrapCompletion: () => `${NS.BOOTSTRAP}completed`,
 
     // Account keys
     accountMeta: (address: string) => `${NS.ACCT_META}${address}/meta`,
