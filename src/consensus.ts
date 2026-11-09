@@ -32,7 +32,7 @@ export interface NodeIdentity {
 }
 
 // Roles a peer may hold; a mirror pulls blocks and state diffs and is never pushed to
-export type PeerRole = 'public' | 'validator' | 'creator' | 'officer' | 'mirror';
+export type PeerRole = 'public' | 'validator' | 'creator' | 'mirror';
 
 export interface PeerInfo extends NodeIdentity {
     name?: string;
@@ -65,12 +65,6 @@ export interface BootstrapPolicy {
 /** Written once by approveApplication when the bootstrap completes; the bootstrap permissions end with it */
 export interface BootstrapCompletion {
     completedAt: number;                // the approving transaction's timestamp
-}
-
-export interface GenesisPublicKey {
-    genesisId: string;
-    publicKey: string;              // Hex-encoded compressed public key
-    privkeyEnv: string;             // Environment variable name for private key eg. PRIVKEY_OFFICER1
 }
 
 
@@ -799,7 +793,6 @@ export interface MintEra {
     amountPerInterval: string;      // SBRIT minted per interval
     creatorShare: number;           // distribution of newly minted coins, must sum to 100
     validatorShare: number;
-    treasuryShare: number;
 }
 
 export interface MintRuleset {

@@ -201,7 +201,6 @@ export const SYSTEM_MINT_ADDRESS = 'SYSTEM_MINT';
 export enum MintReward {
     VALIDATOR = 'validator_reward',  
     CREATOR = 'creator_reward',
-    TREASURY = 'treasury',
 }
 
 export interface SBRITMintContractTx extends ContractCallTransaction {

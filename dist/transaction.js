@@ -44,5 +44,4 @@ var MintReward;
 (function (MintReward) {
     MintReward["VALIDATOR"] = "validator_reward";
     MintReward["CREATOR"] = "creator_reward";
-    MintReward["TREASURY"] = "treasury";
 })(MintReward || (exports.MintReward = MintReward = {}));

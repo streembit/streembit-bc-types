@@ -141,8 +141,7 @@ export declare const MAX_ALLOWED_SIGNATURES = 3;
 export declare const SYSTEM_MINT_ADDRESS = "SYSTEM_MINT";
 export declare enum MintReward {
     VALIDATOR = "validator_reward",
-    CREATOR = "creator_reward",
-    TREASURY = "treasury"
+    CREATOR = "creator_reward"
 }
 export interface SBRITMintContractTx extends ContractCallTransaction {
     type: TxType.SBRIT_MINT;

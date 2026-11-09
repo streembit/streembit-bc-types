@@ -20,7 +20,7 @@ export interface NodeIdentity {
     address?: string;
     role?: string;
 }
-export type PeerRole = 'public' | 'validator' | 'creator' | 'officer' | 'mirror';
+export type PeerRole = 'public' | 'validator' | 'creator' | 'mirror';
 export interface PeerInfo extends NodeIdentity {
     name?: string;
     baseUrl?: string;
@@ -53,11 +53,6 @@ export interface BootstrapPolicy {
 /** Written once by approveApplication when the bootstrap completes; the bootstrap permissions end with it */
 export interface BootstrapCompletion {
     completedAt: number;
-}
-export interface GenesisPublicKey {
-    genesisId: string;
-    publicKey: string;
-    privkeyEnv: string;
 }
 export interface PoCRequirements {
     accountableEntity: boolean;
@@ -597,7 +592,6 @@ export interface MintEra {
     amountPerInterval: string;
     creatorShare: number;
     validatorShare: number;
-    treasuryShare: number;
 }
 export interface MintRuleset {
     publishedAt: number;
