@@ -181,7 +181,7 @@ export interface IValidator {
     privateKey: string;
     address: string;
     idHash: Buffer;
-    validateSet(setNumber: number, parentHash: string, transactions: Transaction[], creatorId: string, feesPaid: boolean, signatureChecks?: Array<{
+    validateSet(setNumber: number, parentHash: string, transactions: Transaction[], creatorId: string, signatureChecks?: Array<{
         valid: boolean;
         error?: string;
     }>): Promise<SetAttestation>;

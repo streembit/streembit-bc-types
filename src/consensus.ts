@@ -240,7 +240,7 @@ export interface IValidator {
     privateKey: string;
     address: string;
     idHash: Buffer;
-    validateSet(setNumber: number, parentHash: string, transactions: Transaction[], creatorId: string, feesPaid: boolean, signatureChecks?: Array<{ valid: boolean; error?: string }>): Promise<SetAttestation>;
+    validateSet(setNumber: number, parentHash: string, transactions: Transaction[], creatorId: string, signatureChecks?: Array<{ valid: boolean; error?: string }>): Promise<SetAttestation>;
     /** One signature per set over { setNumber, parentHash, verdicts }; the attestation the block header carries. */
     signSet(setNumber: number, parentHash: string, verdicts: SetVerdict[]): SetAttestation;
 }
