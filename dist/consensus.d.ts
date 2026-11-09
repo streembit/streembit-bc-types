@@ -52,7 +52,6 @@ export interface BootstrapPolicy {
 }
 /** Written once by approveApplication when the bootstrap completes; the bootstrap permissions end with it */
 export interface BootstrapCompletion {
-    approvalTxId: string;
     completedAt: number;
 }
 export interface GenesisPublicKey {
