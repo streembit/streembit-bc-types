@@ -36,13 +36,11 @@ export interface AccountState {
     // Balances
     balances: {
         SBRIT: string;            // SBRIT balance (8 decimals)
-        SSC: string;              // SSC balance (2 decimals)
     };
 
     // Spendable vs encumbered view
     spendable: {
         SBRIT: string;
-        SSC: string;
     };
 
     // Contract-governed encumbrances (not base balances)

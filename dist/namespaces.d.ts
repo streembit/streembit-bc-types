@@ -34,7 +34,6 @@ declare const NS: {
     readonly SANDBOX_BYTES: 'sandbox/bytes/';
     readonly SC_STATE: 'sc/';
     readonly ASSET_SBRIT: 'asset/SBRIT/meta';
-    readonly ASSET_SSC: 'asset/SSC/meta';
     readonly ACCOUNTABLE_NODE_BASE: "acnode/";
     readonly WHITELIST: 'poc/whitelist/';
     readonly BLACKLIST: 'poc/blacklist/';
@@ -42,7 +41,6 @@ declare const NS: {
     readonly VALIDATOR_BASE: 'validator/';
     readonly GOVERNANCE_BASE: 'governance/';
     readonly CONTRACT_BY_NAME: "contract/name/";
-    readonly SSC: "ssc/";
     readonly MINT: 'mint/';
     readonly UNDO: 'undo/';
     readonly MULTISIG: 'multisig/';
@@ -88,12 +86,6 @@ export declare const NSkey: {
     governanceRulesAudit: (id: string) => string;
     governanceMintRules: (version: number) => string;
     governanceCurrentMintRules: () => string;
-    sscPegRatio: () => string;
-    sscPauseFlag: () => string;
-    sscOracleState: (oracleId: string) => string;
-    sscTotalOutstanding: () => string;
-    sscTotalCollateral: () => string;
-    sscOracleLatest: () => string;
     mintLastProcessingTime: () => string;
     mintLastProcessedEpoch: () => string;
     contractByName: (name: string) => string;

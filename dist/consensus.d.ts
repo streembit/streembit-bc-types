@@ -101,7 +101,6 @@ export interface DepositVerification {
 export interface DepositRegistry {
     nodeId: string;
     SBRIT: string;
-    SSC: string;
     address: string;
     verifications: DepositVerification[];
 }

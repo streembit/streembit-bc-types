@@ -12,8 +12,8 @@ test('AccountState type can be instantiated with valid user account', () => {
   const account: AccountState = {
     address: 'S123abc',
     type: 'user',
-    balances: { SBRIT: '1000', SSC: '500' },
-    spendable: { SBRIT: '1000', SSC: '500' }
+    balances: { SBRIT: '1000' },
+    spendable: { SBRIT: '1000' }
   };
 
   assert.strictEqual(account.type, 'user');
@@ -24,8 +24,8 @@ test('AccountState type can be instantiated with contract account', () => {
   const account: AccountState = {
     address: 'C456def',
     type: 'contract',
-    balances: { SBRIT: '2000', SSC: '1000' },
-    spendable: { SBRIT: '2000', SSC: '1000' },
+    balances: { SBRIT: '2000' },
+    spendable: { SBRIT: '2000' },
     contractInfo: {
       cid: 'abc123',
       codeHash: 'hash456',

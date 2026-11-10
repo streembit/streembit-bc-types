@@ -21,11 +21,9 @@ export interface AccountState {
     type: AccountType;
     balances: {
         SBRIT: string;
-        SSC: string;
     };
     spendable: {
         SBRIT: string;
-        SSC: string;
     };
     encumbered?: {
         pocDeposit?: string;

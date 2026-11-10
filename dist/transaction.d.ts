@@ -12,7 +12,6 @@ export declare enum TxType {
     CONTRACT_CALL = "contract_call",
     CONTRACT_UPGRADE = "contract_upgrade",
     SBRIT_MINT = "mint",
-    SSC_MINT = "ssc_create",
     BOOTSTRAP_DEPLOY = "bootstrap_deploy",// system contract deployment during the bootstrap; no fee
     BOOTSTRAP_CALL = "bootstrap_call"
 }
@@ -26,10 +25,8 @@ export declare const GENESIS_SIGNATURE: string;
 export declare const GENESIS_TX_SIGNATURE: TransactionSignature;
 export declare const GENESIS_SALT: string;
 export declare const SBRIT_FEE_AMOUNT: string;
-export declare const SSC_FEE_AMOUNT: string;
-export declare const SSC_MINT_FEE_RATE: string;
 export interface TransactionFee {
-    amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
+    amount: typeof SBRIT_FEE_AMOUNT;
     asset: AssetId;
 }
 export interface TransactionBase {

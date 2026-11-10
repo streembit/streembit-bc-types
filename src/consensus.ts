@@ -133,7 +133,6 @@ export interface DepositVerification {
 export interface DepositRegistry {
     nodeId: string;                         // Validator address
     SBRIT: string;                          // SBRIT amount locked
-    SSC: string;                            // SBRIT amount locked
     address: string;                        // Contract address governs the deposit
     verifications: DepositVerification[];   // Array of verification records
 }

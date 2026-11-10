@@ -63,7 +63,6 @@ const NS = {
 
     // Assets
     ASSET_SBRIT: 'asset/SBRIT/meta',
-    ASSET_SSC: 'asset/SSC/meta',
 
     // Accountable node base path
     ACCOUNTABLE_NODE_BASE: "acnode/",
@@ -81,8 +80,6 @@ const NS = {
     GOVERNANCE_BASE: 'governance/',
 
     CONTRACT_BY_NAME: "contract/name/",     // Named contracts (governance, treasury, etc.)
-
-    SSC: "ssc/",
 
     MINT: 'mint/',                        // mint/ mint related data for audit and mint processing
 
@@ -166,14 +163,6 @@ export const NSkey = {
     governanceRulesAudit: (id: string) => `${NS.GOVERNANCE_BASE}rules/audit/${id}`, 
     governanceMintRules: (version: number) => `${NS.GOVERNANCE_BASE}rules/mint/v/${version}`, 
     governanceCurrentMintRules: () => `${NS.GOVERNANCE_BASE}rules/mint/current`,                // current minting rules version so to avoid fetching/iterating all versions
-
-
-    sscPegRatio: () => `${NS.SSC}/pegratio`,                                                    // eg. 10 means 1 SSC peg/collateral is 10 SBRIT 
-    sscPauseFlag: () => `${NS.SSC}pause`,                                                       // flag to indicate SSC mint is alloed/disallowed
-    sscOracleState: (oracleId: string) => `${NS.SSC}oracle/${oracleId}`,                      
-    sscTotalOutstanding: () => `${NS.SSC}outstanding`,                                          // total SSC currently exists
-    sscTotalCollateral: () => `${NS.SSC}totalCollateral`,                                       // total SBRIT collateral at the contact CID
-    sscOracleLatest: () => `${NS.SSC}oracle/latest`,                                            // latest oracle timestamp
 
     mintLastProcessingTime: () => `${NS.MINT}last_processing_time`,                             //  timestamp of last mint processing
     mintLastProcessedEpoch: () => `${NS.MINT}lastEpoch`,

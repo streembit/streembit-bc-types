@@ -1,17 +1,14 @@
 /**
- * Asset types for Streembit dual coin system
+ * Asset types of the Streembit blockchain
  * SBRIT: Native security/governance token
- * SSC: USD-backed stablecoin
- * As per white paper section "The coins"
  */
 export declare enum AssetId {
-    SBRIT = "SBRIT",// Streembit Reserve
-    SSC = "SSC"
+    SBRIT = "SBRIT"
 }
 export interface AssetMeta {
     symbol: string;
     decimals: number;
-    kind: 'native' | 'stablecoin';
+    kind: 'native';
     totalSupply?: string;
 }
 export interface SBRITConfig {
@@ -29,38 +26,5 @@ export interface SBRITConfig {
         'block_rewards'
     ];
 }
-export interface SSCConfig {
-    symbol: 'SSC';
-    decimals: 2;
-    backing: {
-        type: '1:1 fiat';
-        custodians: string[];
-    };
-    issuance: {
-        method: 'on_demand';
-        requirement: 'pre_funded';
-    };
-    redemption: {
-        method: 'burn_on_redeem';
-    };
-    oracle: {
-        providers: string[];
-        updateFrequency: number;
-        quorum: {
-            required: number;
-            total: number;
-            amountLimit: number;
-        };
-    };
-}
-export interface SSCIssuer {
-    id: string;
-    name: string;
-    reserves: string;
-    outstanding: string;
-    mintQuota: string;
-    lastAttestationTime: number;
-    attestationSignatures: string[];
-}
-export type AssetConfig = SBRITConfig | SSCConfig;
+export type AssetConfig = SBRITConfig;
 //# sourceMappingURL=asset.d.ts.map

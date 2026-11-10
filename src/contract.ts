@@ -8,7 +8,6 @@ export enum ContractFiles {
     ACCOUNTABLE_NODE = 'dist/node/smart-contracts/consensus/accountable_node_v1.js',
     GOVERNANCE = 'dist/node/smart-contracts/governance/governance_v1.js',
     VALIDATOR = 'dist/node/smart-contracts/validators/validator_v1.js',
-    SSCMINT = 'dist/node/smart-contracts/ssc/ssc_v1.js',
     EXTERNAL_PAYMENT = 'dist/node/smart-contracts/sbritsell/external_payment_v1.js',
 };
 

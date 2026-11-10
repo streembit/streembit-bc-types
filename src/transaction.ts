@@ -16,7 +16,6 @@ export enum TxType {
     CONTRACT_CALL = 'contract_call',
     CONTRACT_UPGRADE = 'contract_upgrade',
     SBRIT_MINT = 'mint',
-    SSC_MINT = 'ssc_create',
     BOOTSTRAP_DEPLOY = 'bootstrap_deploy',     // system contract deployment during the bootstrap; no fee
     BOOTSTRAP_CALL = 'bootstrap_call',         // bootstrap method call during the bootstrap; no fee
 }
@@ -34,11 +33,9 @@ export const GENESIS_SALT: string = 'GENESIS_SALT';
 
 // In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
 export const SBRIT_FEE_AMOUNT: string = '0.01';
-export const SSC_FEE_AMOUNT: string = '0.01';
-export const SSC_MINT_FEE_RATE: string = '0.005';    // 0.5%  of created SSC amount as fee
 
 export interface TransactionFee {
-    amount: typeof SBRIT_FEE_AMOUNT | typeof SSC_FEE_AMOUNT;
+    amount: typeof SBRIT_FEE_AMOUNT;
     asset: AssetId;      
 }
 
@@ -58,7 +55,7 @@ export interface TransactionBase {
 
     // Value transfer
     amount: string;                 // Amount as decimal string or '0' for contract tx
-    asset: AssetId;                 // Asset being transferred (SBRIT or SSC)
+    asset: AssetId;                 // Asset being transferred (SBRIT)
 
     // Uniqueness via timestamp + secuence + salt
     sequence: number;               // u64; must equal state[from].sequence   
