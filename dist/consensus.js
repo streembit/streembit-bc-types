@@ -1,7 +1,7 @@
 "use strict";
 // node/src/types/consensus.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountableNodeEventType = exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = exports.BOOTSTRAP_MIN_VALIDATORS = void 0;
+exports.MINT_DEPOSIT_FILL_PAYOUT_PERCENT = exports.MINT_ISSUANCE_END_MILLISECONDS = exports.AccountableNodeEventType = exports.AccountableNodeStatus = exports.FraudType = exports.BlockMode = exports.POC_CONSTANTS = exports.BOOTSTRAP_MIN_VALIDATORS = void 0;
 /** The spec's minimum: the bootstrap needs at least 2 validators */
 exports.BOOTSTRAP_MIN_VALIDATORS = 2;
 exports.POC_CONSTANTS = {
@@ -92,3 +92,8 @@ var AccountableNodeEventType;
     AccountableNodeEventType["VERIFICATION_UPDATED"] = "verification_updated";
     AccountableNodeEventType["COMPLIANCE_CHECK_FAILED"] = "compliance_check_failed";
 })(AccountableNodeEventType || (exports.AccountableNodeEventType = AccountableNodeEventType = {}));
+// Minting
+/** Issuance ends 100,000 hours after the genesis timestamp: no mint slot ending later is issued */
+exports.MINT_ISSUANCE_END_MILLISECONDS = 100000 * 3600000;
+/** While a participant's deposit is below its target, this percentage of each reward is paid out and the rest is locked */
+exports.MINT_DEPOSIT_FILL_PAYOUT_PERCENT = 5;

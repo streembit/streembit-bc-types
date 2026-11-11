@@ -785,21 +785,25 @@ export enum AccountableNodeEventType {
 }
 
 // Minting
-export interface MintEra {
-    era: number;
-    startMilliSeconds: number;      // offset from genesis timestamp
-    intervalMilliSeconds: number;   // 3,600,000 for hourly
-    amountPerInterval: string;      // SBRIT minted per interval
-    creatorShare: number;           // distribution of newly minted coins, must sum to 100
-    validatorShare: number;
-}
+
+/** Issuance ends 100,000 hours after the genesis timestamp: no mint slot ending later is issued */
+export const MINT_ISSUANCE_END_MILLISECONDS = 100000 * 3600000;
+
+/** While a participant's deposit is below its target, this percentage of each reward is paid out and the rest is locked */
+export const MINT_DEPOSIT_FILL_PAYOUT_PERCENT = 5;
 
 export interface MintRuleset {
     publishedAt: number;
     publishedBy: string;
     policyVersion: number;
 
-    eras: MintEra[];
+    // Schedule: slots of intervalMilliSeconds counted from the genesis timestamp, constant rate
+    intervalMilliSeconds: number;   // 3,600,000 for hourly
+    amountPerInterval: string;      // SBRIT scheduled per interval (the maximum minted in it)
+
+    // Allocation, in percent of amountPerInterval
+    accountableNodeShare: number;   // to each ACTIVE Accountable Node
+    validatorShare: number;         // to each ACTIVE validator, or an equal part of the remainder when that is less
 
     // Eligibility
     // minimumUptimePercent: number; // 90	// Phase 1 will not validate up time 

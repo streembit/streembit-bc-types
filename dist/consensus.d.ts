@@ -584,19 +584,18 @@ export declare enum AccountableNodeEventType {
     VERIFICATION_UPDATED = "verification_updated",
     COMPLIANCE_CHECK_FAILED = "compliance_check_failed"
 }
-export interface MintEra {
-    era: number;
-    startMilliSeconds: number;
-    intervalMilliSeconds: number;
-    amountPerInterval: string;
-    creatorShare: number;
-    validatorShare: number;
-}
+/** Issuance ends 100,000 hours after the genesis timestamp: no mint slot ending later is issued */
+export declare const MINT_ISSUANCE_END_MILLISECONDS: number;
+/** While a participant's deposit is below its target, this percentage of each reward is paid out and the rest is locked */
+export declare const MINT_DEPOSIT_FILL_PAYOUT_PERCENT = 5;
 export interface MintRuleset {
     publishedAt: number;
     publishedBy: string;
     policyVersion: number;
-    eras: MintEra[];
+    intervalMilliSeconds: number;
+    amountPerInterval: string;
+    accountableNodeShare: number;
+    validatorShare: number;
     excludeSlashed: boolean;
     excludeUnbonding: boolean;
     notes?: string;
