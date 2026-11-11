@@ -506,12 +506,6 @@ export interface AccountableNodeDisclosure {
 
     /** Verifiable assets in USD (must be ≥ $5M per whitepaper) */
     assetsUSD: string;
-
-    /** Names of delegated officers with signing authority */
-    officerNames: string[];
-
-    /** Confirmation of personal liability for officers */
-    personalLiability: boolean;
 }
 
 /**
