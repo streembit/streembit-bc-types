@@ -465,6 +465,8 @@ export interface AccountableNodeData {
     nodeId: string;
     /** Current lifecycle status */
     status: AccountableNodeStatus;
+    /** The node's registered public keys (compressed secp256k1, 66 hex characters); a signature by any of them is the node's */
+    publicKeys: string[];
     /** Required business disclosure information */
     disclosure: AccountableNodeDisclosure;
     /** Verification evidence */
