@@ -362,5 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 # Local tooling and package archives, never published
-.claude/settings.local.json
+.claude/
 *.tgz
