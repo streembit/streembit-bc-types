@@ -488,23 +488,23 @@ export enum AccountableNodeStatus {
 }
 
 /**
- * Required disclosure fields for accountable node registration
- * Per whitepaper: Name, registration, address, proof of assets
+ * Disclosure fields of an Accountable Node application: company data only.
+ * The governance rules name the required ones (accountableNode.requiredDisclosures).
  */
 export interface AccountableNodeDisclosure {
     /** Legal business name */
     companyName: string;
 
-    /** Business registration number (government-issued) */
-    businessRegistration: string;
+    /** Company registration number (government-issued) */
+    companyRegistration: string;
 
-    /** Legal jurisdiction (must be in approved whitelist) */
+    /** Legal jurisdiction (must be in the approved whitelist of the governance rules) */
     jurisdiction: string;
 
-    /** Legal business address */
-    businessAddress: string;
+    /** Link to the company's latest audited financial statements */
+    verifiableAssets: string;
 
-    /** Verifiable assets in USD (must be ≥ $5M per whitepaper) */
+    /** Verifiable assets in USD (at least the governance rules' minimumAssetUSD) */
     assetsUSD: string;
 }
 
@@ -709,14 +709,19 @@ export interface AccountableNodeSummary {
 }
 
 /**
- * Parameters for deposit() contract method
+ * Parameters for deposit() contract method: a deposit top-up of a registered node (nodeId and amount), or an
+ * application with a deposit (every field)
  */
 export interface AccountableNodeDepositParams {
     nodeId: string;
-    publicKey: string;
-    disclosure: AccountableNodeDisclosure;
-    verifications: AccountableNodeVerification[];
-    signingRequirements?: AccountableNodeSigningRequirements;
+    /** SBRIT amount to lock */
+    amount: string;
+    /** Application only: the node's public keys (compressed secp256k1, 66 hex characters); the sender's key is one of them */
+    publicKeys?: string[];
+    /** Application only */
+    disclosure?: AccountableNodeDisclosure;
+    /** Application only */
+    verifications?: AccountableNodeVerification[];
 }
 
 /**
@@ -728,6 +733,26 @@ export interface AccountableNodeDepositResult {
     status: AccountableNodeStatus;
     depositAmount: string;
     message?: string;
+}
+
+/**
+ * Parameters for register() contract method: an Accountable Node application without a deposit
+ */
+export interface AccountableNodeRegisterParams {
+    nodeId: string;
+    /** The node's public keys (compressed secp256k1, 66 hex characters); the sender's key is one of them */
+    publicKeys: string[];
+    disclosure: AccountableNodeDisclosure;
+    verifications: AccountableNodeVerification[];
+}
+
+/**
+ * Parameters for addKey() and removeKey() contract methods
+ */
+export interface AccountableNodeKeyChangeParams {
+    nodeId: string;
+    /** Compressed secp256k1 public key, 66 hex characters */
+    publicKey: string;
 }
 
 /**
