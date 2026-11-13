@@ -264,6 +264,63 @@ export interface PendingMultisigTx {
     submittedTxId?: string;
 }
 
+// ============= Multisig route messages =============
+// The requests and answers of the node's multisig routes: the public routes under /api/v1/multisig, used by the
+// wallets and the CLI, and the two peer routes the bootstrap uses.
+
+/** POST /api/v1/multisig: the unsigned contract call and the sender's own signature over it */
+export interface MultisigCreateRequest {
+    unsignedTx: ContractCallTransaction;
+    signature: TransactionSignature;
+}
+
+/** Peer route /multisig/list: the records of the given status, all when left out */
+export interface MultisigListRequest {
+    status?: PendingMultisigStatus;
+}
+
+/** Peer route /multisig/signature: a signer's signature for the record of the id */
+export interface MultisigSignatureRequest {
+    id: string;
+    signature: TransactionSignature;
+}
+
+/** POST /api/v1/multisig/:id/signatures: a signer's signature for the record of the id in the path */
+export interface MultisigSignatureUpload {
+    signature: TransactionSignature;
+}
+
+/**
+ * Outcome of a submission attempt by the node
+ * - submitted: assembled and accepted; the record is 'submitted' with txId
+ * - stale: the sender's sequence moved on chain; the record is 'stale' and must be requested again
+ * - failed: the submission failed; the record stays 'pending' with its signatures, retry with the submit route
+ */
+export interface MultisigSubmission {
+    status: 'submitted' | 'stale' | 'failed';
+    txId?: string;
+    response?: string;
+    reason?: string;
+}
+
+export interface MultisigRecordResponse {
+    record: PendingMultisigTx;
+}
+
+export interface MultisigSignatureResponse {
+    record: PendingMultisigTx;
+    submission?: MultisigSubmission;    // present when this signature reached the threshold and the node attempted submission
+}
+
+export interface MultisigSubmitResponse {
+    record: PendingMultisigTx;
+    submission: MultisigSubmission;
+}
+
+export interface MultisigListResponse {
+    records: PendingMultisigTx[];
+}
+
 
 // Union type for all transactions
 export type Transaction =
