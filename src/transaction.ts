@@ -1,0 +1,334 @@
+/**
+ * Transaction types for Streembit blockchain
+ * Account-based model - NO UTXO as per white paper
+ * Transaction uniqueness via timestamp, not nonces
+ */
+
+import { AssetId } from './asset';
+import type { BootstrapPolicy } from './consensus';
+
+
+// Transaction types as defined in master spec
+export enum TxType {
+    GENESIS = 'genesis',  
+    TRANSFER = 'transfer',
+    CONTRACT = 'contract',
+    CONTRACT_CALL = 'contract_call',
+    CONTRACT_UPGRADE = 'contract_upgrade',
+    SBRIT_MINT = 'mint',
+    BOOTSTRAP_DEPLOY = 'bootstrap_deploy',     // system contract deployment during the bootstrap; no fee
+    BOOTSTRAP_CALL = 'bootstrap_call',         // bootstrap method call during the bootstrap; no fee
+}
+
+export interface TransactionSignature {
+    publickey: string;            // Signer's public key (hex, compressed 33 bytes }
+    signature: string;            // Signer's signature (hex)
+};
+
+export const GENESIS_FROM: string = 'GENESIS';
+export const GENESIS_PUBKEY = '0'.repeat(66);
+export const GENESIS_SIGNATURE: string = 'GENESIS_SIGNATURE';
+export const GENESIS_TX_SIGNATURE: TransactionSignature = { "publickey": GENESIS_PUBKEY, "signature": GENESIS_SIGNATURE };
+export const GENESIS_SALT: string = 'GENESIS_SALT';
+
+// In Phase 1-Alpha defined here as fixed. Get it from global config in Phase 1-Beta and later
+export const SBRIT_FEE_AMOUNT: string = '0.01';
+
+export interface TransactionFee {
+    amount: typeof SBRIT_FEE_AMOUNT;
+    asset: AssetId;      
+}
+
+
+export interface TransactionBase {
+    // Protocol version
+    version: number;                // Currently 1
+
+    chainId: number;                // Chain ID for replay protection eg. devnet = 1337 as defined in the config file
+
+    // Transaction identification
+    type: TxType;
+
+    // Participants (account-based model)
+    from: string;                   // Sender address (Base58Check)
+    to: string;                     // Recipient address (Base58Check)
+
+    // Value transfer
+    amount: string;                 // Amount as decimal string or '0' for contract tx
+    asset: AssetId;                 // Asset being transferred (SBRIT)
+
+    // Uniqueness via timestamp + secuence + salt
+    sequence: number;               // u64; must equal state[from].sequence   
+    timestamp: number;              // Unix timestamp for txid uniqueness
+    salt: string;                   // Random value for guaranteed uniqueness (hex, 16 bytes)
+
+    fee?: TransactionFee;           // Fee amount and asset; the recipient is the attester in the block header
+
+    // Cryptographic proof
+    signature: TransactionSignature[];             
+}
+
+export enum ContractLocation {
+    FS = 'file_system',
+    VM = 'virtual_machine',
+}
+
+export const DEFAULT_LOCATION = {
+    location: ContractLocation.FS  
+};
+
+export interface ContractVersion {
+    version: string | number;
+    codeHash: string;          
+    sandboxHash: string; 
+    deployedAt: number;
+    deployer: string;
+    active: boolean;
+}
+
+/**
+ * Contract metadata stored in blockchain state
+ * Stored at: NSkey.accountMeta(contractAddress)
+ */
+export interface ContractMetadata {
+    type: 'contract';
+    cid: string;
+    filePath: string;               // Canonical path used for CID derivation (e.g., "dist/node/smart-contracts/validators/validator_v1.js")
+    deployer: string;               // Address of initial deployer
+    location: ContractLocation;     // FS or VM
+    codeHash: string;               
+    sandboxHash: string;           
+    versions: ContractVersion[];    // Version history with code/sandbox in each entry
+}
+
+export interface ContractTransaction extends TransactionBase {
+    type: TxType.CONTRACT | TxType.CONTRACT_CALL | TxType.SBRIT_MINT;
+    asset: AssetId.SBRIT;                       // fixed
+    codeHash: string;                           // hex32 (hash of actual contract code)
+    sandboxHash: string;                        // hex32 (hash of sandbox.js code)
+    cid: string;                                // hex32 (derived deterministically)
+    location: typeof DEFAULT_LOCATION.location;
+}
+
+// The single genesis transaction: it records the bootstrap policy and creates no SBRIT
+export interface GenesisPolicyTx extends Omit<TransactionBase, 'fee'> {
+    type: TxType.GENESIS;
+    from: typeof GENESIS_FROM;
+    to: typeof GENESIS_FROM;
+    amount: '0';
+    sequence: 0;
+    timestamp: number;              // the genesis block timestamp
+    signature: [typeof GENESIS_TX_SIGNATURE];
+    policy: BootstrapPolicy;
+    fee: null;                      // Genesis transactions have no fees
+}
+
+// END Genesis only
+
+// Transfer transaction
+export interface TransferTransaction extends TransactionBase {
+    type: TxType.TRANSFER;
+}
+
+// Contract deployment transaction
+export interface ContractTx extends ContractTransaction {
+    type: TxType.CONTRACT;
+    code: string;                           // REQUIRED for deployment
+    sandbox: string;                        // REQUIRED for deployment
+    contractVersion: ContractVersion[];     // REQUIRED for deployment
+}
+
+// Contract call transaction
+export interface ContractCallTransaction extends ContractTransaction {
+    type: TxType.CONTRACT_CALL | TxType.SBRIT_MINT;
+    data: string;                           // Call data (hex)
+    method: string;                         // Method name being called
+}
+
+
+// Bootstrap transactions: fee-free by type; valid only while the bootstrap is open, for the senders the
+// bootstrap policy recorded by genesis names. Genesis creates no SBRIT, so no bootstrap transaction can pay a fee.
+
+// System contract deployment during the bootstrap, signed by the policy's Accountable Node
+export interface BootstrapDeployTx extends Omit<ContractTx, 'type' | 'fee'> {
+    type: TxType.BOOTSTRAP_DEPLOY;
+    fee: null;
+}
+
+// Bootstrap method call during the bootstrap, sent by the policy's Accountable Node or a policy validator
+export interface BootstrapCallTx extends Omit<ContractCallTransaction, 'type' | 'fee'> {
+    type: TxType.BOOTSTRAP_CALL;
+    fee: null;
+}
+
+// Add upgrade transaction interface
+export interface ContractUpgradeTx extends TransactionBase {
+    type: TxType.CONTRACT_UPGRADE;
+    to: string;
+    codeHash: string;
+    sandboxHash: string;
+    code: string;
+    sandbox: string;
+    version: number;
+}
+
+
+// Transaction ID computation
+// txid = H(chainId ‖ timestamp ‖ payload ‖ signature ‖ salt ‖ sequence)
+export interface TxIdComponents {
+    chainId: number;
+    timestamp: number;
+    payload: string;              // Serialized transaction data
+    signature: string;            // Serialized signatures array for TxId computation
+    salt: string;
+    sequence: number;
+}
+
+export interface TxSignParam {
+    publickey: string;
+    privatekey: string;
+}
+
+// Maximum allowed signatures for multisig transactions, increase this if needed for complex governance
+export const MAX_ALLOWED_SIGNATURES = 3;   
+
+
+export const SYSTEM_MINT_ADDRESS = 'SYSTEM_MINT';
+
+export enum MintReward {
+    VALIDATOR = 'validator_reward',  
+    CREATOR = 'creator_reward',
+}
+
+export interface SBRITMintContractTx extends ContractCallTransaction {
+    type: TxType.SBRIT_MINT;
+
+    from: string;                   // Sender address (Base58Check)
+    to: string;                     // Recipient address (Base58Check)
+    
+    data: string;                           // Call data (hex)
+    method: string;                         // Method name being called
+
+    asset: AssetId.SBRIT;
+    amount: '0';                    // no value transfer in mint tx
+    sequence: 0;                    // system tx, always zero
+    policyVersion: number;          // governance mint rules version
+    epochId: number;                // interval/epoch this mint covers
+    issuedTotal: string;            // newly created SBRIT
+    allocations: Array<{
+        address: string;
+        amount: string;
+        reason: MintReward;
+    }>;
+    metadata?: { notes?: string };
+}
+
+export interface MintTx extends Omit<TransactionBase, 'fee'> {
+    type: TxType.SBRIT_MINT;
+    from: typeof SYSTEM_MINT_ADDRESS;
+    to: typeof SYSTEM_MINT_ADDRESS;
+    asset: AssetId.SBRIT;
+    amount: '0';                    // no value transfer in mint tx
+    sequence: 0;                    // system tx, always zero
+    policyVersion: number;          // governance mint rules version
+    epochId: number;                // interval/epoch this mint covers
+    issuedTotal: string;            // newly created SBRIT
+    allocations: Array<{
+        address: string;
+        amount: string;
+        reason: MintReward;
+    }>;
+    metadata?: { notes?: string };
+    fee: null;                      // scheduled mints are fee-free (spec): no spendable balance is needed
+}
+
+export type PendingMultisigStatus = 'pending' | 'submitted' | 'expired' | 'stale';
+
+export interface PendingMultisigSignature {
+    publickey: string;
+    signature: string;
+    receivedAt: number;
+}
+
+export interface PendingMultisigTx {
+    id: string;                          // hex hash of the deterministic unsigned tx bytes
+    unsignedTx: ContractCallTransaction | BootstrapCallTx; // sender = the approval sender's address, signature: []
+    contract: string;                    // target contract address
+    method: string;
+    thresholdM: number;                  // from the contract's policy at creation
+    authorizedSigners: string[];         // snapshot from the contract's policy at creation
+    signatures: PendingMultisigSignature[];
+    status: PendingMultisigStatus;
+    createdAt: number;
+    expiresAt: number;                   // unsignedTx.timestamp + 1 hour
+    submittedTxId?: string;
+}
+
+// ============= Multisig route messages =============
+// The requests and answers of the node's multisig routes: the public routes under /api/v1/multisig, used by the
+// wallets and the CLI, and the two peer routes the bootstrap uses.
+
+/** POST /api/v1/multisig: the unsigned contract call and the sender's own signature over it */
+export interface MultisigCreateRequest {
+    unsignedTx: ContractCallTransaction;
+    signature: TransactionSignature;
+}
+
+/** Peer route /multisig/list: the records of the given status, all when left out */
+export interface MultisigListRequest {
+    status?: PendingMultisigStatus;
+}
+
+/** Peer route /multisig/signature: a signer's signature for the record of the id */
+export interface MultisigSignatureRequest {
+    id: string;
+    signature: TransactionSignature;
+}
+
+/** POST /api/v1/multisig/:id/signatures: a signer's signature for the record of the id in the path */
+export interface MultisigSignatureUpload {
+    signature: TransactionSignature;
+}
+
+/**
+ * Outcome of a submission attempt by the node
+ * - submitted: assembled and accepted; the record is 'submitted' with txId
+ * - stale: the sender's sequence moved on chain; the record is 'stale' and must be requested again
+ * - failed: the submission failed; the record stays 'pending' with its signatures, retry with the submit route
+ */
+export interface MultisigSubmission {
+    status: 'submitted' | 'stale' | 'failed';
+    txId?: string;
+    response?: string;
+    reason?: string;
+}
+
+export interface MultisigRecordResponse {
+    record: PendingMultisigTx;
+}
+
+export interface MultisigSignatureResponse {
+    record: PendingMultisigTx;
+    submission?: MultisigSubmission;    // present when this signature reached the threshold and the node attempted submission
+}
+
+export interface MultisigSubmitResponse {
+    record: PendingMultisigTx;
+    submission: MultisigSubmission;
+}
+
+export interface MultisigListResponse {
+    records: PendingMultisigTx[];
+}
+
+
+// Union type for all transactions
+export type Transaction =
+    | GenesisPolicyTx
+    | TransferTransaction
+    | ContractCallTransaction
+    | ContractTx
+    | BootstrapDeployTx
+    | BootstrapCallTx
+    | ContractUpgradeTx
+    | MintTx;
